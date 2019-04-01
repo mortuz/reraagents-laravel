@@ -18,6 +18,35 @@
           <form action="{{ route('venture.store') }}" method="POST">
             
             @csrf
+
+            <div class="form-group">
+              <label for="state">State</label>
+              <select name="state" id="state" class="form-control js-state-field{{ $errors->has('state') ? ' is-invalid' : '' }}">
+                @foreach ($states as $state)
+                    <option value="{{ $state->id }}" {{ old('state') == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
+                @endforeach
+              </select>
+
+              @if ($errors->has('state'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('state') }}</strong>
+                </span>
+              @endif
+
+            </div>
+
+            <div class="form-group">
+              <label for="city">City</label>
+              <select name="city" id="city" class="form-control js-city-field{{ $errors->has('state') ? ' is-invalid' : '' }}"">
+              </select>
+
+              @if ($errors->has('city'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('city') }}</strong>
+                </span>
+              @endif
+            </div>
+            
             <div class="form-group">
               <label for="name">Name</label>
               <input type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" id="name" name="name" value="{{ old('name') }}">

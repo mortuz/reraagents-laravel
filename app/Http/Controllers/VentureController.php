@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Venture;
 use Illuminate\Http\Request;
 use Session;
+use App\State;
 
 class VentureController extends Controller
 {
@@ -25,7 +26,7 @@ class VentureController extends Controller
      */
     public function create()
     {
-        return view('ventures.create');
+        return view('ventures.create')->with('states', State::all());
     }
 
     /**
@@ -37,12 +38,16 @@ class VentureController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'state' => 'required',
+            'city' => 'required|min:1',
         ]);
 
         Venture::create([
             'name' => $request->name,
-            'slug' => str_slug($request->name)
+            'slug' => str_slug($request->name),
+            'state_id' => $request->state,
+            'city_id' => $request->city
         ]);
 
         Session::flash('success', 'Venture successfully added');
@@ -68,7 +73,7 @@ class VentureController extends Controller
      */
     public function edit(Venture $venture)
     {
-        return view('ventures.edit')->with('venture', $venture);
+        return view('ventures.edit')->with('venture', $venture)->with('states', State::all());
     }
 
     /**
@@ -81,10 +86,15 @@ class VentureController extends Controller
     public function update(Request $request, Venture $venture)
     {
         $this->validate($request, [
-            'name' => 'required'
+            'name' => 'required',
+            'state' => 'required',
+            'city' => 'required|min:1',
         ]);
 
+
         $venture->name = $request->name;
+        $venture->city_id = $request->city;
+        $venture->state_id = $request->state;
         $venture->slug = str_slug($request->name);
 
         $venture->save();

@@ -120,14 +120,21 @@
         dataType: 'json',
         contentType: 'application/json',
         success: function(res) {
-          var html = '';
+          var $cityField = $('.js-city-field');
+          var html = '<option value="0">Select city</option>';
+
+          var oldCity = '0';
+
+          oldCity = $cityField.attr('data-preselect');
+          if (!oldCity) {
+            oldCity = "{{ old('city') }}";
+          }
 
           for (let i = 0; i < res.data.length; i++) {
             const city = res.data[i];
-            html += `<option class="${city.id}">${city.name}</option>`;
+            html += `<option value="${city.id}" ${oldCity == city.id ? 'selected': ''}>${city.name}</option>`;
           }
 
-          var $cityField = $('.js-city-field');
 
           if ($cityField.length) {
             $cityField.html(html);

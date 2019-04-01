@@ -54,6 +54,13 @@
               <i class="mdi mdi-account-multiple menu-icon"></i>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('office.index') }}">
+              <span class="menu-title">Office</span>
+              <i class="mdi mdi-office menu-icon"></i>
+            </a>
+          </li>
           {{-- <li class="nav-item">
             <a class="nav-link" href="../../pages/icons/mdi.html">
               <span class="menu-title">Icons</span>

@@ -16,6 +16,8 @@ class CreateVenturesTable extends Migration
         Schema::create('ventures', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name');
+            $table->integer('state_id');
+            $table->integer('city_id')->nullable();
             $table->string('slug');
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Session;
 use App\Office;
 use App\State;
 use Illuminate\Http\Request;
@@ -15,7 +16,7 @@ class OfficeController extends Controller
      */
     public function index()
     {
-        //
+        return view('office.index')->with('offices', Office::paginate(10));
     }
 
     /**
@@ -36,7 +37,23 @@ class OfficeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'state' => 'required',
+            'address' => 'required',
+        ]);
+
+        Office::create([
+            'state_id' => $request->state,
+            'city_id'  => $request->city,
+            'mobile'   => $request->mobile,
+            'address'  => $request->address,
+            'url'      => $request->url,
+            'govt'     => $request->govt ? $request->govt : 0,
+        ]);
+
+        Session::flash('success', 'Office successfully added.');
+
+        return redirect()->route('office.index');
     }
 
     /**
@@ -58,7 +75,9 @@ class OfficeController extends Controller
      */
     public function edit(Office $office)
     {
-        //
+        return view('office.edit')
+                    ->with('office', $office)
+                    ->with('states', State::all());
     }
 
     /**
@@ -70,7 +89,23 @@ class OfficeController extends Controller
      */
     public function update(Request $request, Office $office)
     {
-        //
+        $this->validate($request, [
+            'state' => 'required',
+            'address' => 'required',
+        ]);
+
+        $office->state_id = $request->state;
+        $office->city_id = $request->city;
+        $office->mobile = $request->mobile;
+        $office->address = $request->address;
+        $office->url = $request->url;
+        $office->govt = $request->govt ? $request->govt : 0;
+
+        $office->save();
+
+        Session::flash('success', 'Office successfully updated.');
+
+        return redirect()->route('office.index');
     }
 
     /**
@@ -81,6 +116,8 @@ class OfficeController extends Controller
      */
     public function destroy(Office $office)
     {
-        //
+        $office->delete();
+        Session::flash('success', 'Office successfully deleted.');
+        return redirect()->back();
     }
 }
