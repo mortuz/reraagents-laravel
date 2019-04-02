@@ -18071,6 +18071,9 @@ div.tagsinput {
   max-width: 100%; }
 
 .typeahead {
+  background-color: #ffffff;
+width: 92.8% }
+.typeahead li{
   background-color: #ffffff; }
   .typeahead:focus {
     border-color: #ebedf2; }

@@ -36,5 +36,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('face', 'FaceController');
         Route::resource('venture', 'VentureController');
         Route::resource('office', 'OfficeController');
+        Route::resource('builders', 'BuilderProfileController');
     });
 });

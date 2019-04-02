@@ -39,7 +39,6 @@
               <label for="city">City</label>
               <select name="city" id="city" class="form-control js-city-field">
               </select>
-
             </div>
 
             <div class="form-group">

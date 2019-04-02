@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="{{ asset('vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.addons.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/css/bootstrap-tagsinput.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/css/typeahead.css') }}">
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
@@ -50,6 +52,8 @@
   <!-- plugins:js -->
   <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
   <script src="{{ asset('vendors/js/vendor.bundle.addons.js') }}"></script>
+  <script src="{{ asset('vendors/js/typeahead.min.js') }}"></script>
+  <script src="{{ asset('vendors/js/bootstrap-tagsinput.min.js') }}"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
   <!-- End plugin js for this page-->
@@ -111,6 +115,12 @@
     @endif
 
 
+    var $cityField = $('.js-city-field');
+
+    $cityField.on('change', function() {
+      initTypeahead();
+    });
+
     function fetchCities(state) {
       var url = "{{ route('get.cities') }}";
 
@@ -120,7 +130,6 @@
         dataType: 'json',
         contentType: 'application/json',
         success: function(res) {
-          var $cityField = $('.js-city-field');
           var html = '<option value="0">Select city</option>';
 
           var oldCity = '0';
@@ -146,7 +155,41 @@
       })
     }
 
+    function initTypeahead() {
+      if ($('.js-typeahead').length) {
+        $typeahead = $('.js-typeahead');
+
+        $typeahead.each(function() {
+          var url = $(this).attr('data-url');
+          $that = $(this);
+          var dependency = $(this).attr('data-dependency');
+
+          var data = {};
+
+          if (dependency == 'city') {
+            data = { 'city' : $cityField.val() };
+          }
+
+          // $that.on('change', function(event) {
+          //     console.log($(this).val());
+          //   });
+
+          $.get(url, data, function (response){
+            // console.log(response);
+            $that.typeahead({ 
+              source: response.data,
+              afterSelect: function(event, item) {
+                console.log(event, this);
+              }
+            });
+
+          }, 'json');
+        });
+      }
+    }
+
     var $stateField = $('.js-state-field');
+
 
     if ($stateField.length) {
       fetchCities($stateField.val());
@@ -154,6 +197,8 @@
     $stateField.on('change', function() {
       fetchCities($(this).val());
     });
+
+
   </script>
   <!-- End custom js for this page-->
   @yield('javascript')

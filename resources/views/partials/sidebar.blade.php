@@ -61,6 +61,14 @@
               <i class="mdi mdi-office menu-icon"></i>
             </a>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('builders.index') }}">
+              <span class="menu-title">Builders</span>
+              <i class="mdi mdi-account menu-icon"></i>
+            </a>
+          </li>
+
           {{-- <li class="nav-item">
             <a class="nav-link" href="../../pages/icons/mdi.html">
               <span class="menu-title">Icons</span>

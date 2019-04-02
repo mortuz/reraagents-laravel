@@ -20,3 +20,4 @@ use Illuminate\Http\Request;
 //});
 
 Route::get('/cities', 'API\CitiesController@citiesFromState')->name('get.cities');
+Route::get('/ventures', 'API\VentureController@venturesFromCity')->name('get.ventures');
