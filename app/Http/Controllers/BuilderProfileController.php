@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\State;
+use App\BuilderProfile;
+use App\Venture;
+use App\User;
+use Session;
 
 class BuilderProfileController extends Controller
 {
@@ -14,7 +18,7 @@ class BuilderProfileController extends Controller
      */
     public function index()
     {
-        //
+        return view('builders.index')->with('builders', BuilderProfile::paginate(10));
     }
 
     /**
@@ -24,7 +28,7 @@ class BuilderProfileController extends Controller
      */
     public function create()
     {
-        return view('builders.create')->with('states', State::all());
+        return view('builders.create')->with('states', State::all())->with('ventures', Venture::all());
     }
 
     /**
@@ -35,7 +39,7 @@ class BuilderProfileController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->name);
+        // dd($request->all());
         $this->validate($request, [
             'name' => 'required',
             'state' => 'required',
@@ -43,6 +47,31 @@ class BuilderProfileController extends Controller
             'mobile' => 'required',
             'password' => 'required',
         ]);
+
+        // name, email. mobile and passowrd in users table
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+            'password' => bcrypt($request->password),
+            'role' => 4
+        ]);
+
+        // state, city, alternative number, alternative number2, user_id
+        $builderProfile = BuilderProfile::create([
+            'state_id' => $request->state,
+            'city_id' => $request->city,
+            'contact_no' => $request->contact_no,
+            'alternative_contact_no' => $request->alternative_contact_no,
+            'user_id' => $user->id
+        ]);
+
+
+        // ventures
+        $builderProfile->ventures()->attach($request->ventures);
+
+        Session::flash('success', 'Builder successfully added.');
+        return redirect()->route('builders.index');
     }
 
     /**
@@ -64,7 +93,7 @@ class BuilderProfileController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('builders.edit')->with('builder', BuilderProfile::find($id))->with('states', State::all())->with('ventures', Venture::all());
     }
 
     /**
@@ -74,9 +103,40 @@ class BuilderProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, BuilderProfile $builder)
     {
-        //
+        // dd($builder);
+        
+        $this->validate($request, [
+            'name' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'mobile' => 'required',
+        ]);
+
+        // $builder = BuilderProfile::find($id);
+
+        $builder->user->name = $request->name;
+        $builder->user->email = $request->email;
+        $builder->user->mobile = $request->mobile;
+
+        if ($request->password != '') {
+            $builder->user->password = $request->password;
+        }
+
+        $builder->user->save();
+
+        $builder->state_id = $request->state;
+        $builder->city_id = $request->city;
+        $builder->contact_no = $request->contact_no;
+        $builder->alternative_contact_no = $request->alternative_contact_no;
+        $builder->save();
+
+        $builder->ventures()->sync($request->ventures);
+
+
+        Session::flash('success', 'Builder successfully updated.');
+        return redirect()->route('builders.index');
     }
 
     /**
@@ -85,8 +145,13 @@ class BuilderProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(BuilderProfile $builder)
     {
-        //
+        $builder->user->delete();
+        $builder->ventures()->delete();
+        $builder->delete();
+
+        Session::flash('success', 'Builder successfully deleted.');
+        return redirect()->route('builders.index');
     }
 }

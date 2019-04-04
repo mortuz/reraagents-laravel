@@ -18,5 +18,19 @@ class VenturesTableSeeder extends Seeder
             'state_id' => 1,
             'city_id' => 1,
         ]);
+
+        Venture::create([
+            'name' => 'Pace Builders',
+            'slug' => str_slug('Pace Builders'),
+            'state_id' => 1,
+            'city_id' => 1,
+        ]);
+
+        Venture::create([
+            'name' => 'Luxury builders',
+            'slug' => str_slug('Luxury builders'),
+            'state_id' => 1,
+            'city_id' => 1,
+        ]);
     }
 }

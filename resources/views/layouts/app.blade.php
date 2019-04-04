@@ -168,6 +168,10 @@
 
           if (dependency == 'city') {
             data = { 'city' : $cityField.val() };
+          } else if (dependency == 'state') {
+            data = {'state': $stateField.val()}
+          } else {
+            data = {};
           }
 
           // $that.on('change', function(event) {
@@ -178,8 +182,15 @@
             // console.log(response);
             $that.typeahead({ 
               source: response.data,
-              afterSelect: function(event, item) {
-                console.log(event, this);
+              afterSelect: function(item) {
+                console.log(item);
+                $that.siblings('input').val(item.id);
+
+                $that.after(`<button type="button" class="btn custom-tag btn-light btn-xs my-3 mr-2">
+                              <input type="hidden" value="${item.id}" name="${$that.attr('data-name')}"> 
+                              ${item.name} <span class="badge"><i class="mdi mdi-delete text-danger"></i></span>
+                            </button>`);
+                $that.val('');
               }
             });
 
@@ -196,6 +207,10 @@
     }
     $stateField.on('change', function() {
       fetchCities($(this).val());
+    });
+
+    $('body').on('click', '.custom-tag', function() {
+      $(this).remove();
     });
 
 

@@ -17,8 +17,8 @@ class CreateBuilderProfilesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('state_id');
             $table->integer('city_id');
-            $table->string('contact_no');
-            $table->string('alternative_contact_no');
+            $table->string('contact_no')->nullable();
+            $table->string('alternative_contact_no')->nullable();
             $table->integer('user_id');
             $table->timestamps();
         });
