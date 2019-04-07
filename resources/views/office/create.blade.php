@@ -74,7 +74,6 @@
                     <strong>{{ $errors->first('address') }}</strong>
                 </span>
               @endif
-
             </div>
 
             <div class="form-check mx-sm-2">
