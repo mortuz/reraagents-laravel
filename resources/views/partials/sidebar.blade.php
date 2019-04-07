@@ -72,7 +72,7 @@
     <li class="nav-item">
       <a class="nav-link" href="{{ route('agents.index') }}">
         <span class="menu-title">Agents</span>
-        <i class="mdi mdi-account-multiple menu-icon"></i>
+        <i class="mdi mdi-clipboard-account menu-icon"></i>
       </a>
     </li>
 
