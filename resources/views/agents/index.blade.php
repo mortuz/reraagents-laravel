@@ -3,9 +3,10 @@
 @section('content')
   <div class="page-header">
     <h3 class="page-title">
-    <span class="page-title-icon bg-gradient-primary text-white mr-2">
-        <i class="mdi mdi-home"></i>
-    </span> Agents </h3>
+      <span class="page-title-icon bg-gradient-primary text-white mr-2">
+          <i class="mdi mdi-home"></i>
+      </span> Agents
+    </h3>
 
     <a href="{{ route('agents.create') }}" class="btn btn-gradient-primary"><i class="mdi mdi-plus"></i> Add agent</a>
   </div>
