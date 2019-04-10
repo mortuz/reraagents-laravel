@@ -5,16 +5,16 @@
     <h3 class="page-title">
     <span class="page-title-icon bg-gradient-primary text-white mr-2">
         <i class="mdi mdi-home"></i>
-    </span> Ventures </h3>
+    </span> Landmarks </h3>
 
-    <a href="{{ route('venture.create') }}" class="btn btn-gradient-primary"><i class="mdi mdi-plus"></i> Add new venture</a>
+    <a href="{{ route('landmark.create') }}" class="btn btn-gradient-primary"><i class="mdi mdi-plus"></i> Add new landmark</a>
   </div>
 
   <div class="row">
     <div class="col-12 grid-margin">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-title">List of all ventures</h4>
+          <h4 class="card-title">List of all landmarks</h4>
           <div class="table-responsive">
             <table class="table">
               <thead>
@@ -28,18 +28,18 @@
               </thead>
               <tbody>
 
-                @foreach ($ventures as $venture)
+                @foreach ($landmarks as $landmark)
                   <tr>
-                    <td>{{ $venture->id }}</td>
-                    <td> <strong>{{ $venture->name }}</strong> </td>
-                    <td> {{ $venture->created_at->diffForHumans() }} </td>
-                    <td> {{ $venture->updated_at->diffForHumans() }} </td>
+                    <td>{{ $landmark->id }}</td>
+                    <td> <strong>{{ $landmark->name }}</strong> </td>
+                    <td> {{ $landmark->created_at->diffForHumans() }} </td>
+                    <td> {{ $landmark->updated_at->diffForHumans() }} </td>
                     <td>
-                      <a href="{{ route('venture.edit', ['venture' => $venture->id]) }}" class="btn btn-gradient-light btn-rounded btn-sm" title="Edit">
+                      <a href="{{ route('landmark.edit', ['landmark' => $landmark->id]) }}" class="btn btn-gradient-light btn-rounded btn-sm" title="Edit">
                         <i class="mdi mdi-pencil"></i>
                       </a>
                       
-                      <button type="button" class="btn btn-gradient-danger btn-rounded btn-sm btn-delete" data-type="{{ $venture->name }}" data-action="{{ route('venture.destroy', ['venture' => $venture->id]) }}">
+                      <button type="button" class="btn btn-gradient-danger btn-rounded btn-sm btn-delete" data-type="{{ $landmark->name }}" data-action="{{ route('landmark.destroy', ['landmark' => $landmark->id]) }}">
                         <i class="mdi mdi-delete"></i>
                       </button>
 
@@ -54,7 +54,7 @@
       </div>
 
       <div class="mt-4">
-        {{ $ventures->links() }}
+        {{ $landmarks->links() }}
       </div>
 
     </div>

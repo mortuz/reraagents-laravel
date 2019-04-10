@@ -39,5 +39,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('builders', 'BuilderProfileController');
         Route::resource('agents', 'AgentProfileController');
         Route::resource('properties', 'PropertiesController');
+        Route::resource('landmark', 'LandmarkController');
+        Route::resource('area', 'AreaController');
+        Route::resource('price', 'PriceController');
     });
 });

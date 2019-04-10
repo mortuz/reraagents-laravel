@@ -111,7 +111,7 @@
             <div class="form-group">
               <label for="ventures">Add Ventures</label>
 
-              <input id="ventures" data-name="ventures[]" data-url={{ route('get.ventures') }} data-dependency="city" data-provide="typeahead" autocomplete="off"  type="text" class="form-control js-typeahead"/>
+              <input id="ventures" data-name="ventures[]" data-url="{{ route('api.get.ventures') }}" data-dependency="city" data-provide="typeahead" autocomplete="off"  type="text" class="form-control js-typeahead"/>
               
               @if (old('ventures'))
                 @foreach (old('ventures') as $venture)
@@ -160,9 +160,6 @@
         //     ventures.push($venture);
         //   @endforeach
 
-        //   $.get("route('get.ventures)", { 'city': $cityField.val() }, function (response) {
-        //     console.log(ventures, allVentures);
-        //   }, 'json');
         // @endif
 
       </script>

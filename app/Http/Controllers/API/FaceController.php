@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Venture;
+use App\Face;
 
-class VentureController extends Controller
+class FaceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +15,13 @@ class VentureController extends Controller
      */
     public function index()
     {
-        $ventures = Venture::where('city_id', request()->city)->get()->transform(function ($venture) {
+        $faces = Face::all()->transform(function ($face) {
             return [
-                'name' => $venture->name,
-                'id'   => $venture->id
+                'name' => $face->face,
+                'id'   => $face->id
             ];
         });
-        return response()->json(['success' => true, 'data' => $ventures]);
+        return response()->json(['success' => true, 'data' => $faces]);
     }
 
     /**
@@ -69,17 +69,17 @@ class VentureController extends Controller
         //
     }
 
-    public function venturesFromCity()
+    public function facesFromCity()
     {
         $city = request()->city;
 
-        $ventures = Venture::where('city_id', $city);
+        $ventures = Face::where('city_id', $city);
         
         foreach ($ventures as $venture) {
             $venture->source = $venture->name;
         }
 
 
-        return response()->json(['success' => true, 'data' => Venture::where('city_id', $city)->get()]);
+        return response()->json(['success' => true, 'data' => Face::where('city_id', $city)->get()]);
     }
 }

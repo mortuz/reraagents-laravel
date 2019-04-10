@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Property;
+use App\Price;
+use Session;
 use Illuminate\Http\Request;
-use App\State;
 
-class PropertiesController extends Controller
+class PriceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,8 @@ class PropertiesController extends Controller
      */
     public function index()
     {
-        return view('properties.index')->with('states', State::all())->with('properties', Property::paginate());
+        return view('price.index')->with('prices', Price::paginate());
+
     }
 
     /**
@@ -25,8 +26,7 @@ class PropertiesController extends Controller
      */
     public function create()
     {
-        return view('properties.create')
-                        ->with('states', State::all());
+        return view('price.create');
     }
 
     /**
@@ -38,24 +38,25 @@ class PropertiesController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'state' => 'required',
-            'city' => 'required|regex:/[1-9]/',
-            'price' => 'required',
-            'contact' => 'required',
-            'handler' => 'required',
-            'status' => 'required'
+            'price' => 'required'
         ]);
 
-        dd($request->all());
+        Price::create([
+            'price' => $request->price,
+        ]);
+
+        Session::flash('success', 'Price successfully created.');
+        return redirect()->route('price.index');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Property  $property
+     * @param  \App\Price  $price
      * @return \Illuminate\Http\Response
      */
-    public function show(Property $property)
+    public function show(Price $price)
     {
         //
     }
@@ -63,34 +64,49 @@ class PropertiesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Property  $property
+     * @param  \App\Price  $price
      * @return \Illuminate\Http\Response
      */
-    public function edit(Property $property)
+    public function edit(Price $price)
     {
-        //
+        return view('price.edit')->with('price', $price);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Property  $property
+     * @param  \App\Price  $price
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Property $property)
+    public function update(Request $request, Price $price)
     {
-        //
+        $this->validate($request, [
+            'price' => 'required',
+        ]);
+
+
+        $price->price = $request->price;
+
+        $price->save();
+
+        Session::flash('success', 'Price successfully updated');
+        return redirect()->route('price.index');
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Property  $property
+     * @param  \App\Price  $price
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Property $property)
+    public function destroy(Price $price)
     {
-        //
+        $price->delete();
+        Session::flash('success', 'Price successfully deleted.');
+
+        return redirect()->back();
+
     }
 }

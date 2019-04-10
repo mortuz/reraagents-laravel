@@ -13,8 +13,8 @@
   <link rel="stylesheet" href="{{ asset('vendors/iconfonts/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.addons.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/css/vendor.bundle.base.css') }}">
-  <link rel="stylesheet" href="{{ asset('vendors/css/bootstrap-tagsinput.css') }}">
   <link rel="stylesheet" href="{{ asset('vendors/css/typeahead.css') }}">
+  <link rel="stylesheet" href="{{ asset('vendors/css/selectize.css') }}">
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
@@ -53,7 +53,7 @@
   <script src="{{ asset('vendors/js/vendor.bundle.base.js') }}"></script>
   <script src="{{ asset('vendors/js/vendor.bundle.addons.js') }}"></script>
   <script src="{{ asset('vendors/js/typeahead.min.js') }}"></script>
-  <script src="{{ asset('vendors/js/bootstrap-tagsinput.min.js') }}"></script>
+  <script src="{{ asset('vendors/js/selectize.min.js') }}"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
   <!-- End plugin js for this page-->
@@ -118,6 +118,7 @@
     var $cityField = $('.js-city-field');
 
     $cityField.on('change', function() {
+      $(document).trigger('city_changed');
       initTypeahead();
     });
 
@@ -146,6 +147,7 @@
 
 
           if ($cityField.length) {
+            $(document).trigger('city_init');
             $cityField.html(html);
           }
         },
@@ -154,6 +156,9 @@
         }
       })
     }
+
+    initTypeahead();
+    initSelectize();
 
     function initTypeahead() {
       if ($('.js-typeahead').length) {
@@ -174,6 +179,7 @@
             data = {};
           }
 
+        $that.typeahead('destroy');
           // $that.on('change', function(event) {
           //     console.log($(this).val());
           //   });
@@ -198,6 +204,68 @@
         });
       }
     }
+
+    function initSelectize() {
+      $selectize = $('.js-selectize');
+      if ($selectize.length) {
+
+        $selectize.each(function() {
+          $that = $(this);
+          var url = $that.attr('data-url');
+          if (!url) return;
+          var dependency = $that.attr('data-dependency');
+
+          var data = {};
+
+          if (dependency == 'city') {
+            data = { 'city' : $cityField.val() };
+            if (!$cityField.val())
+            return;
+          } else if (dependency == 'state') {
+            data = {'state': $stateField.val()}
+          } else {
+            data = {};
+          }
+
+          let select = $(this).selectize({ 
+              optionMap: {},
+              // items: response.data,
+              delimiter: ',',
+              valueField: 'id',
+              labelField: 'name',
+              searchField: 'name',
+              hideSelected: true,
+              preload: true,
+              persist: false,
+              // options: response.data,
+              create: false,
+              render: {
+                option: function(data, escape) {
+                  return `<div class="list-group-item">${data.name}</div>`;
+                }
+              },
+              load: function(query, callback) {
+                $.get(url, data, function (response){
+                  // console.log(response);
+                  callback(response.data);
+                  // console.log($(this)[0].setValue([1], true));
+
+                }, 'json');
+              }
+            });
+
+            // select[0].selectize.setValue([1,2], true);
+
+            // console.log(select[0].selectize.setValue([1,2], true));
+
+          
+        });
+      }
+    }
+
+    $(document).on('city_changed', function() {
+      initSelectize();
+    });
 
     var $stateField = $('.js-state-field');
 

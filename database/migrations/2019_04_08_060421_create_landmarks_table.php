@@ -17,7 +17,8 @@ class CreateLandmarksTable extends Migration
             $table->bigIncrements('id');
             $table->integer('state_id')->unsigned();
             $table->integer('city_id')->unsigned();
-            $table->string('area');
+            $table->string('name');
+            $table->string('slug');
             $table->timestamps();
         });
     }

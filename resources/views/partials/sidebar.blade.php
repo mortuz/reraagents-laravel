@@ -29,6 +29,8 @@
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="{{ route('states.index') }}">States</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{ route('cities.index') }}">Cities</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('landmark.index') }}">Landmark</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('area.index') }}">Area</a></li>
         </ul>
       </div>
     </li>
@@ -44,6 +46,7 @@
           <li class="nav-item"> <a class="nav-link" href="{{ route('bhk.index') }}">Room</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{ route('face.index') }}">Face</a></li>
           <li class="nav-item"> <a class="nav-link" href="{{ route('property-types.index') }}">Property type</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('price.index') }}">Pricing</a></li>
         </ul>
       </div>
     </li>

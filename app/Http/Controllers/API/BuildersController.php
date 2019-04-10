@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Venture;
+use App\BuilderProfile;
 
-class VentureController extends Controller
+class BuildersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +15,15 @@ class VentureController extends Controller
      */
     public function index()
     {
-        $ventures = Venture::where('city_id', request()->city)->get()->transform(function ($venture) {
+        $builders = BuilderProfile::all()->transform(function($builder) {
             return [
-                'name' => $venture->name,
-                'id'   => $venture->id
+                'name' => $builder->user->name,
+                'id' => $builder->id
             ];
         });
-        return response()->json(['success' => true, 'data' => $ventures]);
+
+        return response()->json(['success' => true, 'data' => $builders]);
+
     }
 
     /**
@@ -67,19 +69,5 @@ class VentureController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function venturesFromCity()
-    {
-        $city = request()->city;
-
-        $ventures = Venture::where('city_id', $city);
-        
-        foreach ($ventures as $venture) {
-            $venture->source = $venture->name;
-        }
-
-
-        return response()->json(['success' => true, 'data' => Venture::where('city_id', $city)->get()]);
     }
 }

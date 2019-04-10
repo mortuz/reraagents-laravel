@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Price;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Venture;
 
-class VentureController extends Controller
+class PriceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,13 +15,13 @@ class VentureController extends Controller
      */
     public function index()
     {
-        $ventures = Venture::where('city_id', request()->city)->get()->transform(function ($venture) {
+        $prices = Price::all()->transform(function ($price) {
             return [
-                'name' => $venture->name,
-                'id'   => $venture->id
+                'name' => $price->price,
+                'id'   => $price->id
             ];
         });
-        return response()->json(['success' => true, 'data' => $ventures]);
+        return response()->json(['success' => true, 'data' => $prices]);
     }
 
     /**
@@ -38,10 +38,10 @@ class VentureController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Price  $price
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Price $price)
     {
         //
     }
@@ -50,10 +50,10 @@ class VentureController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Price  $price
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Price $price)
     {
         //
     }
@@ -61,25 +61,11 @@ class VentureController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Price  $price
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Price $price)
     {
         //
-    }
-
-    public function venturesFromCity()
-    {
-        $city = request()->city;
-
-        $ventures = Venture::where('city_id', $city);
-        
-        foreach ($ventures as $venture) {
-            $venture->source = $venture->name;
-        }
-
-
-        return response()->json(['success' => true, 'data' => Venture::where('city_id', $city)->get()]);
     }
 }
