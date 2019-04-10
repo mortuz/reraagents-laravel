@@ -115,11 +115,12 @@
     @endif
 
 
-    var $cityField = $('.js-city-field');
+    $cityField = $('.js-city-field');
 
     $cityField.on('change', function() {
       $(document).trigger('city_changed');
       initTypeahead();
+      initSelectize();
     });
 
     function fetchCities(state) {
@@ -147,8 +148,8 @@
 
 
           if ($cityField.length) {
-            $(document).trigger('city_init');
             $cityField.html(html);
+            $(document).trigger('city_init');
           }
         },
         error: function(err) {
@@ -206,21 +207,22 @@
     }
 
     function initSelectize() {
-      $selectize = $('.js-selectize');
+      var $selectize = $('.js-selectize');
       if ($selectize.length) {
-
+        console.log('init..', $cityField.val())
         $selectize.each(function() {
-          $that = $(this);
+          var $that = $(this);
           var url = $that.attr('data-url');
           if (!url) return;
           var dependency = $that.attr('data-dependency');
 
           var data = {};
+          var values = $that.attr('data-preselect');
 
           if (dependency == 'city') {
-            data = { 'city' : $cityField.val() };
-            if (!$cityField.val())
+            if ((!$cityField.val() || $cityField.val() <= 0))
             return;
+            data = { 'city' : $cityField.val() };
           } else if (dependency == 'state') {
             data = {'state': $stateField.val()}
           } else {
@@ -229,7 +231,6 @@
 
           let select = $(this).selectize({ 
               optionMap: {},
-              // items: response.data,
               delimiter: ',',
               valueField: 'id',
               labelField: 'name',
@@ -237,7 +238,6 @@
               hideSelected: true,
               preload: true,
               persist: false,
-              // options: response.data,
               create: false,
               render: {
                 option: function(data, escape) {
@@ -245,16 +245,20 @@
                 }
               },
               load: function(query, callback) {
+                var self = this;
                 $.get(url, data, function (response){
-                  // console.log(response);
                   callback(response.data);
-                  // console.log($(this)[0].setValue([1], true));
+                  if (values) {
+                    self.setValue(values.split(','), true);
+                    $that.attr('data-preselect','');
+                    values = '';
+                  }
 
                 }, 'json');
               }
             });
 
-            // select[0].selectize.setValue([1,2], true);
+            select[0].selectize.refreshItems();
 
             // console.log(select[0].selectize.setValue([1,2], true));
 

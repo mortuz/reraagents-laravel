@@ -31,7 +31,6 @@
                     <strong>{{ $errors->first('state') }}</strong>
                 </span>
               @endif
-
             </div>
 
             <div class="form-group">
@@ -48,22 +47,22 @@
 
             <div class="form-group">
               <label for="area">Area</label>
-              <input id="area" name="area" data-url={{ route('api.area.index') }} data-dependency="city" type="text" class="form-control js-selectize"/>
+              <input id="area" name="area" data-preselect="{{ old('area') }}" data-url={{ route('api.area.index') }} data-dependency="city" type="text" class="form-control js-selectize"/>
             </div>
 
             <div class="form-group">
               <label for="landmark">Landmark</label>
-              <input id="landmark" name="landmark" data-url={{ route('api.landmark.index') }} data-dependency="city" type="text" class="form-control js-selectize"/>
+              <input id="landmark" name="landmark" data-preselect="{{ old('landmark') }}" data-url={{ route('api.landmark.index') }} data-dependency="city" type="text" class="form-control js-selectize"/>
             </div>
 
             <div class="form-group">
               <label for="type">Property type</label>
-              <input id="bhk" name="bhk" data-url={{ route('api.propertytype.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
+              <input id="type" name="type" data-preselect="{{ old('type') }}" data-url={{ route('api.propertytype.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
             </div>
 
             <div class="form-group">
               <label for="bhk">Room</label>
-              <input id="bhk" name="bhk" data-url={{ route('api.bhk.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
+              <input id="bhk" name="bhk" data-preselect="{{ old('bhk') }}" data-url={{ route('api.bhk.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
             </div>
 
             <div class="form-group">
@@ -73,7 +72,7 @@
             
             <div class="form-group">
               <label for="price">Price</label>
-              <input id="price" name="price" data-url={{ route('api.price.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
+              <input id="price" name="price" data-preselect="{{ old('price') }}" data-url={{ route('api.price.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
             </div>
             
           </div>
@@ -85,17 +84,17 @@
             
             <div class="form-group">
               <label for="agents">Agents</label>
-              <input id="agents" name="agents" data-url={{ route('api.agents.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
+              <input id="agents" name="agents" data-preselect="{{ old('agents') }}" data-url={{ route('api.agents.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
             </div>
             
             <div class="form-group">
               <label for="builders">Builders</label>
-              <input id="builders" name="builders" data-url={{ route('api.builders.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
+              <input id="builders" name="builders" data-preselect="{{ old('builers') }}" data-url={{ route('api.builders.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
             </div>
             
             <div class="form-group">
               <label for="ventures">Ventures</label>
-              <input id="ventures" name="ventures" data-url={{ route('api.venture.index') }} data-dependency="city" type="text" class="form-control js-selectize"/>
+              <input id="ventures" name="ventures" data-preselect="{{ old('ventures') }}" data-url={{ route('api.venture.index') }} data-dependency="city" type="text" class="form-control js-selectize"/>
             </div>
 
           </div>
@@ -106,7 +105,13 @@
 
             <div class="form-group">
               <label for="contact">Contact no</label>
-              <input type="text" class="form-control" id="contact" name="contact">
+              <input type="text" class="form-control{{ $errors->has('contact') ? ' is-invalid' : '' }}" id="contact" name="contact">
+
+              @if ($errors->has('contact'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('contact') }}</strong>
+                </span>
+              @endif
             </div>
 
             <div class="form-group">
@@ -157,7 +162,8 @@
       <script>
 
         $(document).on('city_init', function() {
-          console.log('city init');
+          console.log('selectize')
+          initSelectize();
         });
 
         $(document).on('city_changed', function() {
