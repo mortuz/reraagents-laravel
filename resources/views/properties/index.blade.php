@@ -10,7 +10,7 @@
     <a href="{{ route('properties.create') }}" class="btn btn-gradient-primary"><i class="mdi mdi-plus"></i> Add new property</a>
   </div>
 
-  {{-- <div class="row">
+  <div class="row">
     <div class="col-12 grid-margin">
       <div class="card">
         <div class="card-body">
@@ -20,46 +20,30 @@
               <thead>
                 <tr>
                   <th class="scope"> ID </th>
-                  <th> Name </th>
-                  <th> Status </th>
-                  <th> Cities </th>
+                  <th> State </th>
+                  <th> City </th>
+                  <th> Price </th>
                   <th> Last updated </th>
                   <th> Action </th>
                 </tr>
               </thead>
               <tbody>
 
-                @foreach ($states as $state)
+                @foreach ($properties as $property)
                   <tr>
-                    <td>{{ $state->id }}</td>
-                    <td> <strong>{{ $state->name }}</strong> </td>
+                    <td>{{ $property->id }}</td>
+                    <td>{{ $property->state->name }}</td>
+                    <td>{{ $property->city->name }}</td>
+                    <td> {{ $property->prices->first() ? $property->prices->first()->price : '--'}} </td>
+                    <td> {{ $property->updated_at->diffForHumans() }} </td>
                     <td>
-                      @if ($state->status == 1)
-                        <label class="badge badge-gradient-success">ACTIVE</label>
-                      @else
-                        <label class="badge badge-gradient-danger">INCTIVE</label>                          
-                      @endif
-                    </td>
-                    <td> {{ $state->cities->count()}} cities </td>
-                    <td> {{ $state->updated_at->diffForHumans() }} </td>
-                    <td>
-                      <a href="{{ route('states.edit', ['state' => $state->id]) }}" class="btn btn-gradient-light btn-rounded btn-sm" title="Edit">
+                      <a href="{{ route('properties.edit', ['property' => $property->id]) }}" class="btn btn-gradient-light btn-rounded btn-sm" title="Edit">
                         <i class="mdi mdi-pencil"></i>
                       </a>
 
-                      @if ($state->status == 0)
-                        <a href="{{ route('state.active', ['id' => $state->id]) }}" class="btn btn-gradient-light btn-rounded btn-sm" title="Active">
-                          <i class="mdi mdi-eye"></i>
-                        </a>
-                      @else
-                        <a href="{{ route('state.inactive', ['id' => $state->id]) }}" class="btn btn-gradient-dark btn-rounded btn-sm" title="Inactive">
-                          <i class="mdi mdi-eye-off"></i>
-                        </a>
-                      @endif
-                      
-                      <button type="button" class="btn btn-gradient-danger btn-rounded btn-sm btn-delete" data-state="{{ $state->name }}" data-cities="{{ $state->cities->count() }}" data-action="{{ route('states.destroy', ['state' => $state->id]) }}">
+                      {{-- <button type="button" class="btn btn-gradient-danger btn-rounded btn-sm btn-delete" data-state="{{ $state->name }}" data-cities="{{ $state->cities->count() }}" data-action="{{ route('states.destroy', ['state' => $state->id]) }}">
                         <i class="mdi mdi-delete"></i>
-                      </button>
+                      </button> --}}
 
                     </td>
                   </tr>
@@ -72,11 +56,11 @@
       </div>
 
       <div class="mt-4">
-        {{ $states->links() }}
+        {{ $properties->links() }}
       </div>
 
     </div>
-  </div> --}}
+  </div>
   <form class="d-none" action="#" method="post" id="delete-form">
     @method('delete')
     @csrf

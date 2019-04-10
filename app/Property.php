@@ -62,4 +62,19 @@ class Property extends Model
     {
         return $this->belongsToMany('App\AgentProfile');
     }
+
+    public function ventures()
+    {
+        return $this->belongsToMany('App\Venture');
+    }
+
+    public function state()
+    {
+        return $this->belongsTo('App\State');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo('App\City');
+    }
 }
