@@ -9,9 +9,9 @@
 
   </div>
 
-  <form action="{{ route('properties.store') }}" method="POST">
+  <form action="{{ route('properties.update', ['property' => $property->id]) }}" method="POST">
     @csrf
-    
+    @method('patch')
     <div class="row">
       <div class="col-md-6">
         <div class="card">
@@ -117,17 +117,17 @@
             <div class="form-group">
               <label for="handler">Handled by</label>
               <select class="form-control" id="handler" name="handler">
-                <option value="0" {{ $property->handler == 0 ? 'selected' : '' }}>Agent</option>
-                <option value="1" {{ $property->handler == 1 ? 'selected' : '' }}>Company</option>
+                <option value="0" {{ $property->handled_by == 0 ? 'selected' : '' }}>Agent</option>
+                <option value="1" {{ $property->handled_by == 1 ? 'selected' : '' }}>Company</option>
               </select>
             </div>
 
             <div class="form-group">
               <label for="status">Status</label>
               <select class="form-control" id="status" name="status">
-                <option value="0" {{ $property->staus == 0 ? 'selected' : '' }}>New</option>
-                <option value="1" {{ $property->staus == 1 ? 'selected' : '' }}>Approve</option>
-                <option value="2" {{ $property->staus == 2 ? 'selected' : '' }}>Reject</option>
+                <option value="0" {{ $property->status == 0 ? 'selected' : '' }}>New</option>
+                <option value="1" {{ $property->status == 1 ? 'selected' : '' }}>Approve</option>
+                <option value="2" {{ $property->status == 2 ? 'selected' : '' }}>Reject</option>
               </select>
             </div>
 
@@ -152,7 +152,7 @@
 
     </div>
 
-      <button class="btn btn-gradient-primary mt-3" type="submit">Add Property</button>
+      <button class="btn btn-gradient-primary mt-3" type="submit">Update Property</button>
     </form>
 
   @endsection

@@ -43,7 +43,7 @@ class PropertiesController extends Controller
             'city' => 'required|regex:/[1-9]/',
             'price' => 'required',
             'contact' => 'required',
-            'handler' => 'required',
+            'handled_by' => 'required',
             'status' => 'required'
         ]);
 
@@ -150,11 +150,14 @@ class PropertiesController extends Controller
             'status' => 'required'
         ]);
 
+        // dd($request->all());
+
         $property->state_id = $request->state;
         $property->city_id = $request->city;
-        $property->handler = $request->handler;
+        $property->handled_by = $request->handler;
         $property->status = $request->status;
-        $property->mobile = $request->contac;
+        $property->mobile = $request->contact;
+        $property->save();
 
 
         if ($request->bhk) {
@@ -195,7 +198,7 @@ class PropertiesController extends Controller
 
         // Space for notification
 
-        Session::flash('success', 'Property successfully added.');
+        Session::flash('success', 'Property successfully updated.');
         return redirect()->route('properties.index');
 
 
