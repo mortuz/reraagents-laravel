@@ -40,10 +40,10 @@
                     <li class="nav-item">
                         <a class="nav-link" href="./contact.html">Contact us</a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <button class="btn btn-outline-dark my-sm-0" type="submit"><i class="fa fa-user-secret"
                                 aria-hidden="true"></i> Register as Agent</button>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
         </nav>
