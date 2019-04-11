@@ -31,14 +31,14 @@
                                 alt=""></a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./about.html">About us</a>
+                        <a class="nav-link" href="#">About us</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="./contact.html">Contact us</a>
+                        <a class="nav-link" href="#">Contact us</a>
                     </li>
                     {{-- <li>
                         <button class="btn btn-outline-dark my-sm-0" type="submit"><i class="fa fa-user-secret"
