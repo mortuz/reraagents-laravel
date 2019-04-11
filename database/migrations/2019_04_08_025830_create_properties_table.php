@@ -17,6 +17,7 @@ class CreatePropertiesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('state_id')->unsigned();
             $table->integer('city_id')->unsigned();
+            $table->integer('user_id')->unsigned();
             $table->text('raw_data')->nullable();
             $table->string('mobile');
             $table->boolean('for_sale')->default(1);

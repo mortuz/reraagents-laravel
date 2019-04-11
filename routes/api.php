@@ -15,9 +15,11 @@ use Illuminate\Http\Request;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Route::post('/register', 'API\AuthController@register')->name('api.auth.register');
 
 Route::get('/cities', 'API\CitiesController@citiesFromState')->name('get.cities');
 Route::get('/ventures/city', 'API\VentureController@venturesFromCity')->name('api.get.ventures');
@@ -30,5 +32,3 @@ Route::get('/ventures', 'API\VentureController@index')->name('api.venture.index'
 Route::get('/area', 'API\AreaController@index')->name('api.area.index');
 Route::get('/landmark', 'API\LandmarkController@index')->name('api.landmark.index');
 Route::get('/price', 'API\PriceController@index')->name('api.price.index');
-
-// area controller, landmark controller

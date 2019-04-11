@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'FrontendController@index')->name('index');
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {

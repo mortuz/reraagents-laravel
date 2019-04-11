@@ -16,7 +16,7 @@
                 @csrf
 
                 <div class="form-group">
-                  <input id="email" type="email" placeholder="Enter email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                  <input id="email" type="text" placeholder="Enter email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
 
                   @if ($errors->has('email'))
                     <span class="invalid-feedback" role="alert">

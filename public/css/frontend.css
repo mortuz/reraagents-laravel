@@ -1,0 +1,221 @@
+body{
+    background-color: #f4f4f4;
+    color: #666666;
+}
+
+.bg-hero {
+    background-color: #333;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    height: 650px;
+}
+
+.logo-header {
+    max-width: 225px;
+}
+
+.header-text {
+    font-size: 60px;
+    color: #ffffff;
+    text-shadow: 2px 2px #8e8e8e;
+    height: 500px;
+}
+
+.btn1 {
+    background-color: #e01f24;
+    color: #ffffff;
+    padding: 10px 40px 10px 40px;
+    font-weight: 600;
+}
+
+.btn2 {
+    background-color: #333;
+    color: #ffffff;
+    padding: 10px 40px 10px 40px;
+    font-weight: 600;
+}
+
+.bx-shadow {
+    box-shadow:  0 1px 2px 0 rgba(0,0,0,.11);
+    border: none;
+    border-radius: 0px;
+}
+
+.cards-promote {
+    width: 100%;
+    max-width: 1350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+#footer {
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+}
+
+#footer a {
+    color: #eaeaea;
+}
+
+.playstore-img {
+    max-width: 125px;
+}
+
+.footer-heading {
+    color: #ffffff;
+}
+
+/* .logofoot {
+    max-width: 300px;
+} */
+
+.light-text {
+    color:#eaeaea;
+}
+
+th {
+        vertical-align: top;
+        padding-right: 10px;
+}
+.card-promote {
+
+    align-content: center;
+    padding-left: 5px;
+    align-items: center;
+
+}
+
+/* .card-img {
+    width: 175%;
+} */
+
+.card-img1 {
+    width: 100%;
+}
+
+h3, h4, h5 {
+    color: #666666;
+}
+
+h1 {
+    color: #333;
+}
+
+p {
+    color: #666666;
+    font-size: 14px;
+}
+
+h6 {
+    color: #0287d7;
+}
+
+.page-link {
+    color: #666666;
+}
+
+.card-t1 {
+    color: #0287d7;
+}
+
+.color-grey {
+    color: #666666;
+}
+
+.color-dark {
+    color: #333;
+}
+
+.color-red {
+    color: #e01f24;
+}
+
+.premium-img {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 100%;
+    position: relative;
+}
+
+.premium-img::before {
+    content: 'PREMIUM';
+    padding: 10px 50px;
+    background-color: #0287d7;
+    color:#ffffff;
+    position: absolute;
+    display: block;
+    top: 0;
+}
+
+img {
+    max-width: 100%;
+}
+
+.left-info {
+    float: right;
+}
+
+@media only screen and (max-width: 991px) {
+
+    .premium-img::before {
+    content: 'PREMIUM';
+    padding: 5px 25px;
+    background-color: #0287d7;
+    color:#ffffff;
+    position: absolute;
+    display: block;
+    top: 0;
+}
+
+.premium-img {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 215px;
+    position: relative;
+}
+
+#promote {
+    display: none;
+}
+
+.card-t1 {
+    float: left;
+}
+
+.left-info {
+    float: left;
+    padding-top: 10px;
+}
+
+.card-text {
+    float: left;
+}
+
+.fixed-nav {
+  position: fixed;
+  width: 100%;
+  z-index: 1;
+  background-color: #ffffff;
+}
+
+#navbarSupportedContent {
+    padding: 20px;
+}
+
+.hero-text{
+    padding-top: 175px;
+}
+
+}
+
+
+@media only screen and (max-width: 767px) {
+    .agent-partner {
+        padding-top: 30px;
+    }
+}
+
