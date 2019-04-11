@@ -93,7 +93,7 @@
                             <div class="card-body p-1">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-md-4">
-                                        <img class="card-img" src="{{ asset('img/img3.jpeg') }} class="card-img" alt="...">
+                                        <img class="card-img" src="{{ asset('img/img3.jpeg') }}" class="card-img" alt="...">
                                     </div>
                     
                     
