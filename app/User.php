@@ -42,4 +42,9 @@ class User extends Authenticatable
     {
         return $this->orWhere('email', $identifier)->orWhere('mobile', $identifier)->first();
     }
+    
+    public function agent()
+    {
+        return $this->belongsTo('App\AgentProfile');
+    }
 }

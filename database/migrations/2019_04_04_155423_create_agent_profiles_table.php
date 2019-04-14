@@ -18,14 +18,14 @@ class CreateAgentProfilesTable extends Migration
             $table->integer('state_id');
             $table->integer('city_id');
             $table->string('contact_no')->nullable();
-            $table->text('address');
-            $table->string('pincode', 6);
+            $table->text('address')->nullable();
+            $table->string('pincode', 6)->nullable();
             $table->string('pan')->nullable();
             $table->string('gst')->nullable();
             $table->string('bank_name')->nullable();
             $table->string('account_no')->nullable();
             $table->string('ifsc')->nullable();
-            $table->integer('user_id')->nullable();
+            $table->integer('user_id');
             $table->timestamps();
         });
     }

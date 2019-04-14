@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
+use Session;
 use App\State;
 use App\Property;
-use Session;
 use Illuminate\Http\Request;
 
 class PropertiesController extends Controller
@@ -43,8 +44,12 @@ class PropertiesController extends Controller
             'city' => 'required|regex:/[1-9]/',
             'price' => 'required',
             'contact' => 'required',
-            'handled_by' => 'required',
-            'status' => 'required'
+            'handler' => 'required',
+            'status' => 'required',
+            'raw_price' => 'required',
+            'raw_measurement' => 'required',
+            'raw_location' => 'required',
+            'raw_details' => 'required'
         ]);
 
         $property = Property::create([
@@ -52,7 +57,14 @@ class PropertiesController extends Controller
             'city_id' => $request->city,
             'handler' => $request->handler,
             'status' => $request->status,
-            'mobile' => $request->contact
+            'mobile' => $request->contact,
+            'user_id' => Auth::id(),
+            'raw_data' => json_encode([
+                'price' => $request->price,
+                'measurement' => $request->measurement,
+                'location' => $request->location,
+                'details' => $request->details
+            ]),
         ]);
 
         if ($request->bhk) {
@@ -114,22 +126,23 @@ class PropertiesController extends Controller
      */
     public function edit(Property $property)
     {
+        $property->rooms = implode(',', $property->rooms()->pluck('b_h_k_s.id')->toArray());
+        $property->area = implode(',', $property->areas()->pluck('areas.id')->toArray());
+        $property->landmark = implode(',', $property->landmarks()->pluck('landmarks.id')->toArray());
+        $property->face = implode(',', $property->faces()->pluck('faces.id')->toArray());
+        $property->price = implode(',', $property->prices()->pluck('prices.id')->toArray());
+        $property->type = implode(',', $property->propertytypes()->pluck('property_types.id')->toArray());
 
-        $property->rooms = implode(',',$property->rooms()->pluck('b_h_k_s.id')->toArray());
-        $property->area = implode(',',$property->areas()->pluck('areas.id')->toArray());
-        $property->landmark = implode(',',$property->landmarks()->pluck('landmarks.id')->toArray());
-        $property->face = implode(',',$property->faces()->pluck('faces.id')->toArray());
-        $property->price = implode(',',$property->prices()->pluck('prices.id')->toArray());
-        $property->type = implode(',',$property->propertytypes()->pluck('property_types.id')->toArray());
+        $property->agents = implode(',', $property->agents()->pluck('agent_profiles.id')->toArray());
+        $property->builders = implode(',', $property->builders()->pluck('builder_profiles.id')->toArray());
+        $property->ventures = implode(',', $property->ventures()->pluck('ventures.id')->toArray());
+        $property->raw = json_decode($property->raw_data, true);
 
-        $property->agents = implode(',',$property->agents()->pluck('agent_profiles.id')->toArray());
-        $property->builders = implode(',',$property->builders()->pluck('builder_profiles.id')->toArray());
-        $property->ventures = implode(',',$property->ventures()->pluck('ventures.id')->toArray());
+        // dd($property);
         
         return view('properties.edit')
                         ->with('property', $property)
                         ->with('states', State::all());
-
     }
 
     /**
@@ -147,7 +160,11 @@ class PropertiesController extends Controller
             'price' => 'required',
             'contact' => 'required',
             'handler' => 'required',
-            'status' => 'required'
+            'status' => 'required',
+            'raw_price' => 'required',
+            'raw_measurement' => 'required',
+            'raw_location' => 'required',
+            'raw_details' => 'required'
         ]);
 
         // dd($request->all());
@@ -157,6 +174,15 @@ class PropertiesController extends Controller
         $property->handled_by = $request->handler;
         $property->status = $request->status;
         $property->mobile = $request->contact;
+
+        $raw_data = json_encode([
+                'price' => $request->raw_price,
+                'measurement' => $request->raw_measurement,
+                'location' => $request->raw_location,
+                'details' => $request->raw_details
+            ]);
+        $property->raw_data = $raw_data;
+
         $property->save();
 
 
@@ -200,8 +226,6 @@ class PropertiesController extends Controller
 
         Session::flash('success', 'Property successfully updated.');
         return redirect()->route('properties.index');
-
-
     }
 
     /**

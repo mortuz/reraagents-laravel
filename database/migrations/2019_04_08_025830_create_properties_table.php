@@ -29,7 +29,7 @@ class CreatePropertiesTable extends Migration
             $table->boolean('premium')->default(0);
             $table->dateTime('expiry_date')->default(date('Y-m-d H:i:s', strtotime("+30 days")));
             $table->boolean('handled_by')->nullable(); // 1 for company | 0 for agent
-            $table->integer('status')->default(); // 0 new | 1 approved | 2 rejected
+            $table->integer('status')->default(0); // 0 new | 1 approved | 2 rejected
             $table->timestamps();
         });
     }

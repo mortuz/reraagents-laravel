@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ asset('css/frontend.css') }}">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-    <title>Rera Agentss</title>
+    <title>Rera Agents</title>
 </head>
 
 <body>

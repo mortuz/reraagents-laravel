@@ -143,7 +143,51 @@
             <label for="User value">User value</label>
             <div class="card">
               <div class="card-body bg-light">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione voluptates veniam dicta tempora, quo similique unde totam dignissimos nisi aliquid odio facere earum qui vero amet, quibusdam soluta sapiente iure?
+
+                <div class="form-group">
+                  <label for="raw_price">Price</label>
+                  <input type="text" class="form-control{{ $errors->has('raw_price') ? ' is-invalid' : '' }}" id="raw_price" name="raw_price" value="{{ $property->raw['price'] }}">
+
+                  @if ($errors->has('raw_price'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>Price is required</strong>
+                    </span>
+                  @endif
+                </div>
+
+                <div class="form-group">
+                  <label for="raw_measurement">Measurement</label>
+                  <input type="text" class="form-control{{ $errors->has('raw_measurement') ? ' is-invalid' : '' }}" id="raw_measurement" name="raw_measurement" value="{{ $property->raw['measurement'] }}">
+
+                  @if ($errors->has('raw_measurement'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>Measurement is required</strong>
+                    </span>
+                  @endif
+                </div>
+
+                <div class="form-group">
+                  <label for="raw_location">Location</label>
+                  <input type="text" class="form-control{{ $errors->has('raw_location') ? ' is-invalid' : '' }}" id="raw_location" name="raw_location" value="{{ $property->raw['location'] }}">
+
+                  @if ($errors->has('raw_location'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>Location is required</strong>
+                    </span>
+                  @endif
+                </div>
+
+                <div class="form-group">
+                  <label for="raw_details">Details</label>
+                  <input type="text" class="form-control{{ $errors->has('raw_details') ? ' is-invalid' : '' }}" id="raw_details" name="raw_details" value="{{ $property->raw['details'] }}">
+
+                  @if ($errors->has('raw_details'))
+                    <span class="invalid-feedback" role="alert">
+                        <strong>Price is required</strong>
+                    </span>
+                  @endif
+                </div>
+
               </div>
             </div>
           </div>

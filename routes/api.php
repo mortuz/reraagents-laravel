@@ -15,8 +15,20 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+// Route::group(['middleware' => 'auth:api'], function() {
+    // Route::get('/user', 'API\UserController@user')->name('api.user');
+// });
+
+Route::group(['middleware' => 'auth:api'], function () {
+    Route::get('/user', 'API\UserController@user')->name('api.user');
+
+    Route::get('properties/my', 'API\PropertyController@my');
+    Route::get('properties', 'API\PropertyController@index');
+    Route::post('property/store', 'API\PropertyController@store');
 });
 
 Route::post('/register', 'API\AuthController@register')->name('api.auth.register');
@@ -32,3 +44,4 @@ Route::get('/ventures', 'API\VentureController@index')->name('api.venture.index'
 Route::get('/area', 'API\AreaController@index')->name('api.area.index');
 Route::get('/landmark', 'API\LandmarkController@index')->name('api.landmark.index');
 Route::get('/price', 'API\PriceController@index')->name('api.price.index');
+Route::get('/states', 'API\StatesController@index')->name('api.state.index');

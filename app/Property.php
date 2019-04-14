@@ -9,6 +9,7 @@ class Property extends Model
     protected $fillable = [
         'state_id',
         'city_id',
+        'user_id',
         'mobile',
         'raw_data',
         'for_sale',
