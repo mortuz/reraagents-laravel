@@ -161,25 +161,30 @@
             <div class="row">
                 <div class="col-md-8">
                     <h3>Properties</h3>
-                    <div class="card ml-1 mr-1 bx-shadow mt-3">
-                        <div class="card-body">
-                            <p class="card-text">ANDHRA PRADESH >> <span class="color-dark">GUNTUR</span> >> <span class="color-dark">Residential
-                                    Plots</span> <span class="card-text left-info">Property Id: <span class="color-red" style="font-weight:bold;">318</span>
-                                    , <span class="color-grey" style="font-weight:bold;">2019-04-09</span></span></p>
-                    
-                            <h5 class="card-title card-t1">Sark Projects at patancheru</h5>
-                            <p class="card-text">north (70*90) face 40ft road
-                    
-                                per yard 13500/-
-                    
-                                Walkbul distance to Amaravathi main road</p>
-                            <span class="card-text" style="color:#0287d7; font-weight:bold;">More
-                                Information <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+
+                    @foreach ($properties as $property)
+                        <div class="card ml-1 mr-1 bx-shadow mt-3">
+                            <div class="card-body">
+                                <p class="card-text">{{ $property->state->name }} >> <span class="color-dark">{{ $property->city->name }}</span> >>
+                                    <span class="color-dark">{{ $property->propertytypes->first()->type }}</span>
+                                    <span class="card-text left-info">
+                                        Property Id: <span class="color-red" style="font-weight:bold;">{{ $property->id }}</span>,
+                                        <span class="color-grey" style="font-weight:bold;">2019-04-09</span>
+                                    </span>
+                                </p>
+                        
+                                <h5 class="card-title card-t1">{{ $property->raw_data->details }}</h5>
+                                <p class="card-text">{{ $property->areas->first() ? $property->areas->first()->area : '' }}</p>
+                                <p class="card-text">{{ $property->prices->first() ? $property->prices->first()->price : '' }}</p>
+                                {{-- <p class="card-text"></p> --}}
+                                <span class="card-text" style="color:#0287d7; font-weight:bold;">
+                                    More Information <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                </span>
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
 
-
-                    <div class="card ml-1 mr-1 bx-shadow mt-3">
+                    {{-- <div class="card ml-1 mr-1 bx-shadow mt-3">
                         <div class="row no-gutters">
                             <div class="col-md-4">
                                 <div class="premium-img" style="background-image: url('./img/img3.jpeg')"></div>
@@ -199,153 +204,10 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-
-
-                    <div class="card ml-1 mr-1 bx-shadow mt-3">
-                        <div class="card-body">
-                            <p class="card-text">ANDHRA PRADESH >> <span class="color-dark">GUNTUR</span> >> <span
-                                    class="color-dark">Residential
-                                    Plots</span> <span class="card-text left-info">Property Id: <span class="color-red"
-                                        style="font-weight:bold;">318</span>
-                                    , <span class="color-grey" style="font-weight:bold;">2019-04-09</span></span></p>
-
-                            <h5 class="card-title card-t1">Sark Projects at patancheru</h5>
-                            <p class="card-text">north (70*90) face 40ft road
-
-                                per yard 13500/-
-
-                                Walkbul distance to Amaravathi main road</p>
-                                <span class="card-text" style="color:#0287d7; font-weight:bold;">More
-                                    Information <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
-                        </div>
-                    </div>
-
-
-                <div class="card ml-1 mr-1 bx-shadow mt-3">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <div class="premium-img" style="background-image: url('./img/img3.jpeg')"></div>
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <p class="card-text">ANDHRA PRADESH >> <span class="color-dark">GUNTUR</span> >>
-                                    <span class="color-dark">Residential
-                                        Plots</span> </span></p>
-                                <h5 class="card-title card-t1">Sark Projects at patancheru</h5>
-                                <p class="card-text">This is a wider card with supporting text below as a natural
-                                    lead-in.</p>
-                                <p class="card-text mb-3"><span class="card-text">Property Id: <span class="color-red" style="font-weight:bold;">318</span>
-                                        , <span class="color-grey" style="font-weight:bold;">2019-04-09</span></span>
-                                </p>
-                
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-                    <div class="card ml-1 mr-1 bx-shadow mt-3">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <div class="premium-img" style="background-image: url('./img/img3.jpeg')"></div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <p class="card-text">ANDHRA PRADESH >> <span class="color-dark">GUNTUR</span> >>
-                                        <span class="color-dark">Residential
-                                            Plots</span> </span></p>
-                                    <h5 class="card-title card-t1">Sark Projects at patancheru</h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural
-                                        lead-in.</p>
-                                    <p class="card-text mb-3"><span class="card-text">Property Id: <span class="color-red" style="font-weight:bold;">318</span>
-                                            , <span class="color-grey" style="font-weight:bold;">2019-04-09</span></span>
-                                    </p>
-                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                    <div class="card ml-1 mr-1 bx-shadow mt-3">
-                        <div class="card-body">
-                            <p class="card-text">ANDHRA PRADESH >> <span class="color-dark">GUNTUR</span> >> <span class="color-dark">Residential
-                                    Plots</span> <span class="card-text left-info">Property Id: <span class="color-red" style="font-weight:bold;">318</span>
-                                    , <span class="color-grey" style="font-weight:bold;">2019-04-09</span></span></p>
-                    
-                            <h5 class="card-title card-t1">Sark Projects at patancheru</h5>
-                            <p class="card-text">north (70*90) face 40ft road
-                    
-                                per yard 13500/-
-                    
-                                Walkbul distance to Amaravathi main road</p>
-                            <span class="card-text" style="color:#0287d7; font-weight:bold;">More
-                                Information <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
-                        </div>
-                    </div>
-
-                    <div class="card ml-1 mr-1 bx-shadow mt-3">
-                        <div class="card-body">
-                            <p class="card-text">ANDHRA PRADESH >> <span class="color-dark">GUNTUR</span> >> <span class="color-dark">Residential
-                                    Plots</span> <span class="card-text left-info">Property Id: <span class="color-red" style="font-weight:bold;">318</span>
-                                    , <span class="color-grey" style="font-weight:bold;">2019-04-09</span></span></p>
-                    
-                            <h5 class="card-title card-t1">Sark Projects at patancheru</h5>
-                            <p class="card-text">north (70*90) face 40ft road
-                    
-                                per yard 13500/-
-                    
-                                Walkbul distance to Amaravathi main road</p>
-                            <span class="card-text" style="color:#0287d7; font-weight:bold;">More
-                                Information <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
-                        </div>
-                    </div>
-
-                    <div class="card ml-1 mr-1 bx-shadow mt-3">
-                        <div class="row no-gutters">
-                            <div class="col-md-4">
-                                <div class="premium-img" style="background-image: url('./img/img3.jpeg')"></div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <p class="card-text">ANDHRA PRADESH >> <span class="color-dark">GUNTUR</span> >>
-                                        <span class="color-dark">Residential
-                                            Plots</span> </span></p>
-                                    <h5 class="card-title card-t1">Sark Projects at patancheru</h5>
-                                    <p class="card-text">This is a wider card with supporting text below as a natural
-                                        lead-in.</p>
-                                    <p class="card-text mb-3"><span class="card-text">Property Id: <span class="color-red" style="font-weight:bold;">318</span>
-                                            , <span class="color-grey" style="font-weight:bold;">2019-04-09</span></span>
-                                    </p>
-                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-
-                <div class="card ml-1 mr-1 bx-shadow mt-3">
-                    <div class="card-body">
-                        <p class="card-text">ANDHRA PRADESH >> <span class="color-dark">GUNTUR</span> >> <span class="color-dark">Residential
-                                Plots</span> <span class="card-text left-info">Property Id: <span class="color-red" style="font-weight:bold;">318</span>
-                                , <span class="color-grey" style="font-weight:bold;">2019-04-09</span></span></p>
-                
-                        <h5 class="card-title card-t1">Sark Projects at patancheru</h5>
-                        <p class="card-text">north (70*90) face 40ft road
-                
-                            per yard 13500/-
-                
-                            Walkbul distance to Amaravathi main road</p>
-                        <span class="card-text" style="color:#0287d7; font-weight:bold;">More
-                            Information <i class="fa fa-arrow-right" aria-hidden="true"></i></span>
-                    </div>
-                </div>
-
+                    </div> --}}
 
                 </div>
+
                 <div class="col-md-4">
                     <h3 class="agent-partner">Our Agent Partners</h3>
 
@@ -471,17 +333,13 @@
                     </div>
 
                 </div>
+
+                
             </div>
 
-            <nav aria-label="Page navigation example" class="mt-3">
-                <ul class="pagination">
-                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                </ul>
-            </nav>
+            <div class="mt-3">
+                {{ $properties->links() }}
+            </div>
 
         </div>
     </section>

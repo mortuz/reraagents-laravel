@@ -44,6 +44,27 @@ class PropertyController extends Controller
                                 ->where('premium', 0)
                                 ->latest()
                                 ->get();
+        
+        $properties->transform(function ($property) {
+            return [
+                'id'            => $property->id,
+                'state'         => $property->state->name,
+                'city'          => $property->city->name,
+                'features'      => $property->features,
+                'premium'       => $property->premium,
+                'property_type' => $property->propertytypes->first()->type,
+                'area'          => count($property->areas) == 0 ? null : $property->areas->first()->area,
+                'measurement'   => json_decode($property->raw_data)->measurement,
+                'price'         => $property->prices->first()->price,
+                'heading'       => json_decode($property->raw_data)->details,
+                'raw'           => json_decode($property->raw_data),
+                'images'        => $property->images,
+                'google_map'    => $property->google_map,
+                'created_at'    => $property->created_at,
+                'updated_at'    => $property->updated_at,
+                'expiry_date'   => $property->expiry_date,
+            ];
+        });
 
         return response()->json(['success' => true, 'data' => $properties]);
     }
@@ -151,14 +172,21 @@ class PropertyController extends Controller
     {
         $properties = Property::where('user_id', request()->user()->id)->get();
 
-        $properties->transform(function($property) {
+        $properties->transform(function ($property) {
             return [
-                'id' => $property->id,
-                'state' => $property->state->name,
-                'city'  => $property->city->name,
-                'created_at' => $property->created_at,
-                'premium' => $property->premium,
-                'status' => $property->status
+                'id'            => $property->id,
+                'state'         => $property->state->name,
+                'city'          => $property->city->name,
+                'features'      => $property->features,
+                'premium'       => $property->premium,
+                'property_type' => $property->propertytypes->first()->type,
+                'created_at'    => $property->created_at,
+                'premium'       => $property->premium,
+                'status'        => $property->status,
+                'area'          => count($property->areas) == 0 ? json_decode($property->raw_data)->location : $property->areas->first()->area,
+                'measurement'   => json_decode($property->raw_data)->measurement,
+                'price'         => $property->prices->first() ? $property->prices->first()->price : json_decode($property->raw_data)->price,
+                'heading'       => json_decode($property->raw_data)->details,
             ];
         });
 
@@ -180,6 +208,9 @@ class PropertyController extends Controller
                 'details' => $request->details
             ]),
         ]);
+
+        $property->propertytypes()->attach(explode(',', $request->type));
+        $property->agents()->attach(explode(',', $request->user()->id));
 
         return $property;
     }
