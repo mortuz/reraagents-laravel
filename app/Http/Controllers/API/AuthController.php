@@ -18,13 +18,14 @@ class AuthController extends Controller
             'state' => 'required',
             'city'  => 'required',
             'mobile' => 'required|unique:users,mobile',
+            'password' => 'required'
             ]);
             
             
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt('password'),
+            'password' => $request->password,
             'mobile' => $request->mobile,
             'role' => '5'
         ]);
