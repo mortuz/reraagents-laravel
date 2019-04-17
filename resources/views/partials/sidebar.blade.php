@@ -34,7 +34,7 @@
         </ul>
       </div>
     </li>
-
+    
     <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#additional" aria-expanded="false" aria-controls="additional">
         <span class="menu-title">Additional</span>
@@ -71,6 +71,14 @@
         <i class="mdi mdi-clipboard-account menu-icon"></i>
       </a>
     </li>
+    
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('certificate.index') }}">
+        <span class="menu-title">Certificates</span>
+        <i class="mdi mdi-clipboard-account menu-icon"></i>
+      </a>
+    </li>
+
 
     <li class="nav-item">
       <a class="nav-link" href="{{ route('builders.index') }}">

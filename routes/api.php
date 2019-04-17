@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('properties/my', 'API\PropertyController@my');
     Route::get('properties', 'API\PropertyController@index');
     Route::post('property/store', 'API\PropertyController@store');
+    Route::apiResource('certificate', 'API\CertificatesController');
 });
 
 Route::post('/register', 'API\AuthController@register')->name('api.auth.register');

@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\AgentProfile');
     }
+
+    public function certificates()
+    {
+        return $this->hasMany('App\Certificate');
+    }
 }
