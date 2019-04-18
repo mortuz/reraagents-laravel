@@ -15,7 +15,7 @@ class CertificatesController extends Controller
      */
     public function index()
     {
-        $certificates = Certificate::all();
+        $certificates = Certificate::where('user_id', request()->user()->id)->get();
 
         $certificates->transform(function($certificate) {
             return [
