@@ -44,13 +44,12 @@
             <div class="form-group">
               <label for="mobile">Contact no.</label>
 
-            <input name="mobile" id="mobile" type="text" class="form-control{{ $errors->has('mobile') ? ' is-invalid' : '' }}" value="{{ old('mobile') }}"/>
+              <input name="mobile" id="mobile" type="text" class="form-control{{ $errors->has('mobile') ? ' is-invalid' : '' }}" value="{{ old('mobile') }}"/>
               @if ($errors->has('mobile'))
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->first('mobile') }}</strong>
                 </span>
               @endif
-
             </div>
 
             <div class="form-group">
@@ -62,7 +61,17 @@
                     <strong>{{ $errors->first('url') }}</strong>
                 </span>
               @endif
+            </div>
 
+            <div class="form-group">
+              <label for="mobile">Map location</label>
+
+              <input name="map" id="map" type="text" class="form-control{{ $errors->has('map') ? ' is-invalid' : '' }}" value="{{ old('map') }}"/>
+              @if ($errors->has('map'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('map') }}</strong>
+                </span>
+              @endif
             </div>
 
             <div class="form-group">

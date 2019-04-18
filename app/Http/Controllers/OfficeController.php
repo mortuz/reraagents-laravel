@@ -40,6 +40,7 @@ class OfficeController extends Controller
         $this->validate($request, [
             'state' => 'required',
             'address' => 'required',
+            'mobile' => 'nullable|max:10'
         ]);
 
         Office::create([
@@ -48,6 +49,7 @@ class OfficeController extends Controller
             'mobile'   => $request->mobile,
             'address'  => $request->address,
             'url'      => $request->url,
+            'map'      => $request->map,
             'govt'     => $request->govt ? $request->govt : 0,
         ]);
 
@@ -99,6 +101,7 @@ class OfficeController extends Controller
         $office->mobile = $request->mobile;
         $office->address = $request->address;
         $office->url = $request->url;
+        $office->map = $request->map;
         $office->govt = $request->govt ? $request->govt : 0;
 
         $office->save();

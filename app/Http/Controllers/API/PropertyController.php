@@ -11,6 +11,7 @@ use MiladRahimi\Jwt\JwtGenerator;
 use App\Http\Controllers\Controller;
 use MiladRahimi\Jwt\Cryptography\Algorithms\Hmac\HS256;
 use App\Helpers\SmsHelper;
+use App\Office;
 
 class PropertyController extends Controller
 {
@@ -213,5 +214,34 @@ class PropertyController extends Controller
         $property->agents()->attach(explode(',', $request->user()->id));
 
         return $property;
+    }
+
+    public function view()
+    {
+        $request = request();
+        
+        $propertyId = $request->property;
+
+        $property = Property::find($propertyId);
+
+        $certificates = $request->user()->certificates()
+                            ->where('status', 1)
+                            ->where('state_id', $property->state_id)
+                            ->get();
+
+        // if no certificate found
+        if (!$certificates->count()) {
+            return response()->json(['success' => false, 'permission' => false]);
+        }
+
+        // if handled by company i.e., handled_by = 1
+        if ($property->handled_by) {
+            $office = Office::where('city_id', $property->city_id)->first();
+            // return city office no.
+            return response()->json(['success' => true, 'data' => $office->mobile]);
+        }
+
+        // return property no
+        return response()->json(['success' => true, 'data' => $property->mobile]);
     }
 }

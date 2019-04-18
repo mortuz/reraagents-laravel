@@ -23,7 +23,7 @@
               <label for="state">State</label>
               <select name="state" id="state" class="form-control js-state-field{{ $errors->has('name') ? ' is-invalid' : '' }}">
                 @foreach ($states as $state)
-                    <option value="{{ $state->id }}" {{ $venture->state_id == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
+                    <option value="{{ $state->id }}" {{ $office->state_id == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
                 @endforeach
               </select>
 
@@ -62,7 +62,17 @@
                     <strong>{{ $errors->first('url') }}</strong>
                 </span>
               @endif
+            </div>
 
+            <div class="form-group">
+              <label for="mobile">Map location</label>
+
+              <input name="map" id="map" type="text" class="form-control{{ $errors->has('map') ? ' is-invalid' : '' }}" value="{{ $office->map }}"/>
+              @if ($errors->has('map'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('map') }}</strong>
+                </span>
+              @endif
             </div>
 
             <div class="form-group">

@@ -17,9 +17,10 @@ class CreateOfficesTable extends Migration
             $table->bigIncrements('id');
             $table->integer('state_id');
             $table->integer('city_id')->nullable();
-            $table->text('address');
+            $table->text('address')->nullable();
             $table->text('url')->nullable();
-            $table->string('mobile', 10)->nullable();
+            $table->text('map')->nullable();
+            $table->string('mobile', 15)->nullable();
             $table->boolean('govt')->default(0);
             $table->timestamps();
         });
