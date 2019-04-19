@@ -50,6 +50,8 @@ class PropertyController extends Controller
             return [
                 'id'            => $property->id,
                 'state'         => $property->state->name,
+                'state_id'      => $property->state_id,
+                'city_id'       => $property->city_id,
                 'city'          => $property->city->name,
                 'features'      => $property->features,
                 'premium'       => $property->premium,
@@ -177,6 +179,8 @@ class PropertyController extends Controller
             return [
                 'id'            => $property->id,
                 'state'         => $property->state->name,
+                'state_id'      => $property->state_id,
+                'city_id'       => $property->city_id,
                 'city'          => $property->city->name,
                 'features'      => $property->features,
                 'premium'       => $property->premium,
@@ -243,5 +247,36 @@ class PropertyController extends Controller
 
         // return property no
         return response()->json(['success' => true, 'data' => $property->mobile]);
+    }
+
+    public function office()
+    {
+        $request = request();
+        $propertyId = $request->property;
+        $property = Property::find($propertyId);
+        
+        if (!$property) {
+            return response()->json(['success' => false, 'errors' => true, 'message' => 'Property not available.']);
+        }
+        // fetch regional office in the city
+        $regionalOffice = Office::where('city_id', $property->city_id)->where('govt', 0)->first();
+
+        // fetch govt office in the state
+        $govtOffice = Office::where('state_id', $property->state_id)->where('govt', 1)->first();
+
+        $additional = [
+          'state' => $property->state->name,
+          'state_id' => $property->state_id,
+          'city' => $property->city->name,
+          'city_id' => $property->city_id,
+        ];
+
+        $data = [
+            'govt'       => $govtOffice,
+            'regional'   => $regionalOffice,
+            'additional' => $additional
+        ];
+        
+        return response()->json(['success' => true, 'data' => $data]);
     }
 }
