@@ -12,6 +12,7 @@ use App\Http\Controllers\Controller;
 use MiladRahimi\Jwt\Cryptography\Algorithms\Hmac\HS256;
 use App\Helpers\SmsHelper;
 use App\Office;
+use App\Feedback;
 
 class PropertyController extends Controller
 {
@@ -157,7 +158,60 @@ class PropertyController extends Controller
      */
     public function update(Request $request, Property $property)
     {
-        //
+        $this->validate($request, [
+            'state' => 'required',
+            'city' => 'required',
+            'type' => 'required',
+            'mobile' => 'required',
+            'price' => 'required',
+            'measurement' => 'required',
+            'location' => 'required',
+            'details' => 'required'
+        ]);
+
+        $users = User::where('mobile', $request->mobile)->where('mobile_verified_at', '!=', null)->get();
+        $properties = Property::where('mobile', $request->mobile)->get();
+        
+        if ($users->count() || $properties->count()) {
+            $property = $this->modify($property, $request);
+
+            return response()->json(['success' => true, 'data' => $property]);
+        } else {
+            // generate OTP and token
+            $signer = new HS256(env('JWT_KEY'));
+            if ($request->token) {
+                $parser = new JwtParser($signer);
+                $claims = $parser->parse($request->token);
+
+                if ($request->otp != $claims['code']) {
+                    return response()->json(['success' => false, 'errors' => true, 'message' => 'Invalid OTP']);
+                } else {
+                    // create property
+                    $property = $this->modify($property, $request);
+
+                    if ($request->user()->mobile == $request->mobile) {
+                        $user = User::find($request->user()->id);
+                        $user->mobile_verified_at = Carbon::now();
+                        $user->save();
+                    }
+                    
+                    return response()->json(['success' => true, 'data' => $property]);
+                }
+            } else {
+                $generator = new JwtGenerator($signer);
+                $code = substr(str_shuffle("0123456789"), 0, 6);
+                $jwt = $generator->generate(['code' => $code]);
+
+                $smsHelper = new SmsHelper();
+                
+                $smsHelper->sendOTP($request->mobile, $code);
+                
+                return response()->json(['success' => false, 'otp_required' => true, 'token' => $jwt, 'code' => $code]);
+            }
+        }
+
+
+        return response()->json(['success' => false, 'message' => 'Testing route', 'property' => $property]);
     }
 
     /**
@@ -176,22 +230,26 @@ class PropertyController extends Controller
         $properties = Property::where('user_id', request()->user()->id)->get();
 
         $properties->transform(function ($property) {
+            $feedback = Feedback::where('property_id', $property->id)->first();
             return [
                 'id'            => $property->id,
                 'state'         => $property->state->name,
                 'state_id'      => $property->state_id,
                 'city_id'       => $property->city_id,
                 'city'          => $property->city->name,
+                'type'          => $property->propertytypes->first()->id,
                 'features'      => $property->features,
                 'premium'       => $property->premium,
                 'property_type' => $property->propertytypes->first()->type,
                 'created_at'    => $property->created_at,
                 'premium'       => $property->premium,
                 'status'        => $property->status,
+                'mobile'        => $property->mobile,
                 'area'          => count($property->areas) == 0 ? json_decode($property->raw_data)->location : $property->areas->first()->area,
                 'measurement'   => json_decode($property->raw_data)->measurement,
                 'price'         => $property->prices->first() ? $property->prices->first()->price : json_decode($property->raw_data)->price,
                 'heading'       => json_decode($property->raw_data)->details,
+                'message'       => $feedback ? $feedback->message : null
             ];
         });
 
@@ -218,6 +276,29 @@ class PropertyController extends Controller
         $property->agents()->attach(explode(',', $request->user()->id));
 
         return $property;
+    }
+
+    public function modify($property, $request)
+    {
+        
+        $raw = json_encode([
+                'price' => $request->price,
+                'measurement' => $request->measurement,
+                'location' => $request->location,
+                'details' => $request->details
+            ]);
+
+        $property->state_id = $request->state;
+        $property->city_id = $request->city;
+        $property->mobile = $request->mobile;
+        $property->raw_data = $raw;
+        $property->status = 0;
+        
+        $property->save();
+        $property->propertytypes()->sync(explode(',', $request->type));
+
+        return $property;
+
     }
 
     public function view()
@@ -276,7 +357,7 @@ class PropertyController extends Controller
             'regional'   => $regionalOffice,
             'additional' => $additional
         ];
-        
+
         return response()->json(['success' => true, 'data' => $data]);
     }
 }

@@ -78,4 +78,9 @@ class Property extends Model
     {
         return $this->belongsTo('App\City');
     }
+
+    public function feedback()
+    {
+        return $this->belongsTo('App\Feedback');
+    }
 }

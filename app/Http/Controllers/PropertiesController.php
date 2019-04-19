@@ -7,6 +7,7 @@ use Session;
 use App\State;
 use App\Property;
 use Illuminate\Http\Request;
+use App\Feedback;
 
 class PropertiesController extends Controller
 {
@@ -157,7 +158,6 @@ class PropertiesController extends Controller
         $this->validate($request, [
             'state' => 'required',
             'city' => 'required|regex:/[1-9]/',
-            'price' => 'required',
             'contact' => 'required|max:10',
             'handler' => 'required',
             'status' => 'required',
@@ -220,6 +220,16 @@ class PropertiesController extends Controller
 
         if ($request->ventures) {
             $property->ventures()->sync(explode(',', $request->ventures));
+        }
+
+        // if status rejected i.e., status == 2
+        $feedback = Feedback::firstOrNew(['property_id' => $property->id]);
+        if ($request->status == 2) {
+            $feedback->message = $request->message;
+            $feedback->save();
+        } else {
+            $feedback->message = '';
+            $feedback->save();
         }
 
         // Space for notification

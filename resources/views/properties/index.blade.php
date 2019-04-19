@@ -23,6 +23,7 @@
                   <th> State </th>
                   <th> City </th>
                   <th> Price </th>
+                  <th> Status </th>
                   <th> Last updated </th>
                   <th> Action </th>
                 </tr>
@@ -35,6 +36,21 @@
                     <td>{{ $property->state->name }}</td>
                     <td>{{ $property->city->name }}</td>
                     <td> {{ $property->prices->first() ? $property->prices->first()->price : '--'}} </td>
+                    <td>
+                      @switch($property->status)
+                        @case(0)
+                            <label class="badge badge-dark">Submitted</label>
+                            @break
+                        @case(1)
+                            <label class="badge badge-success">Approved</label>
+                            @break
+                        @case(2)
+                            <label class="badge badge-danger">Rejected</label>
+                            @break
+                        @default
+                            
+                      @endswitch
+                    </td>
                     <td> {{ $property->updated_at->diffForHumans() }} </td>
                     <td>
                       <a href="{{ route('properties.edit', ['property' => $property->id]) }}" class="btn btn-gradient-light btn-rounded btn-sm" title="Edit">

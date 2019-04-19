@@ -124,11 +124,16 @@
 
             <div class="form-group">
               <label for="status">Status</label>
-              <select class="form-control" id="status" name="status">
+              <select class="form-control js-status" id="status" name="status">
                 <option value="0" {{ $property->status == 0 ? 'selected' : '' }}>New</option>
                 <option value="1" {{ $property->status == 1 ? 'selected' : '' }}>Approve</option>
                 <option value="2" {{ $property->status == 2 ? 'selected' : '' }}>Reject</option>
               </select>
+            </div>
+
+            <div class="form-group js-message {{old('status') != 2 ? 'd-none': ''}}">
+              <label for="message">Reason for rejection</label>
+              <textarea name="message" id="message" rows="3" class="form-control"></textarea>
             </div>
 
           </div>
@@ -205,13 +210,20 @@
     
       <script>
 
-        $(document).on('city_init', function() {
-          console.log('selectize')
-          initSelectize();
-        });
+        // $(document).on('city_init', function() {
+        //   console.log('selectize')
+        //   initSelectize();
+        // });
 
-        $(document).on('city_changed', function() {
-          console.log('city changed');
+        $('.js-status').on('change', function() {
+          var value = $(this).val();
+
+          // if value = 2 show message
+          if (value == 2) {
+            $('.js-message').removeClass('d-none');
+          } else {
+            $('.js-message').addClass('d-none');
+          }
         });
       </script>
   @endsection
