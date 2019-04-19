@@ -39,7 +39,6 @@ class OfficeController extends Controller
     {
         $this->validate($request, [
             'state' => 'required',
-            'address' => 'required',
             'mobile' => 'nullable|max:10'
         ]);
 
@@ -93,7 +92,6 @@ class OfficeController extends Controller
     {
         $this->validate($request, [
             'state' => 'required',
-            'address' => 'required',
         ]);
 
         $office->state_id = $request->state;
