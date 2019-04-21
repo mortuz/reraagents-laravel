@@ -32,7 +32,6 @@
                     <strong>{{ $errors->first('state') }}</strong>
                 </span>
               @endif
-
             </div>
 
             <div class="form-group">

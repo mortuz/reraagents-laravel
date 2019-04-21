@@ -425,4 +425,26 @@ class PropertyController extends Controller
         // return property no
         return response()->json(['success' => true, 'data' => $property->mobile]);
     }
+
+    public function premiumDetail(Request $request)
+    {
+        $propertyId = $request->property;
+        
+        $property = Property::find($propertyId);
+
+        $property->state = $property->state->name;
+        $property->state_id      = $property->state_id;
+        $property->city_id       = $property->city_id;
+        $property->city          = $property->city->name;
+        $property->property_type = $property->propertytypes->first()->type;
+        $property->area          = count($property->areas) == 0 ? null : $property->areas->first()->area;
+        $property->measurement   = json_decode($property->raw_data)->measurement;
+        $property->price         = $property->prices->first()->price;
+        $property->heading       = json_decode($property->raw_data)->details;
+        $property->raw           = json_decode($property->raw_data);
+        $property->images        = json_decode($property->images);
+
+        return response()->json(['success' => true, 'data' => $property]);
+        
+    }
 }

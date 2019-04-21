@@ -29,4 +29,20 @@ class SmsHelper
         $res = curl_exec($ch);
         curl_close($ch);
     }
+
+    public function sendPassword($recipient, $password)
+    {
+        $message = urlencode("Your new password is {$password}. Use this to login to your RERA Agents account. Please DO NOT share this OTP with anyone to ensure account's security.");
+        $url="http://login.redsms.in/API/SendMessage.ashx?user=$this->authKey&password=$this->password&phone=$recipient&text=$message&type=t&senderid=$this->senderId";
+    
+        // create a new cURL resource
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        $res = curl_exec($ch);
+        curl_close($ch);
+
+    }
 }

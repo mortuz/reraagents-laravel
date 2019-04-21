@@ -54,7 +54,7 @@
             </div>
 
             <div class="form-group mb-4">
-              <label for="images">Product images</label>
+              <label for="images">Property images</label>
               <div class="custom-file">
                 <input type="file" class="custom-file-input{{ $errors->has('images') ? ' is-invalid' : '' }}" id="images" name="images[]" multiple accept="image/*">
                 <label class="custom-file-label" for="images">Choose file</label>

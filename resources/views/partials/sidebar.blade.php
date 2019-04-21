@@ -20,6 +20,12 @@
       </a>
     </li>
     <li class="nav-item">
+      <a class="nav-link" href="{{ route('advertisement.index') }}">
+        <span class="menu-title">Advertisement</span>
+        <i class="mdi mdi-account-multiple menu-icon"></i>
+      </a>
+    </li>
+    <li class="nav-item">
       <a class="nav-link" data-toggle="collapse" href="#locations" aria-expanded="false" aria-controls="locations">
         <span class="menu-title">Locations</span>
         <i class="menu-arrow"></i>

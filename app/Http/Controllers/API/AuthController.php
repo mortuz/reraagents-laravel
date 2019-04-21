@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use App\User;
 use App\AgentProfile;
+use App\Helpers\SmsHelper;
 
 class AuthController extends Controller
 {
@@ -53,5 +55,29 @@ class AuthController extends Controller
         // dd($response);
 
         return response(['success' => true, 'data' => 'Successfully signed up.']);
+    }
+
+    public function recoverPassword(Request $request)
+    {
+        // find user
+        $user = User::where('mobile', $request->mobile)->first();
+
+        if (!$user) {
+            return response()->json(['success' => false, 'data' => 'Mobile is not registered.']);
+        }
+
+        $code = substr(str_shuffle("0123456789"), 0, 6);
+        
+
+
+        // change password
+        $user->password = Hash::make($code);
+        $user->save();
+        // send sms
+        $smsHelper = new SmsHelper;
+        $smsHelper->sendPassword($request->mobile, $code);
+
+        // return response
+        return response()->json(['success' => true, 'message' => 'Your password has been sent to your registered mobile no.']);
     }
 }
