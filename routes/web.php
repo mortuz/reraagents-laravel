@@ -37,6 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('builders', 'BuilderProfileController');
         Route::resource('agents', 'AgentProfileController');
         Route::resource('properties', 'PropertiesController');
+        Route::get('/property/premium/{property}', 'PropertiesController@premiumEdit')->name('property.premium.edit');
+        Route::put('/property/premium/{property}', 'PropertiesController@premiumUpdate')->name('property.premium.update');
         Route::resource('landmark', 'LandmarkController');
         Route::resource('area', 'AreaController');
         Route::resource('price', 'PriceController');

@@ -33,7 +33,7 @@
                 @foreach ($properties as $property)
                   <tr>
                     <td>{{ $property->id }}</td>
-                    <td>{{ $property->state->name }}</td>
+                    <td>{{ $property->state->name }} {!!$property->premium ? '<label class="badge badge-sm badge-danger">Premium</label>' : '' !!}</td>
                     <td>{{ $property->city->name }}</td>
                     <td> {{ $property->prices->first() ? $property->prices->first()->price : '--'}} </td>
                     <td>

@@ -60,6 +60,7 @@ class PropertiesController extends Controller
             'status' => $request->status,
             'mobile' => $request->contact,
             'user_id' => Auth::id(),
+            'premium' => $request->premium,
             'raw_data' => json_encode([
                 'price' => $request->price,
                 'measurement' => $request->measurement,
@@ -167,13 +168,12 @@ class PropertiesController extends Controller
             'raw_details' => 'required'
         ]);
 
-        // dd($request->all());
-
         $property->state_id = $request->state;
         $property->city_id = $request->city;
         $property->handled_by = $request->handler;
         $property->status = $request->status;
         $property->mobile = $request->contact;
+        $property->premium = $request->premium;
 
         $raw_data = json_encode([
                 'price' => $request->raw_price,
@@ -234,8 +234,12 @@ class PropertiesController extends Controller
 
         // Space for notification
 
-        Session::flash('success', 'Property successfully updated.');
-        return redirect()->route('properties.index');
+        if ($request->premium) {
+            return redirect()->route('property.premium.edit', ['property' => $property->id]);
+        } else {
+            Session::flash('success', 'Property successfully updated.');
+            return redirect()->route('properties.index');
+        }
     }
 
     /**
@@ -247,5 +251,51 @@ class PropertiesController extends Controller
     public function destroy(Property $property)
     {
         //
+    }
+
+    public function premiumEdit(Property $property)
+    {
+        return view('properties.premium.edit')->with('property', $property);
+    }
+
+    public function premiumUpdate(Request $request, Property $property)
+    {
+        // dd($request->all());
+        $this->validate($request, [
+            'website' => 'nullable|regex:/^\S*$/u',
+            'youtube_link' => 'nullable|regex:/^\S*$/u',
+            'google_map' => 'nullable|regex:/^\S*$/u'
+        ]);
+
+        $images = [];
+
+        if ($request->images) {
+            foreach ($request->images as $image) {
+                $image_new_name = time() . $image->getClientOriginalName();
+                $image->move('uploads/properties', $image_new_name);
+
+                $images[] = 'uploads/properties/' . $image_new_name;
+            }
+
+            $oldImages = json_decode($property->images);
+
+            foreach ($oldImages as $image) {
+                unlink(public_path($image));
+            }
+        }
+
+        $property->website = $request->website;
+        $property->youtube_link = $request->youtube_link;
+        $property->google_map = $request->google_map;
+        $property->features = $request->features;
+
+        if ($request->images || !$property->images) {
+            $property->images = json_encode($images);
+        }
+
+        $property->save();
+
+        Session::flash('success', 'Property successfully updated.');
+        return redirect()->route('properties.index');
     }
 }

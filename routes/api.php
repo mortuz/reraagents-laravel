@@ -31,6 +31,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('property/store', 'API\PropertyController@store');
     Route::post('property/update/{property}', 'API\PropertyController@update');
     Route::get('property/view', 'API\PropertyController@view');
+    Route::get('property/premium/call', 'API\PropertyController@premiumCall');
     Route::get('property/office', 'API\PropertyController@office');
     
     Route::apiResource('certificate', 'API\CertificatesController');

@@ -46,7 +46,14 @@ class PropertyController extends Controller
                                 ->where('premium', 0)
                                 ->latest()
                                 ->get();
-        
+                                
+        $premiumProperties = Property::where($filter)
+                                ->where('premium', 1)
+                                ->latest()
+                                ->get();
+                                
+        $formattedProperties = [];
+
         $properties->transform(function ($property) {
             return [
                 'id'            => $property->id,
@@ -62,15 +69,58 @@ class PropertyController extends Controller
                 'price'         => $property->prices->first()->price,
                 'heading'       => json_decode($property->raw_data)->details,
                 'raw'           => json_decode($property->raw_data),
-                'images'        => $property->images,
-                'google_map'    => $property->google_map,
+                'features'      => $property->features,
                 'created_at'    => $property->created_at,
                 'updated_at'    => $property->updated_at,
                 'expiry_date'   => $property->expiry_date,
             ];
         });
 
-        return response()->json(['success' => true, 'data' => $properties]);
+        $premiumProperties->transform(function ($property) {
+            return [
+                'id'            => $property->id,
+                'state'         => $property->state->name,
+                'state_id'      => $property->state_id,
+                'city_id'       => $property->city_id,
+                'city'          => $property->city->name,
+                'features'      => $property->features,
+                'premium'       => $property->premium,
+                'property_type' => $property->propertytypes->first()->type,
+                'area'          => count($property->areas) == 0 ? null : $property->areas->first()->area,
+                'measurement'   => json_decode($property->raw_data)->measurement,
+                'price'         => $property->prices->first()->price,
+                'heading'       => json_decode($property->raw_data)->details,
+                'raw'           => json_decode($property->raw_data),
+                'images'        => json_decode($property->images),
+                'google_map'    => $property->google_map,
+                'youtube_link'  => $property->youtube_link,
+                'website'       => $property->website,
+                'features'      => $property->features,
+                'created_at'    => $property->created_at,
+                'updated_at'    => $property->updated_at,
+                'expiry_date'   => $property->expiry_date,
+            ];
+        });
+
+        $index = 2;
+        $featuredIndex = 0;
+
+        foreach ($properties as $property) {
+
+            // if ($index > 1 && $index % 3 == 0) {
+            if ($premiumProperties->count() > $featuredIndex) {
+                array_push($formattedProperties, $premiumProperties[$featuredIndex]);
+            }
+            $featuredIndex++;
+            // }
+
+            array_push($formattedProperties, $property);
+            $index++;
+        }
+
+        
+
+        return response()->json(['success' => true, 'data' => $formattedProperties]);
     }
 
     /**
@@ -280,7 +330,6 @@ class PropertyController extends Controller
 
     public function modify($property, $request)
     {
-        
         $raw = json_encode([
                 'price' => $request->price,
                 'measurement' => $request->measurement,
@@ -298,7 +347,6 @@ class PropertyController extends Controller
         $property->propertytypes()->sync(explode(',', $request->type));
 
         return $property;
-
     }
 
     public function view()
@@ -359,5 +407,22 @@ class PropertyController extends Controller
         ];
 
         return response()->json(['success' => true, 'data' => $data]);
+    }
+
+    public function premiumCall(Request $request)
+    {
+        $propertyId = $request->property;
+
+        $property = Property::find($propertyId);
+
+        // if handled by company i.e., handled_by = 1
+        if ($property->handled_by) {
+            $office = Office::where('city_id', $property->city_id)->first();
+            // return city office no.
+            return response()->json(['success' => true, 'data' => $office->mobile]);
+        }
+
+        // return property no
+        return response()->json(['success' => true, 'data' => $property->mobile]);
     }
 }

@@ -131,6 +131,11 @@
               </select>
             </div>
 
+            <div class="form-check mx-sm-2">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="premium" {{ old('premium') ? 'checked' : '' }} value="1"> Premium property <i class="input-helper"></i></label>
+            </div>
+
           </div>
         </div>
       </div>

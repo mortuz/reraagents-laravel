@@ -131,9 +131,14 @@
               </select>
             </div>
 
-            <div class="form-group js-message {{old('status') != 2 ? 'd-none': ''}}">
+            <div class="form-group js-message {{$property->status != 2 ? 'd-none': ''}}">
               <label for="message">Reason for rejection</label>
               <textarea name="message" id="message" rows="3" class="form-control"></textarea>
+            </div>
+
+            <div class="form-check mx-sm-2">
+              <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="premium" {{ $property->premium ? 'checked' : '' }} value="1"> Premium property <i class="input-helper"></i></label>
             </div>
 
           </div>
