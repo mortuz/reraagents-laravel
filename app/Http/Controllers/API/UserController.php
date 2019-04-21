@@ -33,7 +33,7 @@ class UserController extends Controller
         
         // look for state ads
         if (!$ad) {
-            $ads = Advertisement::where('state_id', $request->user()->state_id)->first();
+            $ad = Advertisement::where('state_id', $request->user()->state_id)->first();
         }
 
         // look for any ads
@@ -42,7 +42,7 @@ class UserController extends Controller
         }
 
         if (!$ad) {
-            $ad = [];
+            $ads = [];
         } else {
             $ads[] = $ad;
         }
