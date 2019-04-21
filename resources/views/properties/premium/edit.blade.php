@@ -63,7 +63,7 @@
             </div>
 
             <div class="form-group">
-              <label for="features">Features</label>
+              <label for="features">Highlights</label>
               <textarea name="features" id="features" rows="3" class="form-control">{{ $property->features }}</textarea>
 
               @if ($errors->has('features'))
