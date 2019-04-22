@@ -173,7 +173,7 @@ class PropertiesController extends Controller
         $property->handled_by = $request->handler;
         $property->status = $request->status;
         $property->mobile = $request->contact;
-        $property->premium = $request->premium;
+        $property->premium = $request->premium ? $request->premium : 0;
 
         $raw_data = json_encode([
                 'price' => $request->raw_price,
