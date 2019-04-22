@@ -60,7 +60,7 @@ class PropertiesController extends Controller
             'status' => $request->status,
             'mobile' => $request->contact,
             'user_id' => Auth::id(),
-            'premium' => $request->premium,
+            'premium' => $request->premium ? $request->premium : 0,
             'raw_data' => json_encode([
                 'price' => $request->price,
                 'measurement' => $request->measurement,
