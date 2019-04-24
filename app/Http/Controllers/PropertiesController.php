@@ -277,10 +277,12 @@ class PropertiesController extends Controller
                 $images[] = 'uploads/properties/' . $image_new_name;
             }
 
-            $oldImages = json_decode($property->images);
+            if ($property->images) {
+                $oldImages = json_decode($property->images);
 
-            foreach ($oldImages as $image) {
-                unlink(public_path($image));
+                foreach ($oldImages as $image) {
+                    unlink(public_path($image));
+                }
             }
         }
 
