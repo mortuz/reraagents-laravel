@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">New advertisement </div>
 
-          <form action="{{ route('advertisement.store') }}" method="POST" enctype="multipart/form-data">
+          <form autocomplete="off" action="{{ route('advertisement.store') }}" method="POST" enctype="multipart/form-data">
             
             @csrf
 

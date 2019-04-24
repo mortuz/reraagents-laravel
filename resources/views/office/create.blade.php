@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Add office</div>
 
-          <form action="{{ route('office.store') }}" method="POST">
+          <form autocomplete="off" action="{{ route('office.store') }}" method="POST">
             
             @csrf
 

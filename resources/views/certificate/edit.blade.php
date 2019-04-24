@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Review certificate for: {{ $certificate->user->name }}</div>
 
-          <form action="{{ route('certificate.update', ['certificate' => $certificate->id]) }}" method="POST">
+          <form autocomplete="off" action="{{ route('certificate.update', ['certificate' => $certificate->id]) }}" method="POST">
             
             @method('put')
             @csrf

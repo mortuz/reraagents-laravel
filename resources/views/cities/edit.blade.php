@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Edit city: {{ $city->name }}</div>
 
-          <form action="{{ route('cities.update', ['city' => $city->id]) }}" method="POST">
+          <form autocomplete="off" action="{{ route('cities.update', ['city' => $city->id]) }}" method="POST">
             
             @method('put')
             @csrf

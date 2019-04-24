@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Add Facing</div>
 
-          <form action="{{ route('face.store') }}" method="POST">
+          <form autocomplete="off" action="{{ route('face.store') }}" method="POST">
             
             @csrf
             <div class="form-group">

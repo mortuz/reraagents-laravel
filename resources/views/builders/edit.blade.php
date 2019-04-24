@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Edit builder: {{ $builder->user->name }}</div>
 
-          <form action="{{ route('builders.update', ['builder' => $builder->id]) }}" method="POST">
+          <form autocomplete="off" action="{{ route('builders.update', ['builder' => $builder->id]) }}" method="POST">
             
             @csrf
             @method('patch')

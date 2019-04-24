@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Update advertisement </div>
 
-          <form action="{{ route('advertisement.update', ['advertisement' => $ad->id]) }}" method="POST" enctype="multipart/form-data">
+          <form autocomplete="off" action="{{ route('advertisement.update', ['advertisement' => $ad->id]) }}" method="POST" enctype="multipart/form-data">
             
             @csrf
             @method('put')

@@ -9,7 +9,7 @@
 
   </div>
 
-  <form action="{{ route('properties.store') }}" method="POST">
+  <form autocomplete="off" action="{{ route('properties.store') }}" method="POST">
     @csrf
     
     <div class="row">

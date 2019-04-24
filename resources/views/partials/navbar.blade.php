@@ -11,7 +11,7 @@
 
         <div class="search-field d-none d-md-block">
 
-          <form class="d-flex align-items-center h-100" action="#">
+          <form autocomplete="off" class="d-flex align-items-center h-100" action="#">
             <div class="input-group">
               <div class="input-group-prepend bg-transparent">
                   <i class="input-group-text border-0 mdi mdi-magnify"></i>                
@@ -43,7 +43,7 @@
                 Signout
               </a>
 
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              <form autocomplete="off" id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                   @csrf
               </form>
             </div>

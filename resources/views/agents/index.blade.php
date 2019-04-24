@@ -63,7 +63,7 @@
 
     </div>
   </div>
-  <form class="d-none" action="#" method="post" id="delete-form">
+  <form autocomplete="off" class="d-none" action="#" method="post" id="delete-form">
     @method('delete')
     @csrf
   </form>

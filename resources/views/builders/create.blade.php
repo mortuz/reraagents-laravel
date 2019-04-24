@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Add builder</div>
 
-          <form action="{{ route('builders.store') }}" method="POST">
+          <form autocomplete="off" action="{{ route('builders.store') }}" method="POST">
             
             @csrf
 

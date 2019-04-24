@@ -9,7 +9,7 @@
 
   </div>
 
-  <form action="{{ route('properties.update', ['property' => $property->id]) }}" method="POST">
+  <form autocomplete="off" action="{{ route('properties.update', ['property' => $property->id]) }}" method="POST">
     @csrf
     @method('patch')
     <div class="row">

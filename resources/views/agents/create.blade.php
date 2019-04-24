@@ -9,7 +9,7 @@
 
   </div>
 
-  <form action="{{ route('agents.store') }}" method="POST">
+  <form autocomplete="off" action="{{ route('agents.store') }}" method="POST">
     @csrf
     <div class="row">
       <div class="col-md-6">

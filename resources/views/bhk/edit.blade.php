@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Edit BHK type: {{ $bhk->type }}</div>
 
-          <form action="{{ route('bhk.update', ['bhk' => $bhk->id]) }}" method="POST">
+          <form autocomplete="off" action="{{ route('bhk.update', ['bhk' => $bhk->id]) }}" method="POST">
             @method('patch')
             @csrf
             <div class="form-group">

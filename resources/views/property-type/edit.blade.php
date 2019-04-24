@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Edit property type: {{ $type->type }}</div>
 
-          <form action="{{ route('property-types.update', ['property_type' => $type->id]) }}" method="POST">
+          <form autocomplete="off" action="{{ route('property-types.update', ['property_type' => $type->id]) }}" method="POST">
             @method('patch')
             @csrf
             <div class="form-group">

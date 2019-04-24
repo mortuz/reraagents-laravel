@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Add new state</div>
 
-          <form action="{{ route('property-types.store') }}" method="POST">
+          <form autocomplete="off" action="{{ route('property-types.store') }}" method="POST">
             
             @csrf
             <div class="form-group">

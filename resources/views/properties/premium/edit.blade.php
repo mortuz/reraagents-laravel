@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Update property: {{ $property->id }}</div>
 
-          <form action="{{ route('property.premium.update', ['id' => $property->id ]) }}" method="POST" enctype="multipart/form-data">
+          <form autocomplete="off" action="{{ route('property.premium.update', ['id' => $property->id ]) }}" method="POST" enctype="multipart/form-data">
             
             @csrf
             @method('put')

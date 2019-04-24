@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Edit price: {{ $price->price }}</div>
 
-          <form action="{{ route('price.update', ['price' => $price->id]) }}" method="POST">
+          <form autocomplete="off" action="{{ route('price.update', ['price' => $price->id]) }}" method="POST">
             @method('patch')
             @csrf
 

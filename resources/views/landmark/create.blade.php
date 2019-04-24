@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Add Landmark</div>
 
-          <form action="{{ route('landmark.store') }}" method="POST">
+          <form autocomplete="off" action="{{ route('landmark.store') }}" method="POST">
             
             @csrf
 

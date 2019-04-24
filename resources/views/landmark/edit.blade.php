@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Edit Landmark: {{ $landmark->name }}</div>
 
-          <form action="{{ route('landmark.update', ['landmark' => $landmark->id]) }}" method="POST">
+          <form autocomplete="off" action="{{ route('landmark.update', ['landmark' => $landmark->id]) }}" method="POST">
             @method('patch')
             @csrf
 

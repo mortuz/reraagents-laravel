@@ -12,7 +12,7 @@
               <h4>Hello! let's get started</h4>
               <h6 class="font-weight-light">Sign in to continue.</h6>
 
-              <form class="pt-3" method="POST" action="{{ route('login') }}">
+              <form autocomplete="off" class="pt-3" method="POST" action="{{ route('login') }}">
                 @csrf
 
                 <div class="form-group">
@@ -69,7 +69,7 @@
                 <div class="card-header">{{ __('Login') }}</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('login') }}">
+                    <form autocomplete="off" method="POST" action="{{ route('login') }}">
                         @csrf
 
                         <div class="form-group row">

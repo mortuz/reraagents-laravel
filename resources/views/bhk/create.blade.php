@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Add BHK type</div>
 
-          <form action="{{ route('bhk.store') }}" method="POST">
+          <form autocomplete="off" action="{{ route('bhk.store') }}" method="POST">
             
             @csrf
             <div class="form-group">

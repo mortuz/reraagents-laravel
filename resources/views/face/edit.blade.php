@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Edit Facing: {{ $face->face }}</div>
 
-          <form action="{{ route('face.update', ['face' => $face->id]) }}" method="POST">
+          <form autocomplete="off" action="{{ route('face.update', ['face' => $face->id]) }}" method="POST">
             @method('patch')
             @csrf
             <div class="form-group">

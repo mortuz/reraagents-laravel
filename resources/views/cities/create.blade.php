@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Add new city</div>
 
-          <form action="{{ route('cities.store') }}" method="POST">
+          <form autocomplete="off" action="{{ route('cities.store') }}" method="POST">
             
             @csrf
             <div class="form-group">

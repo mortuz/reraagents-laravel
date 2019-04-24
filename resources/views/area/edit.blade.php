@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Edit area: {{ $area->area }}</div>
 
-          <form action="{{ route('area.update', ['area' => $area->id]) }}" method="POST">
+          <form autocomplete="off" action="{{ route('area.update', ['area' => $area->id]) }}" method="POST">
             @method('patch')
             @csrf
 

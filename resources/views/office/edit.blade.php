@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Edit office</div>
 
-          <form action="{{ route('office.update', ['office' => $office]) }}" method="POST">
+          <form autocomplete="off" action="{{ route('office.update', ['office' => $office]) }}" method="POST">
             
             @csrf
             @method('patch')

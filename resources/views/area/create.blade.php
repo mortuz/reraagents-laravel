@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Add area</div>
 
-          <form action="{{ route('area.store') }}" method="POST">
+          <form autocomplete="off" action="{{ route('area.store') }}" method="POST">
             
             @csrf
 
