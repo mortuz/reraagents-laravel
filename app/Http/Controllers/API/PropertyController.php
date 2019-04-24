@@ -13,6 +13,7 @@ use MiladRahimi\Jwt\Cryptography\Algorithms\Hmac\HS256;
 use App\Helpers\SmsHelper;
 use App\Office;
 use App\Feedback;
+use App\Transaction;
 
 class PropertyController extends Controller
 {
@@ -367,6 +368,11 @@ class PropertyController extends Controller
             return response()->json(['success' => false, 'permission' => false]);
         }
 
+        Transaction::updateOrCreate([
+            'user_id' => $request->user()->id,
+            'property_id' => $propertyId
+        ], []);
+
         // if handled by company i.e., handled_by = 1
         if ($property->handled_by) {
             $office = Office::where('city_id', $property->city_id)->first();
@@ -415,6 +421,12 @@ class PropertyController extends Controller
 
         $property = Property::find($propertyId);
 
+        Transaction::updateOrCreate([
+            'user_id' => $request->user()->id,
+            'property_id' => $propertyId
+        ], []);
+
+
         // if handled by company i.e., handled_by = 1
         if ($property->handled_by) {
             $office = Office::where('city_id', $property->city_id)->first();
@@ -445,6 +457,5 @@ class PropertyController extends Controller
         $property->images        = json_decode($property->images);
 
         return response()->json(['success' => true, 'data' => $property]);
-        
     }
 }
