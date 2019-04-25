@@ -68,7 +68,10 @@ class BuilderProfileController extends Controller
 
 
         // ventures
-        $builderProfile->ventures()->attach($request->ventures);
+        if ($request->ventures) {
+            $builderProfile->ventures()->attach(explode(',', $request->ventures));
+        }
+
 
         Session::flash('success', 'Builder successfully added.');
         return redirect()->route('builders.index');
@@ -93,7 +96,10 @@ class BuilderProfileController extends Controller
      */
     public function edit($id)
     {
-        return view('builders.edit')->with('builder', BuilderProfile::find($id))->with('states', State::all())->with('ventures', Venture::all());
+        $builder = BuilderProfile::find($id);
+        $builder->ventures = implode(',', $builder->ventures()->pluck('ventures.id')->toArray());
+
+        return view('builders.edit')->with('builder', $builder)->with('states', State::all());
     }
 
     /**
@@ -132,7 +138,9 @@ class BuilderProfileController extends Controller
         $builder->alternative_contact_no = $request->alternative_contact_no;
         $builder->save();
 
-        $builder->ventures()->sync($request->ventures);
+        if ($request->ventures) {
+            $builder->ventures()->sync(explode(',', $request->ventures));
+        }
 
 
         Session::flash('success', 'Builder successfully updated.');

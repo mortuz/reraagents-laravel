@@ -111,9 +111,10 @@
             <div class="form-group">
               <label for="ventures">Add Ventures</label>
 
-              <input id="ventures" data-name="ventures[]" data-url="{{ route('api.get.ventures') }}" data-dependency="city" data-provide="typeahead" autocomplete="off"  type="text" class="form-control js-typeahead"/>
-              
-              @if (old('ventures'))
+              {{-- <input id="ventures" data-name="ventures[]" data-url="{{ route('api.get.ventures') }}" data-dependency="city" data-provide="typeahead" autocomplete="off"  type="text" class="form-control js-typeahead"/> --}}
+              <input id="ventures" name="ventures" data-preselect="{{ old('ventures') }}" data-url={{ route('api.venture.index') }} data-dependency="city" type="text" class="form-control js-selectize"/>
+
+              {{-- @if (old('ventures'))
                 @foreach (old('ventures') as $venture)
 
                   @foreach ($ventures as $v)
@@ -125,7 +126,7 @@
                       @endif
                   @endforeach
                 @endforeach
-              @endif
+              @endif --}}
               
             </div>
 
@@ -145,22 +146,16 @@
   @endsection
 
   @section('javascript')
+    
       <script>
 
+        $(document).on('city_init', function() {
+          console.log('selectize')
+          initSelectize();
+        });
 
-        var ventures = [];
-        var allVentures = [];
-
-        // @foreach($ventures as $key => $value)
-        //   allVentures.push({ id: {{$key}}, name: {{ $value}}});
-        // @endforeach
-
-        // @if(old('ventures'))
-        //   @foreach(old('ventures') as $venture)
-        //     ventures.push($venture);
-        //   @endforeach
-
-        // @endif
-
+        $(document).on('city_changed', function() {
+          console.log('city changed');
+        });
       </script>
   @endsection

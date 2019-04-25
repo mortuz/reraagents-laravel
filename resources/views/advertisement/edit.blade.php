@@ -66,7 +66,7 @@
             </div>
 
             <div class="form-group">
-              <label for="link">Link</label>
+              <label for="link">Link ( include <span class="bg-light font-weight-bold">http://</span> or <span class="bg-light font-weight-bold"> https://</span> for external url or enter property id)</label>
 
               <input name="link" id="link" type="text" class="form-control{{ $errors->has('link') ? ' is-invalid' : '' }}" value="{{ $ad->link }}"/>
               @if ($errors->has('link'))
