@@ -60,7 +60,6 @@ class AdvertisementController extends Controller
 
         Session::flash('success', 'Advertisement successfully created');
         return redirect()->route('advertisement.index');
-
     }
 
     /**
@@ -105,11 +104,11 @@ class AdvertisementController extends Controller
             $image_new_name = time() . $image->getClientOriginalName();
             $image->move('uploads/advertisement', $image_new_name);
             $imagesPath = 'uploads/advertisement/' . $image_new_name;
-            $advertisement->image = $imagesPath;
-
+            
             unlink(public_path($advertisement->image));
+            
+            $advertisement->image = $imagesPath;
         }
-
         
         $advertisement->state_id = $request->state;
         $advertisement->city_id = $request->city;
