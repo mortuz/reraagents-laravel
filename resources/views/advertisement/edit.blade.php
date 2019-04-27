@@ -34,7 +34,7 @@
               <label for="state">State</label>
               <select name="state" id="state" class="form-control js-state-field{{ $errors->has('state') ? ' is-invalid' : '' }}">
                 @foreach ($states as $state)
-                    <option value="{{ $state->id }}" {{ $ad->description == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
+                    <option value="{{ $state->id }}" {{ $ad->state_id == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
                 @endforeach
               </select>
 
@@ -47,7 +47,7 @@
 
             <div class="form-group">
               <label for="city">City</label>
-              <select name="city" id="city" class="form-control js-city-field">
+              <select name="city" id="city" class="form-control js-city-field" data-preselect="{{ $ad->city_id }}">
               </select>
             </div>
 
