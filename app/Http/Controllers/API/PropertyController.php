@@ -299,6 +299,7 @@ class PropertyController extends Controller
                 'area'          => count($property->areas) == 0 ? json_decode($property->raw_data)->location : $property->areas->first()->area,
                 'measurement'   => json_decode($property->raw_data)->measurement,
                 'price'         => $property->prices->first() ? $property->prices->first()->price : json_decode($property->raw_data)->price,
+                'landmark'      => $property->landmarks->first() ? $property->landmarks->first()->name : null,
                 'heading'       => json_decode($property->raw_data)->details,
                 'message'       => $feedback ? $feedback->message : null
             ];
