@@ -138,6 +138,9 @@ h6 {
     background-size: cover;
     height: 100%;
     position: relative;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+    overflow: hidden;
 }
 
 .premium-img::before {
