@@ -53,8 +53,8 @@
                         @endphp
 
                         <p>
-                            <img class="icons-property" src="{{ asset('img/icons/hotel.svg') }}" alt=""> &nbsp; {{ $f[0] }}: 
-                            <span class="font-weight-bold">{{ count($f) == 2 ? $f[1] : '' }}</span>
+                            <img class="icons-property" src="{{ asset('img/icons/hotel.svg') }}" alt=""> &nbsp; <span class="font-weight-bold">{{ $f[0] }}</span>: 
+                            <span>{{ count($f) == 2 ? $f[1] : '' }}</span>
                         </p>
                         
                     @endforeach
