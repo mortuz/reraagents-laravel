@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'FrontendController@index')->name('index');
+Route::get('/property/{id}', 'FrontendController@showProperty')->name('show.property');
 
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {

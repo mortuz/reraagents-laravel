@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Property;
+use App\Office;
 
 class FrontendController extends Controller
 {
@@ -11,6 +12,9 @@ class FrontendController extends Controller
     {
         $filter = [];
         $city = 0;
+        $title = '';
+        $description = '';
+        $keywords = '';
 
         // $filter[] = ['state', $request->getParam('state')];
 
@@ -28,31 +32,60 @@ class FrontendController extends Controller
 
         foreach ($properties as $property) {
             $property->raw_data = json_decode($property->raw_data);
+
+            if ($property->premium) {
+                $property->images = json_decode($property->images);
+            }
         }
 
-        // $properties->transform(function ($property) {
-        //     return [
-        //         'id'            => $property->id,
-        //         'state'         => $property->state->name,
-        //         'city'          => $property->city->name,
-        //         'features'      => $property->features,
-        //         'premium'       => $property->premium,
-        //         'property_type' => $property->propertytypes->first()->type,
-        //         'area'          => count($property->areas) == 0 ? null : $property->areas->first()->area,
-        //         'measurement'   => json_decode($property->raw_data)->measurement,
-        //         'price'         => $property->prices->first()->price,
-        //         'heading'       => json_decode($property->raw_data)->details,
-        //         'raw'           => json_decode($property->raw_data),
-        //         'images'        => $property->images,
-        //         'google_map'    => $property->google_map,
-        //         'created_at'    => $property->created_at,
-        //         'updated_at'    => $property->updated_at,
-        //         'expiry_date'   => $property->expiry_date,
-        //     ];
-        // });
+        return view('index')->with('properties', $properties)
+                            ->with('title', $title)
+                            ->with('description', $description)
+                            ->with('keywords', $keywords)
+        ;
+    }
 
-        // dd($properties);
+    public function showProperty($id)
+    {
 
-        return view('frontend')->with('properties', $properties);
+        $property =  Property::find($id);
+        $property->raw_data = json_decode($property->raw_data);
+        $office = Office::where('city_id', $property->city_id)->first();
+
+        $areas = [];
+        $landmarks = [];
+
+        foreach($property->areas as $area) {
+            array_push($areas, $area);
+        }
+        foreach($property->landmarks as $landmark) {
+            array_push($landmarks, $landmark);
+        }
+
+        $title = $property->raw_data->details;
+        $description = $property->raw_data->details;
+        $keywords = implode(',', $areas);
+        $keywords .= implode(',', $landmarks);
+        $keywords .= $property->state->name . ',';
+        $keywords .= $property->city->name . ',';
+
+
+        if ($property->premium) {
+            $property->images = json_decode($property->images);
+            return view('frontend.premium-property-detail')
+                    ->with('property', $property)
+                    ->with('title', $title)
+                    ->with('description', $description)
+                    ->with('keywords', $keywords)
+                    ;
+        } else {
+            return view('frontend.property-detail')
+                    ->with('property', $property)
+                    ->with('office', $office)
+                    ->with('title', $title)
+                    ->with('description', $description)
+                    ->with('keywords', $keywords)
+            ;
+        }
     }
 }
