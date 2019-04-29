@@ -47,7 +47,6 @@ class FrontendController extends Controller
 
     public function showProperty($id)
     {
-
         $property =  Property::find($id);
         $property->raw_data = json_decode($property->raw_data);
         $office = Office::where('city_id', $property->city_id)->first();
@@ -55,10 +54,10 @@ class FrontendController extends Controller
         $areas = [];
         $landmarks = [];
 
-        foreach($property->areas as $area) {
+        foreach ($property->areas as $area) {
             array_push($areas, $area);
         }
-        foreach($property->landmarks as $landmark) {
+        foreach ($property->landmarks as $landmark) {
             array_push($landmarks, $landmark);
         }
 
@@ -72,6 +71,8 @@ class FrontendController extends Controller
 
         if ($property->premium) {
             $property->images = json_decode($property->images);
+            $property->features = explode(';', $property->features);
+
             return view('frontend.premium-property-detail')
                     ->with('property', $property)
                     ->with('title', $title)

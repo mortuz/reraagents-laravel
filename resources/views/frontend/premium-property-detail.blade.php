@@ -47,8 +47,19 @@
 
             <div class="col-md-6 mt-5">
                 <div class="">
-                    <p><img class="icons-property" src="{{ asset('img/icons/hotel.svg') }}" alt=""> &nbsp; ROOM: <span class="font-weight-bold">2 BHK</span></p>
-                    <p><img class="icons-property" src="{{ asset('img/icons/hotel.svg') }}" alt=""> &nbsp; NIGHTCLUB: <span style="font-weight:bold;">We have an amazing nightclub</span></p>
+                    @foreach ($property->features as $feature)
+                        @php
+                            $f = explode('::', $feature);
+                        @endphp
+
+                        <p>
+                            <img class="icons-property" src="{{ asset('img/icons/hotel.svg') }}" alt=""> &nbsp; {{ $f[0] }}: 
+                            <span class="font-weight-bold">{{ $f[1] }}</span>
+                        </p>
+                        
+                    @endforeach
+                    
+                    {{-- <p><img class="icons-property" src="{{ asset('img/icons/hotel.svg') }}" alt=""> &nbsp; NIGHTCLUB: <span style="font-weight:bold;">We have an amazing nightclub</span></p> --}}
 
                     @if ($property->website)
                         <a class="btn btn-danger mt-4" href="{{ $property->website }}" target="_blank" style="width:16rem;">Visit Website</a>
