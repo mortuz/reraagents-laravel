@@ -71,7 +71,7 @@ class FrontendController extends Controller
 
         if ($property->premium) {
             $property->images = json_decode($property->images);
-            $property->features = rtrim(';');
+            // $property->features = rtrim(';');
             $property->features = explode(';', $property->features);
 
             return view('frontend.premium-property-detail')
