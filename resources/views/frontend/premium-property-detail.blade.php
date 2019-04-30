@@ -45,7 +45,7 @@
                 <h4 class="card-t1">{{ $property->raw_data->details }}</h4>
             </div>
 
-            <div class="col-md-6 mt-5">
+            <div class="{{ $property->google_map ? 'col-md-6' : 'col-md-12' }} mt-5">
                 <div class="">
                     @foreach ($property->features as $feature)
                         @php
