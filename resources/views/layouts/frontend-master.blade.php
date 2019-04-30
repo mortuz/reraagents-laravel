@@ -33,13 +33,13 @@
                     <h5 class="footer-heading">COMPANY</h5>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="#who-are-we">Home</a>
+                            <a href="{{ route('home') }}">Home</a>
                         </li>
                         <li>
-                            <a href="#solutions">About us</a>
+                            <a href="{{ route('page.about') }}">About us</a>
                         </li>
                         <li>
-                            <a href="#team">Contact us</a>
+                            <a href="{{ route('page.contact') }}">Contact us</a>
                         </li>
                         <li>
                             <a href="#contact">Terms &amp; Conditions</a>

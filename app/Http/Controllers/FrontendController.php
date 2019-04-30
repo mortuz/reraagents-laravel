@@ -90,4 +90,28 @@ class FrontendController extends Controller
             ;
         }
     }
+
+    public function about()
+    {
+        $title = 'About ';
+        $description = '';
+        $keywords = '';
+
+        return view('about')
+            ->with('title', $title)
+            ->with('description', $description)
+            ->with('keywords', $keywords);
+    }
+
+    public function contact()
+    {
+        $title = 'Contact ';
+        $description = '';
+        $keywords = '';
+
+        return view('contact')
+            ->with('title', $title)
+            ->with('description', $description)
+            ->with('keywords', $keywords);
+    }
 }

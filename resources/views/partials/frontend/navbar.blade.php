@@ -9,18 +9,18 @@
         <ul class="navbar-nav ml-auto ham-menu d-flex align-items-center">
             <li class="nav-item active">
                 <a class="nav-link" href="https://play.google.com/store/apps/details?id=in.idevia.reraagents" target="_blank">
-                    <img class="playstore-img " src="{{ asset('img/download-on-the-app-store-icon-0.png') }}"
-                        alt=""></a>
+                    <img class="playstore-img " src="{{ asset('img/download-on-the-app-store-icon-0.png') }}" alt="">
+                </a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">About us</a>
+                <a class="nav-link" href="{{ route('page.about') }}">About us</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#">Contact us</a>
+                <a class="nav-link" href="{{ route('page.contact') }}">Contact us</a>
             </li>
             {{-- <li>
                 <button class="btn btn-outline-dark my-sm-0" type="submit"><i class="fa fa-user-secret"

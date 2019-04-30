@@ -12,6 +12,8 @@
 */
 
 Route::get('/', 'FrontendController@index')->name('index');
+Route::get('/about', 'FrontendController@about')->name('page.about');
+Route::get('/contact', 'FrontendController@contact')->name('page.contact');
 Route::get('/property/{id}', 'FrontendController@showProperty')->name('show.property');
 
 Auth::routes();

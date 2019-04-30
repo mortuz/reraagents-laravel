@@ -32,19 +32,19 @@
 
         <div class="collapse navbar-collapse" id="topNav">
             <ul class="navbar-nav ml-auto ham-menu d-flex align-items-center">
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="https://play.google.com/store/apps/details?id=in.idevia.reraagents" target="_blank">
                         <img class="playstore-img " src="{{ asset('img/download-on-the-app-store-icon-0.png') }}" alt=""></a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">About us</a>
+                    <a class="nav-link" href="{{ route('page.about') }}">About us</a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Contact us</a>
+                    <a class="nav-link" href="{{ route('page.contact') }}">Contact us</a>
                 </li>
                 {{-- <li>
                     <button class="btn btn-outline-dark my-sm-0" type="submit"><i class="fa fa-user-secret"
@@ -81,13 +81,13 @@
                     <h5 class="footer-heading">COMPANY</h5>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="#who-are-we">Home</a>
+                            <a href="{{ route('home') }}">Home</a>
                         </li>
                         <li>
-                            <a href="#solutions">About us</a>
+                            <a href="{{ route('page.about') }}">About us</a>
                         </li>
                         <li>
-                            <a href="#team">Contact us</a>
+                            <a href="{{ route('page.contact') }}">Contact us</a>
                         </li>
                         <li>
                             <a href="#contact">Terms &amp; Conditions</a>
