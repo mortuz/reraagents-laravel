@@ -169,8 +169,14 @@
                                 <p>
                                     {{ $agent->state->name }} <br>
                                     {{ $agent->city->name }} <br>
-                                    {{ $agent->landmark->name }} <br>
-                                    {{ $agent->area->area }} <br>
+
+                                    @if ($agent->landmark)
+                                        {{ $agent->landmark->name }} <br>
+                                    @endif
+
+                                    @if ($agent->area)
+                                        {{ $agent->area->area }} 
+                                    @endif
                                 </p>
 
                                 <h6>{{ $agent->user->mobile }}</h6>
