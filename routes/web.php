@@ -38,7 +38,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('venture', 'VentureController');
         Route::resource('office', 'OfficeController');
         Route::resource('builders', 'BuilderProfileController');
+
         Route::resource('agents', 'AgentProfileController');
+        Route::get('/agents/premium/{id}/edit', 'AgentProfileController@editPremium')->name('agents.premium.make');
+        Route::post('/agents/premium/{id}/edit', 'AgentProfileController@updatePremium');
+
+
         Route::resource('advertisement', 'AdvertisementController');
         Route::resource('properties', 'PropertiesController');
         Route::get('/property/premium/{property}', 'PropertiesController@premiumEdit')->name('property.premium.edit');

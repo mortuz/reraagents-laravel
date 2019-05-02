@@ -222,10 +222,10 @@
       </div>
 
       <div class="col-md-12 mt-4">
-        {{-- <div class="form-check mx-sm-2">
+        <div class="form-check mx-sm-2">
           <label class="form-check-label">
-          <input type="checkbox" class="form-check-input" name="nofity" {{ old('nofity') ? 'checked' : '' }} value="1"> Inform agent via SMS <i class="input-helper"></i></label>
-        </div> --}}
+            <input type="checkbox" class="form-check-input" name="premium" {{ $agent->premium ? 'checked' : '' }} value="1"> Premium property <i class="input-helper"></i></label>
+        </div>
         <button class="btn btn-gradient-primary mt-3" type="submit">Update Agent profile</button>
       </div>
     </div>

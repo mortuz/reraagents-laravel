@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\AgentProfile;
+use App\Landmark;
+use App\Area;
 use Illuminate\Http\Request;
 use App\State;
 use App\User;
@@ -82,7 +84,12 @@ class AgentProfileController extends Controller
         ]);
 
         Session::flash('success', 'Agent successfully added');
-        return redirect()->route('agents.index');
+
+        if ($request->premium) {
+            return redirect()->route('agents.premium.make', ['id' => $agent->id]);
+        } else {
+            return redirect()->route('agents.index');
+        }
     }
 
     /**
@@ -158,11 +165,17 @@ class AgentProfileController extends Controller
         $agent->bank_name = $request->bank_name;
         $agent->ifsc = $request->ifsc;
 
+        $agent->premium = $request->premium ? 1 : 0;
+
         $agent->save();
 
         Session::flash('success', 'Agent successfully added');
-        return redirect()->route('agents.index');
 
+        if ($request->premium) {
+            return redirect()->route('agents.premium.make', ['id' => $agent->id]);
+        } else {
+            return redirect()->route('agents.index');
+        }
     }
 
     /**
@@ -174,5 +187,38 @@ class AgentProfileController extends Controller
     public function destroy(AgentProfile $agentProfile)
     {
         //
+    }
+
+    public function editPremium($id)
+    {
+        $agent = AgentProfile::find($id);
+
+        $landmarks = Landmark::where('city_id', $agent->city_id)->get();
+        $area = Area::where('city_id', $agent->city_id)->get();
+
+        return view('agents.premium.edit')
+            ->with('agent', $agent)
+            ->with('landmarks', $landmarks)
+            ->with('areas', $area);
+    }
+
+    public function updatePremium(Request $request, $id)
+    {
+        $this->validate($request, [
+            'area' => 'required',
+            'landmark' => 'required'
+        ]);
+
+        // dd($request->all());
+
+        $agent = AgentProfile::find($id);
+
+        $agent->landmark_id = $request->landmark;
+        $agent->area_id = $request->area;
+        $agent->save();
+
+        Session::flash('success', 'Agent successfully added');
+
+        return redirect()->route('agents.index');
     }
 }

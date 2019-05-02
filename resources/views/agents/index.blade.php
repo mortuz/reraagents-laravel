@@ -33,7 +33,7 @@
                 @foreach ($agents as $agent)
                   <tr>
                     <td>{{ $agent->user->id }}</td>
-                    <td> <strong>{{ $agent->user->name }}</strong> </td>
+                    <td> <strong>{{ $agent->user->name }}</strong> {!! $agent->premium ? '<label class="badge badge-success">Premium</label>' : '' !!} </td>
                     <td> {{ $agent->user->mobile }} </td>
                     <td> {{ $agent->state->name }} </td>
                     <td>{{$agent->city->name}}</td>

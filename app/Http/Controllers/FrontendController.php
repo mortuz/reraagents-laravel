@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Property;
 use App\Office;
+use App\AgentProfile;
 
 class FrontendController extends Controller
 {
@@ -18,7 +19,7 @@ class FrontendController extends Controller
 
         // $filter[] = ['state', $request->getParam('state')];
 
-        if (request()->city> 0) {
+        if (request()->city > 0) {
             $filter[] = ['city', $city];
         }
 
@@ -38,7 +39,10 @@ class FrontendController extends Controller
             }
         }
 
+        $agents = AgentProfile::where('premium', 1)->limit(10)->latest()->get();
+
         return view('index')->with('properties', $properties)
+                            ->with('agents', $agents)
                             ->with('title', $title)
                             ->with('description', $description)
                             ->with('keywords', $keywords)

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\AgentProfile;
+use App\State;
+use App\Area;
 
 class AgentsController extends Controller
 {
@@ -15,7 +17,7 @@ class AgentsController extends Controller
      */
     public function index()
     {
-        $agents = AgentProfile::all()->transform(function($agent) {
+        $agents = AgentProfile::all()->transform(function ($agent) {
             return [
                 'name' => $agent->user->name,
                 'id' => $agent->id

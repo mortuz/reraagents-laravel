@@ -11,6 +11,9 @@ class AgentProfile extends Model
         'city_id',
         'contact_no',
         'address',
+        'landmark_id',
+        'area_id',
+        'premium',
         'pincode',
         'pan',
         'gst',
@@ -33,5 +36,15 @@ class AgentProfile extends Model
     public function user()
     {
         return $this->belongsTo('App\User');
+    }
+
+    public function area()
+    {
+        return $this->belongsTo('App\Area');
+    }
+
+    public function landmark()
+    {
+        return $this->belongsTo('App\Landmark');
     }
 }

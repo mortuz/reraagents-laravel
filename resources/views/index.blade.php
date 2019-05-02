@@ -159,23 +159,27 @@
 
                 </div>
 
-                {{-- <div class="col-md-4">
+                <div class="col-md-4">
                     <h3 class="agent-partner">Our Agent Partners</h3>
 
-                    <div class="card ml-1 mr-1 bx-shadow mt-3">
-                        <div class="card-body">
-                            <h5>Chakradhar Seetharaman</h5>
-                            <p>
-                                Amravathi <br>
-                                Thulluru
-                            </p>
+                    @foreach ($agents as $agent)
+                        <div class="card ml-1 mr-1 bx-shadow mt-3">
+                            <div class="card-body">
+                                <h5>{{ $agent->user->name }}</h5>
+                                <p>
+                                    {{ $agent->state->name }} <br>
+                                    {{ $agent->city->name }} <br>
+                                    {{ $agent->landmark->name }} <br>
+                                    {{ $agent->area->area }} <br>
+                                </p>
 
-                            <h6>9505261255</h6>
+                                <h6>{{ $agent->user->mobile }}</h6>
 
+                            </div>
                         </div>
-                    </div>
+                    @endforeach
 
-                </div> --}}
+                </div>
 
                 
             </div>
@@ -188,7 +192,7 @@
     </section>
 
     {{-- buy sell --}}
-    <section class="mt-5">
+    {{-- <section class="mt-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
@@ -218,6 +222,6 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     
 @endsection
