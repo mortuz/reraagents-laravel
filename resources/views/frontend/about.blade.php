@@ -91,16 +91,7 @@
             Post their customers properties
             Browse through available database.</pre>
             
-            
-                <strong>As an Agent why do i need credits</strong>
-                we respect our agents and we do not want our agents to get disturbed by all Individuals and other Agents with
-                unwanted calls, There time is so important for them and for us too, keeping them in mind we give credits to each
-                agent using various methods,
-                As a individual (he/she) will have no credits and will have to walk to the nearest reraagents.in office for further
-                details
-                As a Agents (he/she) will have acccess to credits and they will spend the credits wisely and avoid disturbing the
-                other agents like yourself with no proper requirement.
-                <br><br>
+                <br>
                 <strong>Why reraagents.in</strong>
                 <br>
                 To keep it simple, you need to go with reraagents.in for the following reasons:

@@ -149,7 +149,7 @@
                                 <p class="card-text">{{ $property->areas->first() ? $property->areas->first()->area : '' }}</p>
                                 <p class="card-text">{{ $property->prices->first() ? $property->prices->first()->price : '' }}</p>
                                 {{-- <p class="card-text"></p> --}}
-                                <a class="card-text font-weight-bold" style="color:#0287d7;" href="{{ route('show.property', ['id' => $property->id]) }}">
+                                <a class="card-text font-weight-bold" style="color:#0287d7; font-size:14px;" href="{{ route('show.property', ['id' => $property->id]) }}">
                                     More Information <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                 </a>
                             </div>
