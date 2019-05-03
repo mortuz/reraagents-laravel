@@ -58,7 +58,7 @@
                       </li>
 
                       <li class="mt-3">
-                          <button class="btn btn1 my-2 my-sm-0" type="submit" style="width:16rem;">Sell Your Property</button>
+                          <a class="btn btn1 my-2 my-sm-0" href="{{ route('page.property.sell') }}" style="width:16rem;">Sell Your Property</a>
                       </li>
 
                   </ul>

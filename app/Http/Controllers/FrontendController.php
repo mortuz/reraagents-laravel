@@ -101,7 +101,7 @@ class FrontendController extends Controller
         $description = '';
         $keywords = '';
 
-        return view('about')
+        return view('frontend.about')
             ->with('title', $title)
             ->with('description', $description)
             ->with('keywords', $keywords);
@@ -113,9 +113,21 @@ class FrontendController extends Controller
         $description = '';
         $keywords = '';
 
-        return view('contact')
+        return view('frontend.contact')
             ->with('title', $title)
             ->with('description', $description)
             ->with('keywords', $keywords);
+    }
+
+    public function getSellProperty()
+    {
+        $title = 'Sell your property ';
+        $description = '';
+        $keywords = '';
+
+        return view('frontend.sell-property')
+            ->with('title', $title)
+            ->with('description', $description)
+            ->with('keywords', $keywords);;
     }
 }

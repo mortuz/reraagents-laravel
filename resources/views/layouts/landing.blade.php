@@ -61,7 +61,7 @@
                 </div>
                 <div class="col-md-12">
                     <button class="btn btn1 my-2 my-sm-0" type="submit">Post Your Requirement</button>
-                    <button class="btn btn2 my-2 my-sm-0" type="submit">Sell Your Property</button>
+                    <a class="btn btn2 my-2 my-sm-0" href="{{ route('page.property.sell') }}">Sell Your Property</a>
                 </div>
             </div>
 

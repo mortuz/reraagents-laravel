@@ -175,7 +175,7 @@
                                     @endif
 
                                     @if ($agent->area)
-                                        {{ $agent->area->area }} 
+                                        {{ $agent->area->area }}
                                     @endif
                                 </p>
 

@@ -16,6 +16,9 @@ Route::get('/about', 'FrontendController@about')->name('page.about');
 Route::get('/contact', 'FrontendController@contact')->name('page.contact');
 Route::get('/property/{id}', 'FrontendController@showProperty')->name('show.property');
 
+Route::get('/sell-your-property', 'FrontendController@getSellProperty')->name('page.property.sell');
+Route::post('/sell-your-property', 'FrontendController@postSellProperty');
+
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
