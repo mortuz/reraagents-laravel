@@ -1,7 +1,7 @@
 @extends('layouts.frontend-master')
 
 @section('content')
-    <section class="mt-5">
+    <section class="mt-4">
         <div class="container">
             <div class="partners">
                 <h2 class="page-header mb-3"> About Us:</h2>

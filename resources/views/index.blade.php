@@ -138,11 +138,12 @@
                             <div class="card-body">
                                 <p class="card-text">{{ $property->state->name }} >> <span class="color-dark">{{ $property->city->name }}</span> >>
                                     <span class="color-dark">{{ $property->propertytypes->first()->type }}</span>
-                                    <span class="card-text left-info">
+                                </p>
+
+                                <p class="card-text left-info">
                                         Property Id: <span class="color-red" style="font-weight:bold;">{{ $property->id }}</span>,
                                         <span class="color-grey" style="font-weight:bold;">{{ $property->updated_at->format('Y-m-d') }}</span>
-                                    </span>
-                                </p>
+                                    </p>
                         
                                 <h5 class="card-title card-t1">{{ $property->raw_data->details }}</h5>
                                 <p class="card-text">{{ $property->areas->first() ? $property->areas->first()->area : '' }}</p>

@@ -12,7 +12,7 @@ body{
 }
 
 .logo-header {
-    max-width: 225px;
+    max-width: 175px;
 }
 
 .header-text {
@@ -157,9 +157,9 @@ img {
     max-width: 100%;
 }
 
-.left-info {
+/* .left-info {
     float: right;
-}
+} */
 
 @media only screen and (max-width: 991px) {
 
@@ -185,18 +185,18 @@ img {
     display: none;
 }
 
-.card-t1 {
+/* .card-t1 {
     float: left;
-}
+} */
 
 .left-info {
-    float: left;
+    /* float: left; */
     padding-top: 10px;
 }
 
-.card-text {
+/* .card-text {
     float: left;
-}
+} */
 
 .fixed-nav {
   position: fixed;

@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg bg-light fixed-nav navbar-light pt-3">
+<nav class="navbar navbar-expand-lg bg-light navbar-light pt-3">
     <a class="navbar-brand" href="{{ route('index') }}"><img class="logo-header" src="{{ asset('img/rera_new.png') }}" alt=""></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNav"
         aria-controls="topNav" aria-expanded="false" aria-label="Toggle navigation">
