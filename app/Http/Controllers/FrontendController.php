@@ -129,6 +129,30 @@ class FrontendController extends Controller
             ->with('states', State::all())
             ->with('title', $title)
             ->with('description', $description)
-            ->with('keywords', $keywords);;
+            ->with('keywords', $keywords);
+    }
+
+    public function getTermsAndConditions()
+    {
+        $title = 'Terms and conditions ';
+        $description = '';
+        $keywords = '';
+
+        return view('frontend.terms-conditions')
+                ->with('title', $title)
+            ->with('description', $description)
+            ->with('keywords', $keywords);
+    }
+
+    public function getPrivacy()
+    {
+        $title = 'Privacy policy ';
+        $description = '';
+        $keywords = '';
+
+        return view('frontend.privacy-policy')
+                ->with('title', $title)
+            ->with('description', $description)
+            ->with('keywords', $keywords);
     }
 }

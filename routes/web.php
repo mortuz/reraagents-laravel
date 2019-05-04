@@ -19,6 +19,9 @@ Route::get('/property/{id}', 'FrontendController@showProperty')->name('show.prop
 Route::get('/sell-your-property', 'FrontendController@getSellProperty')->name('page.property.sell');
 Route::post('/sell-your-property', 'FrontendController@postSellProperty');
 
+Route::get('/terms-and-conditions', 'FrontendController@getTermsAndConditions')->name('page.terms');
+Route::get('/privacy-policy', 'FrontendController@getPrivacy')->name('page.privacy');
+
 Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
