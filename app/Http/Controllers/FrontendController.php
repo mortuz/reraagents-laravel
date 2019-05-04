@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Property;
 use App\Office;
 use App\AgentProfile;
-
+use App\State;
 class FrontendController extends Controller
 {
     public function index()
@@ -126,6 +126,7 @@ class FrontendController extends Controller
         $keywords = '';
 
         return view('frontend.sell-property')
+            ->with('states', State::all())
             ->with('title', $title)
             ->with('description', $description)
             ->with('keywords', $keywords);;
