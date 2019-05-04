@@ -125,7 +125,7 @@
                                             <span class="color-red" style="font-weight:bold;">{{ $property->id }}</span> , <span class="color-grey" style="font-weight:bold;">{{ $property->updated_at->format('Y-m-d') }}</span></span>
                                         </p>
 
-                                        <a class="card-text font-weight-bold" style="color:#0287d7;" href="{{ route('show.property', ['id' => $property->id]) }}">
+                                        <a class="card-text font-weight-bold" style="color:#0287d7; font-size:14px;" href="{{ route('show.property', ['id' => $property->id]) }}">
                                             More Information <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                         </a>
 
