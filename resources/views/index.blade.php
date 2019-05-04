@@ -151,8 +151,9 @@
                                     </p>
                         
                                 <h5 class="card-title card-t1">{{ $property->raw_data->details }}</h5>
-                                <p class="card-text">{{ $property->areas->first() ? $property->areas->first()->area : '' }}</p>
-                                <p class="card-text">{{ $property->prices->first() ? $property->prices->first()->price : '' }}</p>
+                                @if($property->areas->first()) <p class="card-text">{{$property->areas->first()->area}}</p> @endif
+                                @if($property->landmarks->first()) <p class="card-text">{{$property->landmarks->first()->name}}</p> @endif
+                                @if($property->prices->first()) <p class="card-text">{{$property->prices->first()->price}}</p> @endif
                                 {{-- <p class="card-text"></p> --}}
                                 <a class="card-text font-weight-bold" style="color:#0287d7; font-size:14px;" href="{{ route('show.property', ['id' => $property->id]) }}">
                                     More Information <i class="fa fa-arrow-right" aria-hidden="true"></i>
