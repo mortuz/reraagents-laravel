@@ -16,6 +16,7 @@ class AgentProfilesTableSeeder extends Seeder
             'user_id' => 1,
             'state_id' => 1,
             'city_id' => 2
+            
         ]);
     }
 }
