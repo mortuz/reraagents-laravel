@@ -73,7 +73,7 @@
                     </div>
                    
 
-                  <button type="button" class="btn float-right btn2 mt-4">Sell Property</button>
+                  <button type="button" class="btn float-right btn1 mt-4">Post Property</button>
 
                 </form>
               </div>
