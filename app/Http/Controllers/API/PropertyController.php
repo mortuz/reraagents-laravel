@@ -31,10 +31,10 @@ class PropertyController extends Controller
         $filter = [];
         $city = 0;
 
-        // $filter[] = ['state', $request->getParam('state')];
+        $filter[] = ['state_id', $request->state];
 
-        if ($request->city> 0) {
-            $filter[] = ['city', $city];
+        if ($request->city > 0) {
+            $filter[] = ['city_id', $request->city];
         }
 
         $filter[] = ['status', 1];
