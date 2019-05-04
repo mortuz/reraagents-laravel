@@ -81,7 +81,7 @@
                     <h5 class="footer-heading">COMPANY</h5>
                     <ul class="list-unstyled">
                         <li>
-                            <a href="{{ route('home') }}">Home</a>
+                            <a href="{{ route('index') }}">Home</a>
                         </li>
                         <li>
                             <a href="{{ route('page.about') }}">About us</a>
@@ -151,9 +151,9 @@
                     <h5 class="footer-heading">Social</h5>
                     <ul class="list-unstyled">
                         <li><a href="" target="_blank">Facebook</a></li>
-                        <li><a href="" target="_blank">Linkedin</a></li>
+                        <!-- <li><a href="" target="_blank">Linkedin</a></li>
                         <li><a href="" target="_blank">Twitter</a></li>
-                        <li><a href="" target="_blank">Instagram</a></li>
+                        <li><a href="" target="_blank">Instagram</a></li> -->
                     </ul>
                 </div>
                 <div class="col-md-3 align-self-center my-3">
