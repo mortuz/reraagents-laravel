@@ -22,7 +22,7 @@
                         <div class="">
                             <p>
                               <img class="icons-property" src="{{ asset('img/icons/placeholder.svg') }}" alt=""> &nbsp; Area : 
-                              <span class="font-weight-bold">{{ $property->areas->first() ? $property->areas->first()->area : '' }} @if($property->landmarks->first()) , $property->landmarks->first()->landmark @endif</span>
+                              <span class="font-weight-bold">{{ $property->areas->first() ? $property->areas->first()->area : '' }} @if($property->landmarks->first()) , {{$property->landmarks->first()->name}} @endif</span>
                             </p>
                             <p><img class="icons-property" src="{{ asset('img/icons/price-tag.svg') }}" alt=""> &nbsp; Price : 
                               <span class="font-weight-bold">{{ $property->prices->first() ? $property->prices->first()->price : '' }}</span></p>
