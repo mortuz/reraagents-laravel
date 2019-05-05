@@ -132,6 +132,11 @@ h6 {
     color: #e01f24;
 }
 
+label.error {
+    color: #e01f24;
+    font-size: 13px;
+}
+
 .premium-img {
     background-repeat: no-repeat;
     background-position: center;
