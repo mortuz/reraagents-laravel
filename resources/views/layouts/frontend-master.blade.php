@@ -42,10 +42,10 @@
                             <a href="{{ route('page.contact') }}">Contact us</a>
                         </li>
                         <li>
-                            <a href="#contact">Terms &amp; Conditions</a>
+                            <a href="{{ route('page.privacy') }}">Privacy policy</a>
                         </li>
                         <li>
-                            <a href="#contact">Privacy Policy</a>
+                            <a href="{{ route('page.terms') }}">Terms &amp; Conditions</a>
                         </li>
                     </ul>
                 </div>

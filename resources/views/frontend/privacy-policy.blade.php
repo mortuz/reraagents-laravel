@@ -5,12 +5,12 @@
         <div class="container">
             <div class="partners">
                 <p><strong></strong></p>
-<p><strong>Reraagents.in website is owned and operated by CHARANETRA SPACES PRIVATE LIMITED.</strong></p><br>
+<h5><strong>Reraagents.in website is owned and operated by CHARANETRA SPACES PRIVATE LIMITED.</strong></h5><br>
 <ul>
-<li>Charanetra Spaces Private Limited has created this privacy statement in order to demonstrate our commitment to our user's privacy.</li>
-<li>We may use IP address to help diagnose problems with our server, and to administer our Web site. Your IP address may be also used to gather broad demographic information.</li>
-<li>in contains links to other websites. Charanetra Spaces Private Limited. is not responsible for the privacy practices or the content of such Web sites.</li>
-<li>We may use a third party ad company to display ads on Reraagents.in (e.g. Google Adsense). These ads may contain cookies. While we may use cookies in other parts of our Web site, cookies received with banner ads are collected by our ad company, and we do not have access to this information.</li>
+<li>Charanetra Spaces Private Limited has created this privacy statement in order to demonstrate our commitment to our user's privacy.</li><br>
+<li>We may use IP address to help diagnose problems with our server, and to administer our Web site. Your IP address may be also used to gather broad demographic information.</li><br>
+<li>in contains links to other websites. Charanetra Spaces Private Limited. is not responsible for the privacy practices or the content of such Web sites.</li><br>
+<li>We may use a third party ad company to display ads on Reraagents.in (e.g. Google Adsense). These ads may contain cookies. While we may use cookies in other parts of our Web site, cookies received with banner ads are collected by our ad company, and we do not have access to this information.</li><br>
 <li>Certifiable information is collected from users and/or registered members of Reraagents.in which includes, but may not be limited to
 <ul>
 <li>Email address.</li>
@@ -22,7 +22,7 @@
 <li>RERA Certificate &amp; Certificate ID number</li>
 <li>Telephone number or mobile number or other contact number</li>
 </ul>
-</li>
+</li><br>
 <li>Except where you are explicitly informed, Charanetra Spaces Private Limited. does not sell, rent, share, trade or give away any of your personal information.</li>
 <li>in may tie-up with partners to bring you various services. However, we will never share your personal information, without your explicitly permission. Still, we encourage you to review the privacy policy of the partner for questions about their use, any personally identifiable information that you may separately submit to such partner.</li>
 <li>in may tie-up with partners to bring you various services. However, we will never share your personal information, without your explicitly permission. Still, we encourage you to review the privacy policy of the partner for questions about their use, any personally identifiable information that you may separately submit to such partner.</li>

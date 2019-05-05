@@ -95,9 +95,6 @@
                         <li>
                             <a href="{{ route('page.terms') }}">Terms &amp; Conditions</a>
                         </li>
-                        <li>
-                            <a href="#contact">Privacy Policy</a>
-                        </li>
                     </ul>
                 </div>
 

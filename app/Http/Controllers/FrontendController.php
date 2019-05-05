@@ -29,7 +29,7 @@ class FrontendController extends Controller
             $filter[] = ['price', request()->price];
         }
 
-        $properties = Property::where($filter)->paginate(15);
+        $properties = Property::where($filter)->latest()->paginate(15);
 
         foreach ($properties as $property) {
             $property->raw_data = json_decode($property->raw_data);
@@ -139,9 +139,10 @@ class FrontendController extends Controller
         $keywords = '';
 
         return view('frontend.terms-conditions')
-                ->with('title', $title)
+            ->with('title', $title)
             ->with('description', $description)
             ->with('keywords', $keywords);
+
     }
 
     public function getPrivacy()
