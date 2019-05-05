@@ -44,6 +44,9 @@
                         <li>
                             <a href="#contact">Terms &amp; Conditions</a>
                         </li>
+                        <li>
+                            <a href="#contact">Privacy Policy</a>
+                        </li>
                     </ul>
                 </div>
 
@@ -102,7 +105,7 @@
                 <div class="col-md-3 light-text mb-3">
                     <h5 class="footer-heading">Social</h5>
                     <ul class="list-unstyled">
-                        <li><a href="" target="_blank">Facebook</a></li>
+                        <li><a href="https://www.facebook.com/reraagents.in/" target="_blank">Facebook</a></li>
                         <!-- <li><a href="" target="_blank">Linkedin</a></li>
                         <li><a href="" target="_blank">Twitter</a></li>
                         <li><a href="" target="_blank">Instagram</a></li> -->

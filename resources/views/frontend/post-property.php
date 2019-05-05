@@ -7,7 +7,7 @@
           <div class="col-md-8 offset-md-2">
             
             <div class="card">
-              <div class="card-header"> <h5>Sell your property</h5> </div>
+              <div class="card-header"> <h5>Post your property</h5> </div>
               <div class="card-body">
                 <form action="{{ route('page.property.sell') }}" method="post">
               
