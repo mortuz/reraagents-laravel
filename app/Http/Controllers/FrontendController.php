@@ -7,6 +7,8 @@ use App\Property;
 use App\Office;
 use App\AgentProfile;
 use App\State;
+use App\PropertyType;
+
 class FrontendController extends Controller
 {
     public function index()
@@ -127,6 +129,7 @@ class FrontendController extends Controller
 
         return view('frontend.sell-property')
             ->with('states', State::all())
+            ->with('types', PropertyType::all())
             ->with('title', $title)
             ->with('description', $description)
             ->with('keywords', $keywords);
@@ -142,7 +145,6 @@ class FrontendController extends Controller
             ->with('title', $title)
             ->with('description', $description)
             ->with('keywords', $keywords);
-
     }
 
     public function getPrivacy()

@@ -296,6 +296,7 @@ class PropertyController extends Controller
                 'premium'       => $property->premium,
                 'status'        => $property->status,
                 'mobile'        => $property->mobile,
+                'expiry_date'   => $property->expiry_date,
                 'area'          => count($property->areas) == 0 ? json_decode($property->raw_data)->location : $property->areas->first()->area,
                 'measurement'   => json_decode($property->raw_data)->measurement,
                 'price'         => $property->prices->first() ? $property->prices->first()->price : json_decode($property->raw_data)->price,
@@ -458,5 +459,64 @@ class PropertyController extends Controller
         $property->images        = json_decode($property->images);
 
         return response()->json(['success' => true, 'data' => $property]);
+    }
+
+    public function postGuestProperty(Request $request)
+    {
+        $this->validate($request, [
+            'state' => 'required',
+            'city' => 'required',
+            'type' => 'required',
+            'mobile' => 'required',
+            'price' => 'required',
+            'measurement' => 'required',
+            'location' => 'required',
+            'details' => 'required'
+        ]);
+
+        $signer = new HS256(env('JWT_KEY'));
+        if ($request->token) {
+            $parser = new JwtParser($signer);
+            $claims = $parser->parse($request->token);
+
+            if ($request->otp != $claims['code']) {
+                return response()->json(['success' => false, 'errors' => true, 'message' => 'Invalid OTP']);
+            } else {
+                // create property
+
+                $user = User::where('mobile', $request->mobile)->where('mobile_verified_at', '!=', null)->first();
+
+                $property = Property::create([
+                    'state_id' => $request->state,
+                    'city_id'  => $request->city,
+                    'user_id'  => $user ? $user->id : 0,
+                    'mobile'   => $request->mobile,
+                    'raw_data' => json_encode([
+                        'price' => $request->price,
+                        'measurement' => $request->measurement,
+                        'location' => $request->location,
+                        'details' => $request->details
+                    ]),
+                ]);
+
+                $property->propertytypes()->attach($request->type);
+
+                if ($user) {
+                    $property->agents()->attach($user->id);
+                }
+
+                return response()->json(['success' => true, 'data' => $property]);
+            }
+        } else {
+            $generator = new JwtGenerator($signer);
+            $code = substr(str_shuffle("0123456789"), 0, 6);
+            $jwt = $generator->generate(['code' => $code]);
+
+            $smsHelper = new SmsHelper();
+            
+            $smsHelper->sendOTP($request->mobile, $code);
+            
+            return response()->json(['success' => false, 'otp_required' => true, 'token' => $jwt]);
+        }
     }
 }

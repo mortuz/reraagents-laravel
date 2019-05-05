@@ -40,6 +40,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 Route::get('/property/premium/details', 'API\PropertyController@premiumDetail');
 Route::post('/auth/recover/password', 'API\AuthController@recoverPassword');
 
+Route::post('property/guest-post', 'API\PropertyController@postGuestProperty')->name('post.guest.property');
 
 Route::post('/register', 'API\AuthController@register')->name('api.auth.register');
 
