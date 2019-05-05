@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Property;
 use App\Office;
 use App\AgentProfile;
-
+use App\State;
 class FrontendController extends Controller
 {
     public function index()
@@ -126,8 +126,33 @@ class FrontendController extends Controller
         $keywords = '';
 
         return view('frontend.sell-property')
+            ->with('states', State::all())
             ->with('title', $title)
             ->with('description', $description)
-            ->with('keywords', $keywords);;
+            ->with('keywords', $keywords);
+    }
+
+    public function getTermsAndConditions()
+    {
+        $title = 'Terms and conditions ';
+        $description = '';
+        $keywords = '';
+
+        return view('frontend.terms-conditions')
+                ->with('title', $title)
+            ->with('description', $description)
+            ->with('keywords', $keywords);
+    }
+
+    public function getPrivacy()
+    {
+        $title = 'Privacy policy ';
+        $description = '';
+        $keywords = '';
+
+        return view('frontend.privacy-policy')
+                ->with('title', $title)
+            ->with('description', $description)
+            ->with('keywords', $keywords);
     }
 }
