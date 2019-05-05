@@ -21,6 +21,10 @@
                   </div>
                 </div>
 
+                <div class="download-text d-none">
+                  Download our app to sell your property.
+                </div>
+
                 <form action="{{ route('page.property.sell') }}" method="post" id="form">
               
                   <div class="form-group">
@@ -39,36 +43,27 @@
                   </div>
 
                    <div class="form-group">
-                    <label for="mobile">Measurements</label>
-                    <input type="text" name="mobile" id="mobile" class="form-control{{$errors->has('mobile') ? ' is-invalid': ''}}">
-                    @if ($errors->has('mobile'))
-                        <label class="invalid-feedback">{{ $errors->mobile }}</label>
-                    @endif
+                    <label for="measurements">Measurements</label>
+                    <input type="text" name="measurements" id="measurements" class="form-control">
                   </div>
 
                    <div class="form-group">
-                    <label for="mobile">Location</label>
-                    <input type="text" name="mobile" id="mobile" class="form-control{{$errors->has('mobile') ? ' is-invalid': ''}}">
-                    @if ($errors->has('mobile'))
-                        <label class="invalid-feedback">{{ $errors->mobile }}</label>
-                    @endif
+                    <label for="location">Location</label>
+                    <input type="text" name="location" id="location" class="form-control">
                   </div>
 
                    <div class="form-group">
-                    <label for="mobile">Price</label>
-                    <input type="text" name="mobile" id="mobile" class="form-control{{$errors->has('mobile') ? ' is-invalid': ''}}">
-                    @if ($errors->has('mobile'))
-                        <label class="invalid-feedback">{{ $errors->mobile }}</label>
-                    @endif
+                    <label for="price">Price</label>
+                    <input type="text" name="price" id="price" class="form-control">
                   </div>
 
                    <div class="form-group">
-                      <label for="exampleFormControlTextarea1">Example textarea</label>
-                      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      <label for="details">Details</label>
+                      <textarea class="form-control" id="details" rows="3" name="details"></textarea>
                     </div>
 
 
-                  <button type="button" class="btn float-right btn2 mt-4">Sell Property</button>
+                  <button type="submit" class="btn float-right btn2 mt-4">Sell Property</button>
 
                 </form>
               </div>
@@ -95,18 +90,11 @@
           dataType: 'json',
           contentType: 'application/json',
           success: function(res) {
-            var html = '<option value="0">Select city</option>';
-
-            var oldCity = '0';
-
-            oldCity = $cityField.attr('data-preselect');
-            if (!oldCity) {
-              oldCity = "{{ old('city') }}";
-            }
+            var html = '<option value="">Select city</option>';
 
             for (let i = 0; i < res.data.length; i++) {
               const city = res.data[i];
-              html += `<option value="${city.id}" ${oldCity == city.id ? 'selected': ''}>${city.name}</option>`;
+              html += `<option value="${city.id}">${city.name}</option>`;
             }
 
 
@@ -135,16 +123,31 @@
         if($(this).val() == 'yes') {
           // hide form
           $('#form').hide();
+          $('.download-text').show();
         } else {
           // show form
           $('#form').show();
+          $('.download-text').hide();
         }
       });
 
 
       $('#form').validate({
         rules: {
-
+          state: 'required',
+          city: 'required',
+          measurements: 'required',
+          location: 'required',
+          price: 'required',
+          details: 'required'
+        },
+        messages: {
+          state: 'Please select a state',
+          city: 'Please select a city',
+          measurements: 'Please enter measurements',
+          location: 'Please enter location',
+          price: 'Please enter price of the property',
+          details: 'Please enter Property details',
         }
       });
     </script>
