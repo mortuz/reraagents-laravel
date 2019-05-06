@@ -40,9 +40,9 @@ class PropertyController extends Controller
         $filter[] = ['status', 1];
         $filter[] = ['inactive', 0];
 
-        if ($request->price) {
-            $filter[] = ['price', $request->price];
-        }
+        // if ($request->price) {
+        //     $filter[] = ['price', $request->price];
+        // }
 
         $properties = Property::where($filter)
                                 ->where('premium', 0)
@@ -68,7 +68,7 @@ class PropertyController extends Controller
                 'property_type' => $property->propertytypes->first()->type,
                 'area'          => count($property->areas) == 0 ? null : $property->areas->first()->area,
                 'measurement'   => json_decode($property->raw_data)->measurement,
-                'price'         => $property->prices->first()->price,
+                'price'         => count($property->prices) ? $property->prices->first()->price : '--',
                 'heading'       => json_decode($property->raw_data)->details,
                 'raw'           => json_decode($property->raw_data),
                 'features'      => $property->features,
@@ -91,7 +91,7 @@ class PropertyController extends Controller
                 'area'          => count($property->areas) == 0 ? null : $property->areas->first()->area,
                 'landmark'      => count($property->landmarks) == 0 ? null : $property->landmarks->first()->name,
                 'measurement'   => json_decode($property->raw_data)->measurement,
-                'price'         => $property->prices->first()->price,
+                'price'         => count($property->prices) ? $property->prices->first()->price : '--',
                 'heading'       => json_decode($property->raw_data)->details,
                 'raw'           => json_decode($property->raw_data),
                 'images'        => json_decode($property->images),
