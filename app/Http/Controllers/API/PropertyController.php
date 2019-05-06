@@ -89,6 +89,7 @@ class PropertyController extends Controller
                 'premium'       => $property->premium,
                 'property_type' => $property->propertytypes->first()->type,
                 'area'          => count($property->areas) == 0 ? null : $property->areas->first()->area,
+                'landmark'      => count($property->landmarks) == 0 ? null : $property->landmarks->first()->name,
                 'measurement'   => json_decode($property->raw_data)->measurement,
                 'price'         => $property->prices->first()->price,
                 'heading'       => json_decode($property->raw_data)->details,
@@ -272,10 +273,12 @@ class PropertyController extends Controller
      * @param  \App\Property  $property
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Property $property)
+    public function destroy()
     {
+        $property = Property::find(request()->property);
+        
         if ($property->user_id != request()->user()->id) {
-            return response()->json(['success' => false, 'message' => 'You do not own this property.']);
+            return response()->json(['success' => false, 'message' => 'You do not own this property.', 'data' => $property]);
         }
 
         $property->inactive = 1;

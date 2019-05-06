@@ -231,3 +231,8 @@ img {
 .icons-property {
     max-width: 20px;
 }
+
+.modal-content iframe{
+    margin: 0 auto;
+    display: block;
+}

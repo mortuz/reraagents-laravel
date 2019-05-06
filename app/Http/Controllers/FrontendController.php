@@ -76,6 +76,15 @@ class FrontendController extends Controller
 
 
         if ($property->premium) {
+            $mobile = '';
+
+            // if handled by company i.e., handled_by = 1
+            if ($property->handled_by) {
+                $office = Office::where('city_id', $property->city_id)->first();
+                // return city office no.
+                $property->mobile = $office->mobile;
+            }
+
             $property->images = json_decode($property->images);
             $property->features = rtrim($property->features, ';');
             $property->features = explode(';', $property->features);

@@ -66,7 +66,7 @@
                     @endif
 
                     @if ($property->youtube_link)
-                        <a class="btn btn-danger mt-4" href="{{ $property->website }}" target="_blank" style="width:16rem;">
+                        <a class="btn btn-danger mt-4" data-toggle="modal" href="#videoModal" target="_blank" style="width:16rem;">
                           Watch video
                         </a>
                     @endif
@@ -92,4 +92,37 @@
         </div>
     </div>
   </section>
+
+  @if ($property->youtube_link)
+      <div id="videoModal" class="modal fade">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <iframe id="videoFrame" style="width: 100%; max-width: 800px; height: 100%; height: 600px" src="{{$property->youtube_link}}" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+  @endif
+  
+@endsection
+
+@section('javascript')
+    <script>
+        /* Get iframe src attribute value i.e. YouTube video url
+        and store it in a variable */
+        var url = $("#videoFrame").attr('src');
+        
+        /* Assign empty url value to the iframe src attribute when
+        modal hide, which stop the video playing */
+        $("#videoModal").on('hide.bs.modal', function(){
+            $("#videoFrame").attr('src', '');
+        });
+        
+        /* Assign the initially stored url back to the iframe src
+        attribute when modal is displayed again */
+        $("#videoModal").on('show.bs.modal', function(){
+            $("#videoFrame").attr('src', url);
+        });
+    </script>
 @endsection
