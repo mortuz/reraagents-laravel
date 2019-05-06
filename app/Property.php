@@ -18,6 +18,7 @@ class Property extends Model
         'google_map',
         'website',
         'images',
+        'inactive',
         'premium',
         'expiry_date',
         'handled_by',

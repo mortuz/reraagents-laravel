@@ -38,6 +38,7 @@ class PropertyController extends Controller
         }
 
         $filter[] = ['status', 1];
+        $filter[] = ['inactive', 0];
 
         if ($request->price) {
             $filter[] = ['price', $request->price];
@@ -273,12 +274,19 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
-        //
+        if ($property->user_id != request()->user()->id) {
+            return response()->json(['success' => false, 'message' => 'You do not own this property.']);
+        }
+
+        $property->inactive = 1;
+        $property->save();
+
+        return response()->json(['success' => true, 'message' => 'Property successfully deleted.']);
     }
 
     public function my()
     {
-        $properties = Property::where('user_id', request()->user()->id)->get();
+        $properties = Property::where('user_id', request()->user()->id)->where('inactive', 0)->get();
 
         $properties->transform(function ($property) {
             $feedback = Feedback::where('property_id', $property->id)->first();
