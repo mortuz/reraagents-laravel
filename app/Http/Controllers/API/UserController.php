@@ -33,7 +33,7 @@ class UserController extends Controller
         
         // look for state ads
         if (!$ad) {
-            $ad = Advertisement::where('state_id', $request->user()->state_id)->first();
+            $ad = Advertisement::where('state_id', $request->user()->state_id)->where('city_id', null)->first();
         }
 
         // look for any ads
@@ -56,7 +56,8 @@ class UserController extends Controller
 
         $data['property']['my'] = Property::where('user_id', $request->user()->id)->get()->count();
 
-        $data['version'] = '0.5';
+        $data['app_url'] = 'https://play.google.com/store/apps/details?id=in.idevia.reraagents';
+        $data['version'] = '0.6';
         $data['ads'] = $ads;
 
         return response()->json(['success' => true, 'data' => $data]);
