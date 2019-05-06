@@ -290,8 +290,9 @@
                     </div>
                   </div>
                 </div>
+              </div>
 
-
+              <div class="accordion" id="accordionExample">
                 <h4 class="page-header mt-5 mb-3">Terms - Agents</h4>
 
                 <div class="card">
@@ -528,9 +529,11 @@
                     </div>
                   </div>
                 </div>
-                
               </div>
+
             </div>
         </div>
     </section>
 @endsection
+
+
