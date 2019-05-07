@@ -510,10 +510,10 @@ class PropertyController extends Controller
                     ]),
                 ]);
 
-                $property->propertytypes()->attach($request->type);
+                $property->propertytypes()->attach(explode(',', $request->type));
 
                 if ($user) {
-                    $property->agents()->attach($user->id);
+                    $property->agents()->attach(explode(',', $user->id));
                 }
 
                 return response()->json(['success' => true, 'data' => $property]);
