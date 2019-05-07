@@ -103,7 +103,7 @@
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-8">
-                    <h3>Properties</h3>
+                    <h3>Property List</h3>
 
                     @foreach ($properties as $property)
                     
