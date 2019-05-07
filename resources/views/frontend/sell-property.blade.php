@@ -1,7 +1,7 @@
 @extends('layouts.frontend-master')
 
 @section('content')
-    <section class="mt-5">
+    <section class="mt-5" style="min-height: calc(100vh - 481px);">
       <div class="container">
         <div class="row">
           <div class="col-md-8 offset-md-2">
@@ -22,7 +22,10 @@
                 </div>
 
                 <div class="download-text" style="display: none">
-                  Download our app to sell your property.
+                  <p class="mt-3">Download our app to sell your property.</p>
+                  <a class="nav-link mt-2" href="https://play.google.com/store/apps/details?id=in.idevia.reraagents" target="_blank">
+                    <img class="playstore-img " src="http://127.0.0.1:8000/img/download-on-the-app-store-icon-0.png" alt="">
+                </a>
                 </div>
 
                 <form action="{{ route('page.property.sell') }}" method="post" id="form" style="display: none">
