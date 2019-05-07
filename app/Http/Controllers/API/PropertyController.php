@@ -70,6 +70,7 @@ class PropertyController extends Controller
                 'measurement'   => json_decode($property->raw_data)->measurement,
                 'price'         => count($property->prices) ? $property->prices->first()->price : '--',
                 'heading'       => json_decode($property->raw_data)->details,
+                'landmark'      => count($property->landmarks) == 0 ? null : $property->landmarks->first()->name,
                 'raw'           => json_decode($property->raw_data),
                 'features'      => $property->features,
                 'created_at'    => $property->created_at,
