@@ -15,7 +15,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
-    <title>Rera Agents -All Certificed agents by RERA</title>
+    <title>Rera Agents - All Certificed agents by RERA</title>
 </head>
 
 <body>
