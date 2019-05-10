@@ -20,7 +20,7 @@ class AgentProfileController extends Controller
      */
     public function index()
     {
-        return view('agents.index')->with('agents', AgentProfile::paginate(10));
+        return view('agents.index')->with('agents', AgentProfile::latest()->paginate(10));
     }
 
     /**
