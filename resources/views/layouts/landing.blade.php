@@ -54,10 +54,10 @@
         </div>
     </nav>
 
-        <div class="container text-center header-text d-flex align-items-center">
+        <div class="container text-center header-text">
             <div class="row ">
                 <div class="col-md-12 hero-text">
-                    <p style="color:#ffffff; font-size: 60px;">For all Agents communication</p>
+                    <p class="hero-tagline" style="color:#ffffff;">For all Agents communication</p>
                 </div>
                 <div class="col-md-12">
                     {{-- <a href="{{ route('page.property.sell') }}"><button class="btn btn1 my-2 my-sm-0" >Post Your Requirement</button></a> --}}

@@ -20,6 +20,7 @@ body{
     color: #ffffff;
     text-shadow: 2px 2px #8e8e8e;
     height: 500px;
+    padding-top: 150px;
 }
 
 .btn1 {
@@ -166,7 +167,22 @@ img {
     float: right;
 } */
 
+.hero-tagline{
+    font-size: 60px;
+}
+
 @media only screen and (max-width: 991px) {
+
+       .header-text {
+    color: #ffffff;
+    text-shadow: 2px 2px #8e8e8e;
+    height: 500px;
+    padding-top: 110px;
+}
+
+.hero-tagline{
+    font-size: 45px;
+}
 
     .premium-img::before {
     content: 'PREMIUM';
@@ -235,4 +251,17 @@ img {
 .modal-content iframe{
     margin: 0 auto;
     display: block;
+}
+
+@media (max-width: 576px) {
+    .header-text {
+    color: #ffffff;
+    text-shadow: 2px 2px #8e8e8e;
+    height: 500px;
+    padding-top: 100px;
+}
+
+.hero-tagline{
+    font-size: 30px;
+}
 }
