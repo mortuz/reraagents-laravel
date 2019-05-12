@@ -1,6 +1,7 @@
 body{
     background-color: #f4f4f4;
     color: #666666;
+    overflow-x: hidden;
 }
 
 .bg-hero {
@@ -181,7 +182,7 @@ img {
 }
 
 .hero-tagline{
-    font-size: 45px;
+    font-size: 60px;
 }
 
     .premium-img::before {
@@ -239,7 +240,7 @@ img {
 
 @media only screen and (max-width: 767px) {
     .agent-partner {
-        padding-top: 30px;
+        padding-top: 45px;
     }
 }
 
@@ -258,10 +259,10 @@ img {
     color: #ffffff;
     text-shadow: 2px 2px #8e8e8e;
     height: 500px;
-    padding-top: 100px;
+    padding-top: 80px;
 }
 
 .hero-tagline{
-    font-size: 30px;
+    font-size: 40px;
 }
 }
