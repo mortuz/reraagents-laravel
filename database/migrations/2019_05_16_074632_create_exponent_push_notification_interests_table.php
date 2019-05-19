@@ -15,7 +15,7 @@ class CreateExponentPushNotificationInterestsTable extends Migration
             $table->string('key', 256)->index();
             $table->string('value');
 
-            $table->unique(['key','value']);
+            // $table->unique(['key','value']);
             $table->timestamps();
         });
     }
