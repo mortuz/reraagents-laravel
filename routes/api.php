@@ -25,6 +25,7 @@ use Illuminate\Http\Request;
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', 'API\UserController@user')->name('api.user');
+    Route::post('/expo-token/store', 'API\ExpoTokenController@store');
 
     Route::get('properties/my', 'API\PropertyController@my');
     Route::get('properties', 'API\PropertyController@index');

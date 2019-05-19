@@ -84,4 +84,8 @@ class Property extends Model
     {
         return $this->belongsTo('App\Feedback');
     }
+
+    public function user() {
+        return $this->belongsTo('App\User');
+    }
 }

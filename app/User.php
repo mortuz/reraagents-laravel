@@ -52,4 +52,9 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Certificate');
     }
+
+    public function tokens()
+    {
+        return $this->hasMany('App\ExpoToken');
+    }
 }

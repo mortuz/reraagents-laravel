@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use Auth;
 use Session;
 use App\State;
+use App\User;
 use App\Property;
 use Illuminate\Http\Request;
 use App\Feedback;
+use Notification;
+use App\Notifications\PropertyApprovedNotification;
+use App\Notifications\PropertyRejectededNotification;
 
 class PropertiesController extends Controller
 {
@@ -141,7 +145,7 @@ class PropertiesController extends Controller
         $property->raw = json_decode($property->raw_data, true);
 
         // dd($property);
-        
+
         return view('properties.edit')
                         ->with('property', $property)
                         ->with('states', State::all());
@@ -171,7 +175,6 @@ class PropertiesController extends Controller
         $property->state_id = $request->state;
         $property->city_id = $request->city;
         $property->handled_by = $request->handler;
-        $property->status = $request->status;
         $property->mobile = $request->contact;
         $property->premium = $request->premium ? $request->premium : 0;
 
@@ -182,9 +185,6 @@ class PropertiesController extends Controller
                 'details' => $request->raw_details
             ]);
         $property->raw_data = $raw_data;
-
-        $property->save();
-
 
         if ($request->bhk) {
             $property->rooms()->sync(explode(',', $request->bhk));
@@ -232,7 +232,20 @@ class PropertiesController extends Controller
             $feedback->save();
         }
 
-        // Space for notification
+        // send notification
+
+        if ($request->status != $property->status) {
+            if ($request->status == 1) {
+                Notification::send($property->user, new PropertyApprovedNotification($property));
+            }
+
+            if ($request->status == 2) {
+                Notification::send($property->user, new PropertyRejectededNotification($property));
+            }
+        }
+
+        $property->status = $request->status;
+        $property->save();
 
         if ($request->premium) {
             return redirect()->route('property.premium.edit', ['property' => $property->id]);
