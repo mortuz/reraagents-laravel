@@ -5,7 +5,11 @@ namespace App\Http\Controllers;
 use App\Advertisement;
 use Illuminate\Http\Request;
 use App\State;
+use App\User;
 use Session;
+use Notification;
+use App\Notifications\NewDashboardAdNotification;
+use App\AgentProfile;
 
 class AdvertisementController extends Controller
 {
@@ -49,7 +53,7 @@ class AdvertisementController extends Controller
 
         $imagesPath = 'uploads/advertisement/' . $image_new_name;
 
-        Advertisement::create([
+        $ad = Advertisement::create([
             'state_id' => $request->state,
             'city_id' => $request->city,
             'link' => $request->link,
@@ -57,6 +61,15 @@ class AdvertisementController extends Controller
             'title' => $request->title,
             'image' => $imagesPath
         ]);
+
+        if ($request->city) {
+            $agents = AgentProfile::where('city_id', $request->city)->get();
+            $users = [];
+            foreach ($agents as $agent) {
+                $users[] = $agent->user;
+            }
+            Notification::send($users, new NewDashboardAdNotification($ad));
+        }
 
         Session::flash('success', 'Advertisement successfully created');
         return redirect()->route('advertisement.index');
@@ -116,6 +129,16 @@ class AdvertisementController extends Controller
         $advertisement->description = $request->description;
         $advertisement->title = $request->title;
         $advertisement->save();
+
+        if ($request->city) {
+            $agents = AgentProfile::where('city_id', $request->city)->get();
+            $users = [];
+            foreach ($agents as $agent) {
+                $users[] = $agent->user;
+            }
+
+            Notification::send($users, new NewDashboardAdNotification($advertisement));
+        }
 
         Session::flash('success', 'Advertisement successfully updated');
         return redirect()->route('advertisement.index');
