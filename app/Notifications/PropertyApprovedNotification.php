@@ -42,13 +42,14 @@ class PropertyApprovedNotification extends Notification
 
         $raw_data = json_decode($this->property->raw_data);
 
-        $description = substr($raw_data->details, 0, 20);
+        $description = substr($raw_data->details, 0, 150);
         // dd( $notifiable->service);
         return ExpoMessage::create()
             ->badge(1)
             ->enableSound()
             ->title($title)
-            ->setJsonData(['my_property' => true])
+            ->setChannelId('property-approval')
+            ->setJsonData(['my_property' => true, 'property_id' => $this->property->id, 'action' => 'approved', 'description' => $description])
             ->body($description);
     }
 

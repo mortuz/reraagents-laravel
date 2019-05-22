@@ -50,7 +50,8 @@ class PropertyRejectededNotification extends Notification
             ->badge(1)
             ->enableSound()
             ->title($title)
-            ->setJsonData(['my_property' => true])
+            ->setChannelId('property-rejection')
+            ->setJsonData(['my_property' => true, 'property_id' => $this->property->id, 'action' => 'rejected', 'description' => $description])
             ->body($description);
     }
 

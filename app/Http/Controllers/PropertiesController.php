@@ -234,7 +234,7 @@ class PropertiesController extends Controller
 
         // send notification
 
-        if ($request->status != $property->status) {
+        // if ($request->status != $property->status) {
             if ($request->status == 1) {
                 Notification::send($property->user, new PropertyApprovedNotification($property));
             }
@@ -242,7 +242,7 @@ class PropertiesController extends Controller
             if ($request->status == 2) {
                 Notification::send($property->user, new PropertyRejectededNotification($property));
             }
-        }
+        // }
 
         $property->status = $request->status;
         $property->save();
