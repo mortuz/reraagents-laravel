@@ -33,8 +33,8 @@ class PropertyController extends Controller
 
         $filter[] = ['state_id', $request->state];
 
-        if ($request->city > 0) {
-            $filter[] = ['city_id', $request->city];
+        if ($request->city) {
+            $filter[] = ['city_id', (int)$request->city];
         }
 
         $filter[] = ['status', 1];

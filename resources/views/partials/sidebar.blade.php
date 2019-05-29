@@ -106,6 +106,13 @@
       </div>
     </li>
 
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('requirement.index') }}">
+        <span class="menu-title">Requiments</span>
+        <i class="mdi mdi-clipboard-account menu-icon"></i>
+      </a>
+    </li>
+
 
     {{-- <li class="nav-item">
       <a class="nav-link" href="../../pages/icons/mdi.html">

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\User;
+use App\Property;
 use App\Certificate;
+use App\AgentProfile;
+use App\Advertisement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\AgentProfile;
-use App\Property;
-use App\Advertisement;
 
 class UserController extends Controller
 {

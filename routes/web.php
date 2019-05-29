@@ -58,5 +58,6 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('area', 'AreaController');
         Route::resource('price', 'PriceController');
         Route::resource('certificate', 'CertificatesController');
+        Route::resource('requirement', 'RequirementsController');
     });
 });
