@@ -109,18 +109,24 @@ class PropertyController extends Controller
         $index = 2;
         $featuredIndex = 0;
 
-        foreach ($properties as $property) {
+        if($properties->count() > 0) {
+            foreach ($properties as $property) {
 
-            // if ($index > 1 && $index % 3 == 0) {
-            if ($premiumProperties->count() > $featuredIndex) {
-                array_push($formattedProperties, $premiumProperties[$featuredIndex]);
+                // if ($index > 1 && $index % 3 == 0) {
+                if ($premiumProperties->count() > $featuredIndex) {
+                    array_push($formattedProperties, $premiumProperties[$featuredIndex]);
+                }
+                $featuredIndex++;
+                // }
+
+                array_push($formattedProperties, $property);
+                $index++;
             }
-            $featuredIndex++;
-            // }
-
-            array_push($formattedProperties, $property);
-            $index++;
+        } else {
+            $formattedProperties = $premiumProperties;
         }
+
+        
 
         
 
