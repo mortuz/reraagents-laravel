@@ -33,7 +33,7 @@ class UserController extends Controller
         
         // look for state ads
         if (!$ad) {
-            $ad = Advertisement::where('state_id', $request->user()->state_id)->where('city_id', null)->latest()->first();
+            $ad = Advertisement::where('state_id', $request->user()->state_id)->where('city_id', '')->latest()->first();
         }
 
         // look for any ads

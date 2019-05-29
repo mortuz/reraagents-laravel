@@ -106,17 +106,17 @@ class PropertyController extends Controller
             ];
         });
 
-        $index = 2;
+        $index = 0;
         $featuredIndex = 0;
 
         if($properties->count() > 0) {
             foreach ($properties as $property) {
 
                 // if ($index > 1 && $index % 3 == 0) {
-                if ($premiumProperties->count() > $featuredIndex) {
-                    array_push($formattedProperties, $premiumProperties[$featuredIndex]);
-                }
-                $featuredIndex++;
+                    if ($premiumProperties->count() > $featuredIndex) {
+                        array_push($formattedProperties, $premiumProperties[$featuredIndex]);
+                    }
+                    $featuredIndex++;
                 // }
 
                 array_push($formattedProperties, $property);
