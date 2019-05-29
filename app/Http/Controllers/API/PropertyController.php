@@ -34,7 +34,7 @@ class PropertyController extends Controller
         $filter[] = ['state_id', $request->state];
 
         if ($request->city) {
-            $filter[] = ['city_id', (int)$request->city];
+            $filter[] = ['city_id', $request->city];
         }
 
         $filter[] = ['status', 1];
@@ -124,7 +124,7 @@ class PropertyController extends Controller
 
         
 
-        return response()->json(['success' => true, 'data' => $formattedProperties]);
+        return response()->json(['success' => true, 'data' => $formattedProperties, 'city' => $request->city, 'state' => $request->state]);
     }
 
     /**
