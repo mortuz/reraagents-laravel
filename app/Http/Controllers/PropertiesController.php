@@ -144,8 +144,6 @@ class PropertiesController extends Controller
         $property->ventures = implode(',', $property->ventures()->pluck('ventures.id')->toArray());
         $property->raw = json_decode($property->raw_data, true);
 
-        // dd($property);
-
         return view('properties.edit')
                         ->with('property', $property)
                         ->with('states', State::all());

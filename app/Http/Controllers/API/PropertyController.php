@@ -8,8 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use MiladRahimi\Jwt\JwtParser;
 use MiladRahimi\Jwt\JwtGenerator;
-use App\Http\Controllers\Controller;
 use MiladRahimi\Jwt\Cryptography\Algorithms\Hmac\HS256;
+use App\Http\Controllers\Controller;
 use App\Helpers\SmsHelper;
 use App\Office;
 use App\Feedback;
@@ -126,11 +126,7 @@ class PropertyController extends Controller
             $formattedProperties = $premiumProperties;
         }
 
-        
-
-        
-
-        return response()->json(['success' => true, 'data' => $formattedProperties, 'city' => $request->city, 'state' => $request->state]);
+        return response()->json(['success' => true, 'data' => $formattedProperties]);
     }
 
     /**

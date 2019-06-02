@@ -35,6 +35,17 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('property/view', 'API\PropertyController@view');
     Route::get('property/premium/call', 'API\PropertyController@premiumCall');
     Route::get('property/office', 'API\PropertyController@office');
+
+    Route::get('requirements', 'API\RequirementController@index');
+    Route::get('requirements/my', 'API\RequirementController@my');
+    Route::post('requirement/call-working-agent', 'API\RequirementController@callworkingAgent');
+    Route::post('requirement/view', 'API\RequirementController@view');
+    Route::post('requirement/store', 'API\RequirementController@store');
+    Route::get('requirement/office', 'API\RequirementController@office');
+    Route::post('requirement/release', 'API\RequirementController@release');
+    Route::get('requirements/working', 'API\RequirementController@working');
+    Route::get('requirement/show', 'API\RequirementController@show');
+    Route::post('requirement/update-details', 'API\RequirementController@updateDetails');
     
     Route::apiResource('certificate', 'API\CertificatesController');
     Route::apiResource('finance', 'API\FinanceController');
