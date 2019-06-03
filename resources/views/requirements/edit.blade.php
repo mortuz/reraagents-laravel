@@ -149,7 +149,8 @@
               <select class="form-control js-status" id="status" name="status">
                 <option value="0" {{ $requirement->status == 0 ? 'selected' : '' }}>New</option>
                 <option value="1" {{ $requirement->status == 1 ? 'selected' : '' }}>Release</option>
-                <option value="2" {{ $requirement->status == 2 ? 'selected' : '' }}>Reject</option>
+                <option value="2" {{ $requirement->status == 2 ? 'selected' : '' }}>Approve</option>
+                <option value="3" {{ $requirement->status == 3 ? 'selected' : '' }}>Reject</option>
               </select>
             </div>
 
@@ -224,13 +225,15 @@
                 <input type="checkbox" id="release-check" class="form-check-input" name="release" value="1"> Release from the agent <i class="input-helper"></i></label>
               </div>
 
-              <div class="form-group js-release-message {{$requirement->status != 2 ? 'd-none': ''}}">
-                <label for="release_message">Reason for release</label>
-                <textarea name="release_message" id="release_message" rows="3" class="form-control"></textarea>
-              </div>
+              
             </div>
           </div>
         @endif
+
+        <div class="form-group">
+          <label for="release_message">Add comment(optional)</label>
+          <textarea name="release_message" id="release_message" rows="3" class="form-control"></textarea>
+        </div>
         
       </div>
 
@@ -258,7 +261,7 @@
           var value = $(this).val();
 
           // if value = 2 show message
-          if (value == 2) {
+          if (value == 3) {
             $('.js-message').removeClass('d-none');
           } else {
             $('.js-message').addClass('d-none');

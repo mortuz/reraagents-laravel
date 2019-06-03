@@ -127,7 +127,8 @@
               <select class="form-control" id="status" name="status">
                 <option value="0">New</option>
                 <option value="1">Release</option>
-                <option value="2">Reject</option>
+                <option value="2">Approve</option>
+                <option value="3">Reject</option>
               </select>
             </div>
 

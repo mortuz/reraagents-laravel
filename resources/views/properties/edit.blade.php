@@ -215,10 +215,10 @@
     
       <script>
 
-        // $(document).on('city_init', function() {
-        //   console.log('selectize')
-        //   initSelectize();
-        // });
+         $(document).on('city_init', function() {
+          console.log('selectize')
+          initSelectize();
+        });
 
         $('.js-status').on('change', function() {
           var value = $(this).val();

@@ -46,6 +46,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('requirements/working', 'API\RequirementController@working');
     Route::get('requirement/show', 'API\RequirementController@show');
     Route::post('requirement/update-details', 'API\RequirementController@updateDetails');
+    Route::get('requirement/get-comments', 'API\RequirementMessageController@show');
+    Route::post('requirement/post-comment', 'API\RequirementMessageController@store');
     
     Route::apiResource('certificate', 'API\CertificatesController');
     Route::apiResource('finance', 'API\FinanceController');

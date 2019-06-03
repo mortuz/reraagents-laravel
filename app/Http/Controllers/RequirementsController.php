@@ -9,6 +9,10 @@ use App\Requirement;
 use App\CustomerStatus;
 use App\RequirementMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\RequirementApprovedNotification;
+use App\Notifications\RequirementRejectedNotification;
+use App\Notifications\RequirementCommentAddedNotification;
 
 class RequirementsController extends Controller
 {
@@ -219,24 +223,31 @@ class RequirementsController extends Controller
         }
 
         if($request->release == 1) {
-            if ($request->release_message) {
-                RequirementMessage::create([
-                    'requirement_id' => $requirement->id,
-                    'user_id' => Auth::id(),
-                    'message' => $request->release_message
-                ]);
-            }
+            $requirement->working_agent = 0;
+            $requirement->customer_status_id = null;
+            $requirement->visit_date = null;
+            $requirement->call_date = null;
+        }
+
+        if ($request->release_message) {
+            RequirementMessage::create([
+                'requirement_id' => $requirement->id,
+                'user_id' => Auth::id(),
+                'message' => $request->release_message
+            ]);
+
+            Notification::send($requirement->user, new RequirementCommentAddedNotification($requirement));
         }
         
 
         // send notification
         if ($request->status != $requirement->status) {
-            if ($request->status == 1) {
-                // Notification::send($requirement->user, new PropertyApprovedNotification($property));
+            if ($request->status == 2) {
+                Notification::send($requirement->user, new RequirementApprovedNotification($requirement));
             }
 
-            if ($request->status == 2) {
-                // Notification::send($requirement->user, new PropertyRejectededNotification($property));
+            if ($request->status == 3) {
+                Notification::send($requirement->user, new RequirementRejectedNotification($requirement));
             }
         }
 
