@@ -382,7 +382,7 @@ class RequirementController extends Controller
         $requirementId = $request->requirement;
         $requirement = Requirement::find($requirementId);
 
-        if ($requirement->working_agent !== $request->user()->id) {
+        if ($requirement->working_agent != $request->user()->id) {
             return response()->json(['success' => false, 'message' => 'You are not working on this requirement.']);
         }
 
