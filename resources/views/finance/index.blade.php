@@ -34,7 +34,7 @@
                     <td>{{ $application->id }}</td>
                     <td> <strong>{{ $application->name }}</strong> </td>
                     <td> <strong>{{ $application->contact }}</strong> </td>
-                    <td> <strong>{{ $application->city->name }}</strong> </td>
+                    <td>{{ $application->city->name }} </td>
                     <td> {{ $application->purpose->purpose }} </td>
                     <td> {{ $application->description }} </td>
                     {{-- <td>

@@ -15,6 +15,8 @@ use App\Http\Controllers\Controller;
 use App\CustomerStatus;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\RequirementStatusChangeNotification;
+use App\RequirementTransaction;
+use App\RequirementStatusTransaction;
 
 class RequirementController extends Controller
 {
@@ -322,6 +324,10 @@ class RequirementController extends Controller
         //     'property_id' => $propertyId
         // ], []);
 
+        RequirementTransaction::create([
+            'requirement_id' => $requirement->id,
+            'user_id' => $request->user()->id,
+        ]);
         // if status approved status == 2
 
         if($requirement->status == 2) {
@@ -408,6 +414,11 @@ class RequirementController extends Controller
             // send notification
             Notification::send($requirement->user, new RequirementStatusChangeNotification($requirement));
             // create transaction
+            RequirementStatusTransaction::create([
+                'customer_status_id' => $request->status,
+                'requirement_id'     => $requirement->id,
+                'user_id'           => $request->user()->id
+            ]);
         }
 
         $requirement->customer_status_id = $request->status;
