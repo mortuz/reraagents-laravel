@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Notification;
 use App\Notifications\RequirementApprovedNotification;
 use App\Notifications\RequirementRejectedNotification;
 use App\Notifications\RequirementCommentAddedNotification;
+use App\Notifications\RequirementReleasedNotification;
 
 class RequirementsController extends Controller
 {
@@ -242,6 +243,10 @@ class RequirementsController extends Controller
 
         // send notification
         if ($request->status != $requirement->status) {
+            if ($request->status == 1) {
+                Notification::send($requirement->user, new RequirementReleasedNotification($requirement));
+            }
+
             if ($request->status == 2) {
                 Notification::send($requirement->user, new RequirementApprovedNotification($requirement));
             }

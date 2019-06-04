@@ -59,5 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('price', 'PriceController');
         Route::resource('certificate', 'CertificatesController');
         Route::resource('requirement', 'RequirementsController');
+
+        Route::get('/finance', 'FinanceController@index')->name('finance.index');
     });
 });

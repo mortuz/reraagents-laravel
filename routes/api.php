@@ -51,7 +51,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     
     Route::apiResource('certificate', 'API\CertificatesController');
     Route::apiResource('finance', 'API\FinanceController');
+    Route::get('/finances', 'API\FinanceController@index');
+    Route::post('/finances/store', 'API\FinanceController@store');
 });
+Route::get('/loan-purposes', 'API\LoanPurposeController@index');
 Route::get('/property/premium/details', 'API\PropertyController@premiumDetail');
 Route::post('/auth/recover/password', 'API\AuthController@recoverPassword');
 

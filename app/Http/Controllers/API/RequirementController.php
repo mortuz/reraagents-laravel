@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 use App\Helpers\SmsHelper;
 use App\Http\Controllers\Controller;
 use App\CustomerStatus;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\RequirementStatusChangeNotification;
 
 class RequirementController extends Controller
 {
@@ -404,6 +406,7 @@ class RequirementController extends Controller
 
         if($requirement->customer_status_id != $request->status) {
             // send notification
+            Notification::send($requirement->user, new RequirementStatusChangeNotification($requirement));
             // create transaction
         }
 

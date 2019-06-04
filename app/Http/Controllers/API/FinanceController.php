@@ -15,7 +15,22 @@ class FinanceController extends Controller
      */
     public function index()
     {
-        return response()->json(['success' => true, 'data' => Finance::where('user_id', request()->user()->id)->get()]);
+        $finances = Finance::where('user_id', request()->user()->id)->get();
+
+        $finances->transform(function($finance) {
+            return [
+                'id' => $finance->id,
+                'name' => $finance->name,
+                'contact' => $finance->contact,
+                'description' => $finance->description,
+                'state' => $finance->state->name,
+                'city' => $finance->city->name,
+                'purpose' => $finance->purpose->purpose,
+                'created_at' => $finance->created_at
+            ];
+        });
+
+        return response()->json(['success' => true, 'data' => $finances]);
 
     }
 
@@ -27,19 +42,28 @@ class FinanceController extends Controller
      */
     public function store(Request $request)
     {
+        // return response()->json(['success' => false, 'message' => 'Successfully submitted your request.', 'data' => $request->all()]);
+
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'nullable|email',
-            'mobile' => 'required',
+            'contact' => 'required',
+            'state' => 'required',
+            'city' => 'required',
+            'purpose' => 'required',
             'description' => 'required'
         ]);
 
-        // Finance::create([
-        //     'name'   => $request->name,
-        //     'mobile' => $request->mobile,
-        //     'email'   => $request->email,
-        //     'description' => $request->description
-        // ]);
+        Finance::create([
+            'name'   => $request->name,
+            'contact' => $request->contact,
+            'loan_purpose_id'   => $request->purpose,
+            'city_id'   => $request->city,
+            'state_id'   => $request->state,
+            'description' => $request->description,
+            'user_id' => $request->user()->id
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Successfully submitted your request.']);
     }
 
     /**
