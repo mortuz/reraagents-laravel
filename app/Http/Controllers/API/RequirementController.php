@@ -287,6 +287,7 @@ class RequirementController extends Controller
                 'features'      => $requirement->features,
                 'created_at'    => $requirement->created_at,
                 'updated_at'    => $requirement->updated_at,
+                'working_agent' => $requirement->working_agent,
                 'property_type' => $requirement->propertytypes->first() ? $requirement->propertytypes->first()->type : null,
             ];
         });
@@ -331,6 +332,58 @@ class RequirementController extends Controller
         // if status approved status == 2
 
         if($requirement->status == 2) {
+            $office = Office::where('city_id', $requirement->city_id)->first();
+            // return city office no.
+            return response()->json(['success' => true, 'data' => $office->mobile]);
+        } else {
+            // if handled by company i.e., handled_by = 1
+            if ($requirement->handled_by) {
+                $office = Office::where('city_id', $requirement->city_id)->first();
+                // return city office no.
+                return response()->json(['success' => true, 'data' => $office->mobile]);
+            }
+            // return property no
+            return response()->json(['success' => true, 'data' => $requirement->mobile]);
+        }
+    }
+
+    public function call()
+    {
+        $request = request();
+
+        $requirementId = $request->requirement;
+
+        $requirement = Requirement::find($requirementId);
+
+        if ($requirement->working_agent != $request->user()->id) {
+            return response()->json(['success' => false, 'message' => "You are not working on this requirement."]);;
+        }
+
+        $certificates = $request->user()->certificates()
+            ->where('status', 1)
+            ->where('state_id', $requirement->state_id)
+            ->get();
+
+        // if no certificate found
+        if (!$certificates->count()) {
+            return response()->json(['success' => false, 'permission' => false]);
+        }
+
+        $requirement->working_agent = $request->user()->id;
+        $requirement->save();
+
+        // Transaction::updateOrCreate([
+        //     'user_id' => $request->user()->id,
+        //     'property_id' => $propertyId
+        // ], []);
+
+        RequirementTransaction::create([
+            'requirement_id' => $requirement->id,
+            'user_id' => $request->user()->id,
+        ]);
+        // if status approved status == 2
+
+        if ($requirement->status == 2) {
             $office = Office::where('city_id', $requirement->city_id)->first();
             // return city office no.
             return response()->json(['success' => true, 'data' => $office->mobile]);
