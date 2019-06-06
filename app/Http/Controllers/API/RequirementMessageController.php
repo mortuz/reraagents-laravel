@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\RequirementMessage;
+use App\Requirement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Notification;
@@ -39,11 +40,13 @@ class RequirementMessageController extends Controller
             'requirement_id' => $request->requirement
         ]);
 
-        $requirement = Requirement::find( $request->requirement);
+        $requirement = Requirement::find($request->requirement);
+
+        // dd( $requirement->user);
 
         Notification::send($requirement->user, new RequirementCommentAddedNotification($requirement));
 
-        return response()->json(['success' => true, 'message' => 'Comment successfully submitted.']);
+        return response()->json(['success' => true, 'message' => 'Comment successfully submitted.', 'a' => $requirement->user]);
     }
 
     /**

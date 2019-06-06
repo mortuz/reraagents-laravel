@@ -456,14 +456,25 @@ class RequirementController extends Controller
             'requirement' => 'required'
         ]);
 
+        
         $requirementId = $request->requirement;
-
+        
         $requirement = Requirement::find($requirementId);
+        // return response()->json(['success' => true, 'params' => $requirement->status]);
 
-        $requirement->call_date = $request->call_date;
-        $requirement->visit_date = $request->visit_date;
+        if($request->visit_date) {
+            $requirement->visit_date = $request->visit_date;
+        }
 
-        if($requirement->customer_status_id != $request->status) {
+        if($request->call_date) {
+            $requirement->call_date = $request->call_date;
+        }
+
+        $currentStatus = $requirement->customer_status_id;
+        $requirement->customer_status_id = $request->status;
+        $requirement->save();
+
+        if($currentStatus != $request->status) {
             // send notification
             Notification::send($requirement->user, new RequirementStatusChangeNotification($requirement));
             // create transaction
@@ -473,9 +484,6 @@ class RequirementController extends Controller
                 'user_id'           => $request->user()->id
             ]);
         }
-
-        $requirement->customer_status_id = $request->status;
-        $requirement->save();
 
         return response()->json(['success' => true, 'message' => 'Details successfully updated.']);
     }

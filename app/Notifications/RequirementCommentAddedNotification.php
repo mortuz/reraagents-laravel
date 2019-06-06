@@ -41,7 +41,7 @@ class RequirementCommentAddedNotification extends Notification
      */
     public function toExpoPush($notifiable)
     {
-        $title = 'Requirement id: ' . $this->requirement->id . 'new comment added';
+        $title = 'Requirement id: ' . $this->requirement->id . ' new comment added';
 
         $raw_data = json_decode($this->requirement->raw_data);
 

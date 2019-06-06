@@ -96,8 +96,8 @@ class Requirement extends Model
         return $this->hasMany('App\RequirementMessage');
     }
 
-    public function status()
+    public function customerStatus()
     {
-        return $this->belongsTo('App\CustomerStatus');
+        return $this->belongsTo('App\CustomerStatus', 'customer_status_id', 'id');
     }
 }
