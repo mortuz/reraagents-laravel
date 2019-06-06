@@ -42,7 +42,12 @@ class RequirementStatusChangeNotification extends Notification
      */
     public function toExpoPush($notifiable)
     {
-        $title = 'Requirement id: ' . $this->requirement->id . ' status changed to ' . $this->requirement->status->status;
+        $title = '';
+        if($this->requirement->customer_status_id) {
+            $title = 'Requirement id: ' . $this->requirement->id . ' status changed to ' . $this->requirement->customerStatus->status;
+        } else {
+            $title = 'Requirement id: status changed';
+        }
 
         $raw_data = json_decode($this->requirement->raw_data);
 
