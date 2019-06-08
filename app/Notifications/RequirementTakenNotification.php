@@ -51,7 +51,7 @@ class RequirementTakenNotification extends Notification
             ->enableSound()
             ->title($title)
             ->setChannelId('requirement-taken')
-            ->setJsonData(['my_requirement' => true, 'requirement_id' => $this->requirement->id, 'action' => 'rejected', 'description' => $description])
+            ->setJsonData(['my_requirement' => true, 'requirement_id' => $this->requirement->id, 'action' => 'taken', 'description' => $description])
             ->body($description);
     }
 
