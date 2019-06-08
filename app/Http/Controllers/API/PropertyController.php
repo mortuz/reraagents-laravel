@@ -28,8 +28,11 @@ class PropertyController extends Controller
             'state' => 'required'
         ]);
 
+        $items_per_page = 20;
+        $premium_items_per_page = 5;
+        $page = $request->page ? ((int) $request->page) : 1;
+
         $filter = [];
-        $city = 0;
 
         $filter[] = ['state_id', $request->state];
 
@@ -46,11 +49,15 @@ class PropertyController extends Controller
 
         $properties = Property::where($filter)
                                 ->where('premium', 0)
+                                ->limit( $items_per_page)
+                                ->offset(($page - 1) * $items_per_page)
                                 ->latest()
                                 ->get();
                                 
         $premiumProperties = Property::where($filter)
                                 ->where('premium', 1)
+                                ->limit( $premium_items_per_page)
+                                ->offset(($page - 1) * $premium_items_per_page)
                                 ->latest()
                                 ->get();
                                 
@@ -126,7 +133,7 @@ class PropertyController extends Controller
             $formattedProperties = $premiumProperties;
         }
 
-        return response()->json(['success' => true, 'data' => $formattedProperties]);
+        return response()->json(['success' => true, 'data' => $formattedProperties, 'page' => $page]);
     }
 
     /**

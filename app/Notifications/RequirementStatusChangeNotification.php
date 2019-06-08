@@ -57,7 +57,7 @@ class RequirementStatusChangeNotification extends Notification
             ->enableSound()
             ->title($title)
             ->setChannelId('requirement-status')
-            ->setJsonData(['my_requirement' => true, 'requirement_id' => $this->requirement->id, 'action' => 'rejected', 'description' => $description])
+            ->setJsonData(['my_requirement' => true, 'requirement_id' => $this->requirement->id, 'action' => 'status_changed', 'description' => $description])
             ->body($description);
     }
 

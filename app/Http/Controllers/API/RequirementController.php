@@ -31,6 +31,9 @@ class RequirementController extends Controller
             'state' => 'required'
         ]);
 
+        $items_per_page = 20;
+        $page = $request->page ? ((int)$request->page) : 1;
+
         $filter = [];
 
         $filter[] = ['state_id', $request->state];
@@ -44,6 +47,8 @@ class RequirementController extends Controller
 
         $requirements = Requirement::where($filter)
             ->where('working_agent', 0)
+            ->limit($items_per_page)
+            ->offset(($page - 1) * $items_per_page)
             ->latest()
             ->get();
 
