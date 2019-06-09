@@ -29,11 +29,11 @@ class UserController extends Controller
         $ads = [];
         $ad = null;
         // look for city ads
-        $ad = Advertisement::where('city_id', $request->user()->city_id)->latest()->first();
+        $ad = Advertisement::where('city_id', $request->user()->agent->city_id)->latest()->first();
         
         // look for state ads
         if (!$ad) {
-            $ad = Advertisement::where('state_id', $request->user()->state_id)->where('city_id', '')->latest()->first();
+            $ad = Advertisement::where('state_id', $request->user()->agent->state_id)->where('city_id')->latest()->first();
         }
 
         // look for any ads
