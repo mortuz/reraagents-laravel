@@ -7,11 +7,13 @@ use Session;
 use App\State;
 use App\User;
 use App\Property;
+use App\AgentProfile;
 use Illuminate\Http\Request;
 use App\Feedback;
 use Notification;
 use App\Notifications\PropertyApprovedNotification;
 use App\Notifications\PropertyRejectededNotification;
+use App\Notifications\PremiumPropertyNotification;
 
 class PropertiesController extends Controller
 {
@@ -309,6 +311,15 @@ class PropertiesController extends Controller
         }
 
         $property->save();
+
+        $agents = AgentProfile::where('city_id', $property->city_id)->get();
+        $users = [];
+
+        foreach ($agents as $agent) {
+            array_push($users, $agent->user);
+        }
+
+        Notification::send($users, new PremiumPropertyNotification($property));
 
         Session::flash('success', 'Property successfully updated.');
         return redirect()->route('properties.index');

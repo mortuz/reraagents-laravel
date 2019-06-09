@@ -4,19 +4,21 @@ namespace App\Http\Controllers\API;
 
 use App\User;
 use App\Office;
+use App\AgentProfile;
 use App\Property;
 use App\Requirement;
+use App\CustomerStatus;
+use App\RequirementTransaction;
+use App\RequirementStatusTransaction;
 use MiladRahimi\Jwt\JwtParser;
 use MiladRahimi\Jwt\JwtGenerator;
 use MiladRahimi\Jwt\Cryptography\Algorithms\Hmac\HS256;
 use Illuminate\Http\Request;
 use App\Helpers\SmsHelper;
 use App\Http\Controllers\Controller;
-use App\CustomerStatus;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\RequirementStatusChangeNotification;
-use App\RequirementTransaction;
-use App\RequirementStatusTransaction;
+use App\Notifications\PremiumPropertyNotification;
 
 class RequirementController extends Controller
 {
@@ -451,6 +453,15 @@ class RequirementController extends Controller
         $requirement->visit_date = null;
         $requirement->call_date = null;
         $requirement->save();
+
+        $agents = AgentProfile::where('city_id', $requirement->city_id)->get();
+        $users = [];
+
+        foreach ($agents as $agent) {
+            if ($requirement->user_id == $agent->user_id || $request->user()->id == $agent->user_id) continue;
+            array_push($users, $agent->user);
+        }
+        Notification::send($users, new PremiumPropertyNotification($requirement));
 
         return response()->json(['success' => true, 'message' => 'Requirement successfully released.']);
     }

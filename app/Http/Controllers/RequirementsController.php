@@ -228,6 +228,15 @@ class RequirementsController extends Controller
             $requirement->customer_status_id = null;
             $requirement->visit_date = null;
             $requirement->call_date = null;
+
+            $agents = AgentProfile::where('city_id', $requirement->city_id)->get();
+            $users = [];
+
+            foreach ($agents as $agent) {
+                if ($requirement->user_id == $agent->user_id || $request->user()->id == $agent->user_id) continue;
+                array_push($users, $agent->user);
+            }
+            Notification::send($users, new PremiumPropertyNotification($requirement));
         }
 
         if ($request->release_message) {
