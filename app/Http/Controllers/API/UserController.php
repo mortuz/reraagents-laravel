@@ -28,7 +28,7 @@ class UserController extends Controller
 
         $ads = [];
         $ad = null;
-        $agent = AgentProfile::where('user_id', $request->user()->id)->get();
+        $agent = AgentProfile::where('user_id', $request->user()->id)->first();
         // look for city ads
         $ad = Advertisement::where('city_id', $agent->city_id)->latest()->first();
         
