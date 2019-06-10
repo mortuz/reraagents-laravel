@@ -60,15 +60,16 @@ class FrontendController extends Controller
         $premiumProperty = null;
 
         if($property->landmarks->first()) {
-            $premium[] = $property->landmarks->first()->properties()->where('property_id', '!=', $id)->take(5)->inRandomOrder()->get();
+            $premium[] = $property->landmarks->first()->properties()->where('property_id', '!=', $id)->where('status', 1)->take(5)->inRandomOrder()->get();
         }
 
         if($property->areas->first()) {
-            $premium[] = $property->areas->first()->properties()->where('property_id', '!=', $id)->take(5)->inRandomOrder()->get();
+            $premium[] = $property->areas->first()->properties()->where('property_id', '!=', $id)->where('status', 1)->take(5)->inRandomOrder()->get();
         }
 
         $premium[] = Property::where('city_id', $property->city_id)
             ->where('id', '!=', $id)
+            ->where('status', 1)
             ->inRandomOrder()->limit(4)->get();
         // dd($premium); 
         // dd( $premium[0]->merge($premium[1]));
