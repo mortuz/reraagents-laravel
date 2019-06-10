@@ -174,26 +174,28 @@
                     <h3 class="agent-partner">Our Agent Partners</h3>
 
                     @foreach ($agents as $agent)
-                        <div class="card ml-1 mr-1 bx-shadow mt-3">
-                            <div class="card-body">
-                                <h5>{{ $agent->user->name }}</h5>
-                                <p>
-                                    {{ $agent->state->name }} <br>
-                                    {{ $agent->city->name }} <br>
+                        <a href="{{ route('agent.details', ['id' => $agent->id]) }}">
+                            <div class="card ml-1 mr-1 bx-shadow mt-3">
+                                <div class="card-body">
+                                    <h5>{{ $agent->user->name }}</h5>
+                                    <p>
+                                        {{ $agent->state->name }} <br>
+                                        {{ $agent->city->name }} <br>
 
-                                    @if ($agent->landmark)
-                                        {{ $agent->landmark->name }} <br>
-                                    @endif
+                                        @if ($agent->landmark)
+                                            {{ $agent->landmark->name }} <br>
+                                        @endif
 
-                                    @if ($agent->area)
-                                        {{ $agent->area->area }}
-                                    @endif
-                                </p>
+                                        @if ($agent->area)
+                                            {{ $agent->area->area }}
+                                        @endif
+                                    </p>
 
-                                <h6>{{ $agent->user->mobile }}</h6>
+                                    <h6>{{ $agent->user->mobile }}</h6>
 
+                                </div>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
 
                 </div>

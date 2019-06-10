@@ -176,6 +176,26 @@ class FrontendController extends Controller
             ->with('keywords', $keywords);
     }
 
+    public function getAgentDetails($id)
+    {
+        $agent = AgentProfile::where('id', $id)->where('premium', 1)->first();
+
+        if (!$agent) {
+            return redirect()->back();
+        }
+
+        $title = $agent->user->name . ' ';
+        $description = '';
+        $keywords = '';
+
+        return view('frontend.agent-details')
+            ->with('title', $title)
+            ->with('description', $description)
+            ->with('keywords', $keywords)
+            ->with('agent', $agent)
+            ;
+    }
+
     public function getTermsAndConditions()
     {
         $title = 'Terms and conditions ';
