@@ -59,14 +59,14 @@ class FrontendController extends Controller
         $premium = [];
 
         if($property->landmarks->first()) {
-            $premium[] = $property->landmarks->first()->properties()->take(5)->inRandomOrder()->get();
+            $premium[] = $property->landmarks->first()->properties()->where('property_id', '!=', $id)->take(5)->inRandomOrder()->get();
         }
 
         if($property->areas->first()) {
-            $premium[] = $property->areas->first()->properties()->take(5)->inRandomOrder()->get();
+            $premium[] = $property->areas->first()->properties()->where('property_id', '!=', $id)->take(5)->inRandomOrder()->get();
         }
 
-        $premium[] = Property::Where('city_id', $property->city_id)
+        $premium[] = Property::where('city_id', $property->city_id)
             ->where('id', '!=', $id)
             ->inRandomOrder()->limit(4)->get();
         
