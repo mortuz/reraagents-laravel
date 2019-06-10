@@ -124,7 +124,6 @@ class FrontendController extends Controller
                     ->with('title', $title)
                     ->with('description', $description)
                     ->with('keywords', $keywords)
-                    ->with('premiumProperties', $premiumProperty->take(4))
                     ;
         } else {
             return view('frontend.property-detail')
@@ -133,7 +132,7 @@ class FrontendController extends Controller
                     ->with('title', $title)
                     ->with('description', $description)
                     ->with('keywords', $keywords)
-                    ->with('premiumProperties', $premiumProperty->take(4))
+                    ->with('premiumProperties', $premiumProperty ? $premiumProperty->take(4) : [])
             ;
         }
     }
