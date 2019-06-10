@@ -25,6 +25,16 @@ class Property extends Model
         'status'
     ];
 
+    public function getDecodedRawDataAttribute()
+    {
+        return json_decode($this->raw_data);
+    }
+
+    public function getFirstImageAttribute()
+    {
+        return json_decode($this->images);
+    }
+
     public function areas()
     {
         return $this->belongsToMany('App\Area');

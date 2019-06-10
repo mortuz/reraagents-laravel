@@ -108,15 +108,17 @@
                     @foreach ($properties as $property)
                     
                       @if ($property->premium)
-                          <div class="card ml-1 mr-1 bx-shadow mt-3">
+                        <div class="card ml-1 mr-1 bx-shadow mt-3">
                             <div class="row no-gutters">
                                 <div class="col-md-4">
                                     <div class="premium-img" style="background-image: url('{{ $property->images ? $property->images[0] : 'https://via.placeholder.com/250x200?text=N/A' }} ')"></div>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <p class="card-text">{{ $property->state->name }} >> <span class="color-dark">{{ $property->city->name }}</span> >>
-                                            <span class="color-dark">{{ $property->propertytypes->first()->type }}</span>
+                                        <p class="card-text">{{ $property->state->name }} >> <span class="color-dark">{{ $property->city->name }}</span> 
+                                            @if ($property->propertytypes->first())
+                                                >> <span class="color-dark">{{ $property->propertytypes->first()->type }}</span>                                                
+                                            @endif
                                         </p>
                                         <h5 class="card-title card-t1">{{ $property->raw_data->details }}</h5>
                                         {{-- <p class="card-text">{{ $property->areas->first() ? $property->areas->first()->area : '' }}</p>
@@ -130,7 +132,7 @@
                                             <span class="color-red" style="font-weight:bold;">{{ $property->id }}</span> , <span class="color-grey" style="font-weight:bold;">{{ $property->updated_at->format('Y-m-d') }}</span></span>
                                         </p>
 
-                                        <a class="card-text font-weight-bold" style="color:#0287d7; font-size:14px;" href="{{ route('show.property', ['id' => $property->id]) }}">
+                                        <a class="card-text font-weight-bold" style="color:#0287d7; font-size:14px;" href="{{ route('show.property', ['id' => $property->id]) }}" target="_blank">
                                             More Information <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                         </a>
 
@@ -141,8 +143,10 @@
                       @else
                           <div class="card ml-1 mr-1 bx-shadow mt-3">
                             <div class="card-body">
-                                <p class="card-text">{{ $property->state->name }} >> <span class="color-dark">{{ $property->city->name }}</span> >>
-                                    <span class="color-dark">{{ $property->propertytypes->first()->type }}</span>
+                                <p class="card-text">{{ $property->state->name }} >> <span class="color-dark">{{ $property->city->name }}</span>
+                                    @if ($property->propertytypes->first())
+                                        >> <span class="color-dark">{{ $property->propertytypes->first()->type }}</span>                                                
+                                    @endif
                                 </p>
 
                                 <p class="card-text left-info">
@@ -155,7 +159,7 @@
                                 @if($property->landmarks->first()) <p class="card-text">{{$property->landmarks->first()->name}}</p> @endif
                                 @if($property->prices->first()) <p class="card-text">{{$property->prices->first()->price}}</p> @endif
                                 {{-- <p class="card-text"></p> --}}
-                                <a class="card-text font-weight-bold" style="color:#0287d7; font-size:14px;" href="{{ route('show.property', ['id' => $property->id]) }}">
+                                <a class="card-text font-weight-bold" style="color:#0287d7; font-size:14px;" href="{{ route('show.property', ['id' => $property->id]) }}" target="_blank">
                                     More Information <i class="fa fa-arrow-right" aria-hidden="true"></i>
                                 </a>
                             </div>

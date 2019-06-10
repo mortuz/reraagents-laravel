@@ -56,6 +56,24 @@ class FrontendController extends Controller
         $property =  Property::find($id);
         $property->raw_data = json_decode($property->raw_data);
         $office = Office::where('city_id', $property->city_id)->first();
+        $premium = [];
+        $landmarkCondition = [];
+        $areaCondition = [];
+
+        if($property->landmarks->first()) {
+            $landmarkCondition[] = ['landmarks', '=', $property->landmarks->first()->id] ;
+        }
+
+        if($property->areas->first()) {
+            $areaCondition[] = ['areas', '=', $property->areas->first()->id] ;
+        }
+
+        $premiumProperties = Property::where($landmarkCondition)
+            ->orWhere($areaCondition)
+            ->orWhere('city_id', $property->city_id)
+            ->where('id', '!=', $id)
+            ->inRandomOrder()->limit(4)->get();
+        
 
         $areas = [];
         $landmarks = [];
@@ -76,7 +94,7 @@ class FrontendController extends Controller
 
 
         if ($property->premium) {
-            $mobile = '';
+            // $mobile = '';
 
             // if handled by company i.e., handled_by = 1
             if ($property->handled_by) {
@@ -94,6 +112,7 @@ class FrontendController extends Controller
                     ->with('title', $title)
                     ->with('description', $description)
                     ->with('keywords', $keywords)
+                    ->with('premiumProperties', $premiumProperties)
                     ;
         } else {
             return view('frontend.property-detail')
@@ -102,6 +121,7 @@ class FrontendController extends Controller
                     ->with('title', $title)
                     ->with('description', $description)
                     ->with('keywords', $keywords)
+                    ->with('premiumProperties', $premiumProperties)
             ;
         }
     }
