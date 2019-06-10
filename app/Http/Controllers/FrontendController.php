@@ -69,7 +69,8 @@ class FrontendController extends Controller
         $premium[] = Property::where('city_id', $property->city_id)
             ->where('id', '!=', $id)
             ->inRandomOrder()->limit(4)->get();
-        
+       // dd(array_merge($premium)); 
+	// dd( $premium[0]->merge($premium[1])->merge($premium[2]));
 
         $areas = [];
         $landmarks = [];
@@ -88,7 +89,7 @@ class FrontendController extends Controller
         $keywords .= $property->state->name . ',';
         $keywords .= $property->city->name . ',';
 
-        // dd( $premium[0]->take(4));
+        
 
         if ($property->premium) {
             // $mobile = '';
@@ -110,7 +111,7 @@ class FrontendController extends Controller
                     ->with('title', $title)
                     ->with('description', $description)
                     ->with('keywords', $keywords)
-                    ->with('premiumProperties', $premium[0]->take(4))
+                    ->with('premiumProperties', $premium[0]->merge($premium[1])->merge($premium[2])->take(4))
                     ;
         } else {
             return view('frontend.property-detail')
@@ -119,7 +120,7 @@ class FrontendController extends Controller
                     ->with('title', $title)
                     ->with('description', $description)
                     ->with('keywords', $keywords)
-                    ->with('premiumProperties', $premium[0]->take(4))
+                    ->with('premiumProperties', $premium[0]->merge($premium[1])->merge($premium[2])->take(4))
             ;
         }
     }
