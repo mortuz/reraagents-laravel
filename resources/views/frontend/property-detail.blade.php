@@ -92,7 +92,7 @@
     </section>
 
     @if (count($premiumProperties))
-        <section id="premium-properties">
+        <section id="premium-properties" class="mt-3 ml-2">
           <div class="container">
             <div class="row">
               <div class="col-12">
