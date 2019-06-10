@@ -88,7 +88,7 @@ class FrontendController extends Controller
         $keywords .= $property->state->name . ',';
         $keywords .= $property->city->name . ',';
 
-        // dd( $premium[0]->take(4));
+        dd( $premium[0]->merge($premium[1])->merge($premium[2]));
 
         if ($property->premium) {
             // $mobile = '';
