@@ -57,20 +57,16 @@ class FrontendController extends Controller
         $property->raw_data = json_decode($property->raw_data);
         $office = Office::where('city_id', $property->city_id)->first();
         $premium = [];
-        $landmarkCondition = [];
-        $areaCondition = [];
 
         if($property->landmarks->first()) {
-            $landmarkCondition[] = ['landmarks', '=', $property->landmarks->first()->id] ;
+            $premium[] = $property->landmarks->first()->properties()->take(5)->where('id', '!=', $id)->inRandomOrder()->get();
         }
 
         if($property->areas->first()) {
-            $areaCondition[] = ['areas', '=', $property->areas->first()->id] ;
+            $premium[] = $property->areas->first()->properties()->take(5)->where('id', '!=', $id)->inRandomOrder()->get();
         }
 
-        $premiumProperties = Property::where($landmarkCondition)
-            ->orWhere($areaCondition)
-            ->orWhere('city_id', $property->city_id)
+        $premium[] = Property::Where('city_id', $property->city_id)
             ->where('id', '!=', $id)
             ->inRandomOrder()->limit(4)->get();
         
@@ -92,6 +88,7 @@ class FrontendController extends Controller
         $keywords .= $property->state->name . ',';
         $keywords .= $property->city->name . ',';
 
+        // dd( $premium[0]->take(4));
 
         if ($property->premium) {
             // $mobile = '';
@@ -107,12 +104,13 @@ class FrontendController extends Controller
             $property->features = rtrim($property->features, ';');
             $property->features = explode(';', $property->features);
 
+
             return view('frontend.premium-property-detail')
                     ->with('property', $property)
                     ->with('title', $title)
                     ->with('description', $description)
                     ->with('keywords', $keywords)
-                    ->with('premiumProperties', $premiumProperties)
+                    ->with('premiumProperties', $premium[0]->take(4))
                     ;
         } else {
             return view('frontend.property-detail')
@@ -121,7 +119,7 @@ class FrontendController extends Controller
                     ->with('title', $title)
                     ->with('description', $description)
                     ->with('keywords', $keywords)
-                    ->with('premiumProperties', $premiumProperties)
+                    ->with('premiumProperties', $premium[0]->take(4))
             ;
         }
     }

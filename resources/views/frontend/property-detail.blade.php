@@ -91,7 +91,7 @@
       </div>
     </section>
 
-    @if ($premiumProperties->count())
+    @if (count($premiumProperties))
         <section id="premium-properties">
           <div class="container">
             <div class="row">
