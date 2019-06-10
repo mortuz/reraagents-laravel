@@ -92,11 +92,11 @@
     </section>
 
     @if (count($premiumProperties))
-        <section id="premium-properties" class="mt-5 ml-3">
+        <section id="premium-properties" class="mt-5">
           <div class="container">
             <div class="row">
               <div class="col-12">
-                <h3 class="h5">You might also like</h3>
+                <h3 class="h5 ml-2">You might also like</h3>
                 @foreach ($premiumProperties as $property)
                   @if ($property->premium)
                         <div class="card ml-1 mr-1 bx-shadow mt-3">
