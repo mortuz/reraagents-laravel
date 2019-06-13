@@ -34,6 +34,39 @@
 
           </div>
 
+          @if (count($premiumAgents))
+              <div class="row mt-5">
+                <div class="col-md-4 col-sm-6">
+                    <h3 class="agent-partner h5 ml-2">More agents</h3>
+
+                    @foreach ($premiumAgents as $a)
+                        <a href="{{ route('agent.details', ['id' => $a->id]) }}">
+                            <div class="card ml-1 mr-1 bx-shadow mt-3">
+                                <div class="card-body">
+                                    <h5>{{ $a->user->name }}</h5>
+                                    <p>
+                                        {{ $a->state->name }} <br>
+                                        {{ $a->city->name }} <br>
+
+                                        @if ($a->landmark)
+                                            {{ $a->landmark->name }} <br>
+                                        @endif
+
+                                        @if ($a->area)
+                                            {{ $a->area->area }}
+                                        @endif
+                                    </p>
+
+                                    <h6>{{ $a->user->mobile }}</h6>
+
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+
+                </div>
+              </div>
+          @endif
       </div>
     </section>
 @endsection

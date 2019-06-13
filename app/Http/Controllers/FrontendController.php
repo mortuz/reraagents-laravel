@@ -188,11 +188,39 @@ class FrontendController extends Controller
         $description = '';
         $keywords = '';
 
+        $premium = [];
+        $premiumAgents = null;
+
+        if ($agent->area_id) {
+            $premium[] = AgentProfile::where('area_id', '!=', $id)->take(5)->inRandomOrder()->get();
+        }
+
+        if ($agent->landmark_id) {
+            $premium[] = AgentProfile::where('landmark_id', '!=', $id)->take(5)->inRandomOrder()->get();
+        }
+
+        $premium[] = AgentProfile::where('city_id', $agent->city_id)
+            ->where('id', '!=', $id)
+            ->inRandomOrder()->limit(4)->get();
+
+        if (array_key_exists('1', $premium)) {
+            $premiumAgents = $premium[0]->merge($premium[1]);
+        }
+
+        if (array_key_exists('2', $premium)) {
+            if ($premiumAgents) {
+                $premiumAgents = $premiumAgents->merge($premium[2]);
+            } else {
+                $premiumAgents = $premium[0]->merge($premium[2]);
+            }
+        }
+
         return view('frontend.agent-details')
             ->with('title', $title)
             ->with('description', $description)
             ->with('keywords', $keywords)
             ->with('agent', $agent)
+            ->with('premiumAgents', $premiumAgents)
             ;
     }
 
