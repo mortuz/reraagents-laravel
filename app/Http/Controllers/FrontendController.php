@@ -220,7 +220,7 @@ class FrontendController extends Controller
             ->with('description', $description)
             ->with('keywords', $keywords)
             ->with('agent', $agent)
-            ->with('premiumAgents', $premiumAgents)
+            ->with('premiumAgents', $premiumAgents ? $premiumAgents->take(4) : [])
             ;
     }
 
