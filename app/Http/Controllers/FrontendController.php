@@ -192,15 +192,16 @@ class FrontendController extends Controller
         $premiumAgents = null;
 
         if ($agent->area_id) {
-            $premium[] = AgentProfile::where('area_id', '!=', $id)->take(5)->inRandomOrder()->get();
+            $premium[] = AgentProfile::where('area_id', '!=', $id)->where('premium', 1)->take(5)->inRandomOrder()->get();
         }
 
         if ($agent->landmark_id) {
-            $premium[] = AgentProfile::where('landmark_id', '!=', $id)->take(5)->inRandomOrder()->get();
+            $premium[] = AgentProfile::where('landmark_id', '!=', $id)->where('premium', 1)->take(5)->inRandomOrder()->get();
         }
 
         $premium[] = AgentProfile::where('city_id', $agent->city_id)
             ->where('id', '!=', $id)
+            ->where('premium', 1)
             ->inRandomOrder()->limit(4)->get();
 
         if (array_key_exists('1', $premium)) {
