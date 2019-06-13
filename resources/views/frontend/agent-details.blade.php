@@ -36,10 +36,14 @@
 
           @if (count($premiumAgents))
               <div class="row mt-5">
-                <div class="col-md-4 col-sm-6">
+                
+                    
+                  <div class="col-md-12">
                     <h3 class="agent-partner h5 ml-2">More agents</h3>
+                  </div>
 
                     @foreach ($premiumAgents as $a)
+                      <div class="col-md-4 col-sm-6">
                         <a href="{{ route('agent.details', ['id' => $a->id]) }}">
                             <div class="card ml-1 mr-1 bx-shadow mt-3">
                                 <div class="card-body">
@@ -62,9 +66,8 @@
                                 </div>
                             </div>
                         </a>
+                      </div>
                     @endforeach
-
-                </div>
               </div>
           @endif
       </div>
