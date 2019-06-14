@@ -19,6 +19,8 @@ class FrontendController extends Controller
         $description = '';
         $keywords = '';
 
+        $agentFilter = [];
+
         // $filter[] = ['state', $request->getParam('state')];
         $states = State::all();
 
