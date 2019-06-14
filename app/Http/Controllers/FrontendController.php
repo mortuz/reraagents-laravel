@@ -20,16 +20,23 @@ class FrontendController extends Controller
         $keywords = '';
 
         // $filter[] = ['state', $request->getParam('state')];
+        $states = State::all();
+
+        if (request()->state > 0) {
+            $filter[] = ['state_id', request()->state];
+            $agentFilter[] = ['state_id', request()->state];
+        }
 
         if (request()->city > 0) {
-            $filter[] = ['city', $city];
+            $filter[] = ['city_id', request()->city];
+            $agentFilter[] = ['city_id', request()->city];
         }
 
         $filter[] = ['status', 1];
 
-        if (request()->price) {
-            $filter[] = ['price', request()->price];
-        }
+        // if (request()->price) {
+        //     $filter[] = ['price', request()->price];
+        // }
 
         $properties = Property::where($filter)->latest()->paginate(15);
 
@@ -41,13 +48,16 @@ class FrontendController extends Controller
             }
         }
 
-        $agents = AgentProfile::where('premium', 1)->limit(10)->latest()->get();
+        $agents = AgentProfile::where('premium', 1)->where($agentFilter)->limit(10)->latest()->get();
 
         return view('index')->with('properties', $properties)
                             ->with('agents', $agents)
                             ->with('title', $title)
                             ->with('description', $description)
                             ->with('keywords', $keywords)
+                            ->with('states', $states)
+                            ->with('filter_state', request()->state)
+                            ->with('filter_city', request()->city)
         ;
     }
 

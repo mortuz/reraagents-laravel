@@ -279,6 +279,7 @@
     }
     $stateField.on('change', function() {
       fetchCities($(this).val());
+      console.log('changed');
     });
 
     $('body').on('click', '.custom-tag', function() {

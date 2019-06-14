@@ -176,9 +176,178 @@
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <script>
+        $cityField = $('.js-city-field');
+
+        $cityField.on('change', function() {
+        $(document).trigger('city_changed');
+        initTypeahead();
+        initSelectize();
+        });
+
+        function fetchCities(state) {
+        var url = "{{ route('get.cities') }}";
+
+        $.ajax({
+            url: url,
+            data: {state: state},
+            dataType: 'json',
+            contentType: 'application/json',
+            success: function(res) {
+            var html = '<option value="0">Select city</option>';
+
+            var oldCity = '0';
+
+            oldCity = $cityField.attr('data-preselect');
+            if (!oldCity) {
+                oldCity = "{{ old('city') }}";
+            }
+
+            for (let i = 0; i < res.data.length; i++) {
+                const city = res.data[i];
+                html += `<option value="${city.id}" ${oldCity == city.id ? 'selected': ''}>${city.name}</option>`;
+            }
+
+
+            if ($cityField.length) {
+                $cityField.html(html);
+                $(document).trigger('city_init');
+            }
+            },
+            error: function(err) {
+            console.log('FETCH_CITY_ERR:', err);  
+            }
+        })
+        }
+
+        initTypeahead();
+        initSelectize();
+
+        function initTypeahead() {
+        if ($('.js-typeahead').length) {
+            $typeahead = $('.js-typeahead');
+
+            $typeahead.each(function() {
+            var url = $(this).attr('data-url');
+            $that = $(this);
+            var dependency = $(this).attr('data-dependency');
+
+            var data = {};
+
+            if (dependency == 'city') {
+                data = { 'city' : $cityField.val() };
+            } else if (dependency == 'state') {
+                data = {'state': $stateField.val()}
+            } else {
+                data = {};
+            }
+
+            $that.typeahead('destroy');
+            // $that.on('change', function(event) {
+            //     console.log($(this).val());
+            //   });
+
+            $.get(url, data, function (response){
+                // console.log(response);
+                $that.typeahead({ 
+                source: response.data,
+                afterSelect: function(item) {
+                    console.log(item);
+                    $that.siblings('input').val(item.id);
+
+                    $that.after(`<button type="button" class="btn custom-tag btn-light btn-xs my-3 mr-2">
+                                <input type="hidden" value="${item.id}" name="${$that.attr('data-name')}"> 
+                                ${item.name} <span class="badge"><i class="mdi mdi-delete text-danger"></i></span>
+                                </button>`);
+                    $that.val('');
+                }
+                });
+
+            }, 'json');
+            });
+        }
+        }
+
+        function initSelectize() {
+        var $selectize = $('.js-selectize');
+        if ($selectize.length) {
+            console.log('init..', $cityField.val())
+            $selectize.each(function() {
+            var $that = $(this);
+            var url = $that.attr('data-url');
+            if (!url) return;
+            var dependency = $that.attr('data-dependency');
+
+            var data = {};
+            var values = $that.attr('data-preselect');
+
+            if (dependency == 'city') {
+                if ((!$cityField.val() || $cityField.val() <= 0))
+                return;
+                data = { 'city' : $cityField.val() };
+            } else if (dependency == 'state') {
+                data = {'state': $stateField.val()}
+            } else {
+                data = {};
+            }
+
+            let select = $(this).selectize({ 
+                optionMap: {},
+                delimiter: ',',
+                valueField: 'id',
+                labelField: 'name',
+                searchField: 'name',
+                hideSelected: true,
+                preload: true,
+                persist: false,
+                create: false,
+                render: {
+                    option: function(data, escape) {
+                    return `<div class="list-group-item">${data.name}</div>`;
+                    }
+                },
+                load: function(query, callback) {
+                    var self = this;
+                    $.get(url, data, function (response){
+                    callback(response.data);
+                    if (values) {
+                        self.setValue(values.split(','), true);
+                        $that.attr('data-preselect','');
+                        values = '';
+                    }
+
+                    }, 'json');
+                }
+                });
+
+                select[0].selectize.refreshItems();
+
+                // console.log(select[0].selectize.setValue([1,2], true));
+
+            
+            });
+        }
+        }
+
+        $(document).on('city_changed', function() {
+        initSelectize();
+        });
+
+        var $stateField = $('.js-state-field');
+
+
+        if ($stateField.length) {
+        fetchCities($stateField.val());
+        }
+        $stateField.on('change', function() {
+        fetchCities($(this).val());
+        });
+    </script>
+
 </body>
 
 </html>
