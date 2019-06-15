@@ -20,6 +20,11 @@ class FrontendController extends Controller
         $keywords = '';
 
         $agentFilter = [];
+        $queries = [];
+
+        $columns = [
+            'state', 'city', 'areas'
+        ];
 
         // $filter[] = ['state', $request->getParam('state')];
         $states = State::all();
@@ -40,7 +45,10 @@ class FrontendController extends Controller
         //     $filter[] = ['price', request()->price];
         // }
 
-        $properties = Property::where($filter)->latest()->paginate(15);
+        $properties = Property::where($filter)->latest()->paginate(1)->appends([
+            'state' => request()->state,
+            'city' => request()->city
+        ]);
 
         foreach ($properties as $property) {
             $property->raw_data = json_decode($property->raw_data);
