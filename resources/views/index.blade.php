@@ -291,7 +291,7 @@
                     } else {
                         window.scrollTo(parseInt(parts[parts.length - 1]), parseInt(parts[parts.length - 2]));
                     }
-                }   
+                }
             };  
             $.maintainscroll();
         })(jQuery);
