@@ -47,7 +47,7 @@ class FrontendController extends Controller
         //     $filter[] = ['price', request()->price];
         // }
 
-        $properties = Property::where($filter)->latest()->paginate(1)->appends([
+        $properties = Property::where($filter)->latest()->paginate(15)->appends([
             'state' => request()->state,
             'city' => request()->city
         ]);
