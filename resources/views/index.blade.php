@@ -279,9 +279,9 @@
 @section('javascripts')
     <script>
 
-        var shouldFilter = {{ $shouldFilter }};
+        var shouldScroll = {{ app('request')->input('page') }} || {{ app('request')->input('state') }} || {{ app('request')->input('city') }};
 
-        if (shouldFilter) {
+        if (shouldScroll) {
                 $('html, body').animate({
                     scrollTop: $("#filterForm").offset().top
                 }, 100);
