@@ -278,8 +278,18 @@
 
 @section('javascripts')
     <script>
+        var shouldScroll = false;
+        if({{ app('request')->input('page') }}) {
+            shouldScroll = true;
+        }
+        if({{ app('request')->input('state') }}) {
+            shouldScroll = true;
+        }
+        if({{ app('request')->input('city') }}) {
+            shouldScroll = true;
+        }
 
-        var shouldScroll = {{ app('request')->input('page') }} || {{ app('request')->input('state') }} || {{ app('request')->input('city') }};
+        // var shouldScroll = hasPage || {{ app('request')->input('state') }} || {{ app('request')->input('city') }};
 
         if (shouldScroll) {
                 $('html, body').animate({
