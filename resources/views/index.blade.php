@@ -97,7 +97,7 @@
         </div>
     </section> --}}
 
-    <section class="container mt-5" id="filterForm">
+    <section class="container pt-5" id="filterForm">
         <div class="row">
             <div class="col-12">
                 <form class="form-inline filter-form">
@@ -278,22 +278,31 @@
 
 @section('javascripts')
     <script>
-        (function($){
-            window.onbeforeunload = function(e) {
-             window.name += ' [' + location.pathname + '[' + $(window).scrollTop().toString() + '[' + $(window).scrollLeft().toString();
-            };
-            $.maintainscroll = function() {
-                if(window.name.indexOf('[') > 0) {
-                    var parts = window.name.split('['); 
-                    window.name = $.trim(parts[0]);
-                    if( parts[parts.length - 3] == location.pathname ) {
-                        window.scrollTo(parseInt(parts[parts.length - 1]), parseInt(parts[parts.length - 2]));
-                    } else {
-                        window.scrollTo(parseInt(parts[parts.length - 1]), parseInt(parts[parts.length - 2]));
-                    }
-                }
-            };  
-            $.maintainscroll();
-        })(jQuery);
+
+        var shouldFilter = {{ $shouldFilter }};
+
+        if (shouldFilter) {
+                $('html, body').animate({
+                    scrollTop: $("#filterForm").offset().top
+                }, 100);
+
+        }
+        // (function($){
+        //     window.onbeforeunload = function(e) {
+        //      window.name += ' [' + location.pathname + '[' + $(window).scrollTop().toString() + '[' + $(window).scrollLeft().toString();
+        //     };
+        //     $.maintainscroll = function() {
+        //         if(window.name.indexOf('[') > 0) {
+        //             var parts = window.name.split('['); 
+        //             window.name = $.trim(parts[0]);
+        //             if( parts[parts.length - 3] == location.pathname ) {
+        //                 window.scrollTo(parseInt(parts[parts.length - 1]), parseInt(parts[parts.length - 2]));
+        //             } else {
+        //                 window.scrollTo(parseInt(parts[parts.length - 1]), parseInt(parts[parts.length - 2]));
+        //             }
+        //         }
+        //     };  
+        //     $.maintainscroll();
+        // })(jQuery);
     </script>
 @endsection

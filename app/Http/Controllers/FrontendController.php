@@ -18,7 +18,7 @@ class FrontendController extends Controller
         $title = '';
         $description = '';
         $keywords = '';
-
+        $shouldFilter = 0;
         $agentFilter = [];
         $queries = [];
 
@@ -32,11 +32,13 @@ class FrontendController extends Controller
         if (request()->state > 0) {
             $filter[] = ['state_id', request()->state];
             $agentFilter[] = ['state_id', request()->state];
+            $shouldFilter = 1;
         }
 
         if (request()->city > 0) {
             $filter[] = ['city_id', request()->city];
             $agentFilter[] = ['city_id', request()->city];
+            $shouldFilter = 1;
         }
 
         $filter[] = ['status', 1];
@@ -59,6 +61,7 @@ class FrontendController extends Controller
         }
 
         $agents = AgentProfile::where('premium', 1)->where($agentFilter)->limit(10)->latest()->get();
+        // dd($shouldFilter);
 
         return view('index')->with('properties', $properties)
                             ->with('agents', $agents)
@@ -68,6 +71,7 @@ class FrontendController extends Controller
                             ->with('states', $states)
                             ->with('filter_state', request()->state)
                             ->with('filter_city', request()->city)
+                            ->with('shouldFilter', $shouldFilter)
         ;
     }
 
