@@ -278,16 +278,18 @@
 
 @section('javascripts')
     <script>
-        var shouldScroll = false;
-        if({{ app('request')->input('page') }}) {
-            shouldScroll = true;
-        }
-        if({{ app('request')->input('state') }}) {
-            shouldScroll = true;
-        }
-        if({{ app('request')->input('city') }}) {
-            shouldScroll = true;
-        }
+        var shouldScroll = {{ $shouldScroll }};
+
+        
+        // if({{ app('request')->input('page') }}) {
+        //     shouldScroll = true;
+        // }
+        // if({{ app('request')->input('state') }}) {
+        //     shouldScroll = true;
+        // }
+        // if({{ app('request')->input('city') || 0}}) {
+        //     shouldScroll = true;
+        // }
 
         // var shouldScroll = hasPage || {{ app('request')->input('state') }} || {{ app('request')->input('city') }};
 
