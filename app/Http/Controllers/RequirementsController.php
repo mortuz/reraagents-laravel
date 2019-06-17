@@ -14,6 +14,7 @@ use App\Notifications\RequirementApprovedNotification;
 use App\Notifications\RequirementRejectedNotification;
 use App\Notifications\RequirementCommentAddedNotification;
 use App\Notifications\RequirementReleasedNotification;
+use App\AgentProfile;
 
 class RequirementsController extends Controller
 {

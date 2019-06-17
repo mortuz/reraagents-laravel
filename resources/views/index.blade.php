@@ -280,19 +280,6 @@
     <script>
         var shouldScroll = {{ $shouldScroll }};
 
-        
-        // if({{ app('request')->input('page') }}) {
-        //     shouldScroll = true;
-        // }
-        // if({{ app('request')->input('state') }}) {
-        //     shouldScroll = true;
-        // }
-        // if({{ app('request')->input('city') || 0}}) {
-        //     shouldScroll = true;
-        // }
-
-        // var shouldScroll = hasPage || {{ app('request')->input('state') }} || {{ app('request')->input('city') }};
-
         if (shouldScroll) {
                 $('html, body').animate({
                     scrollTop: $("#filterForm").offset().top
