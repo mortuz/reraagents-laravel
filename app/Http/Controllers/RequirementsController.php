@@ -237,7 +237,7 @@ class RequirementsController extends Controller
                 if ($requirement->user_id == $agent->user_id || $request->user()->id == $agent->user_id) continue;
                 array_push($users, $agent->user);
             }
-            Notification::send($users, new PremiumPropertyNotification($requirement));
+            Notification::send($users, new RequirementReleasedNotification($requirement));
         }
 
         if ($request->release_message) {
