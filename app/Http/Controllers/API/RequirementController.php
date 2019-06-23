@@ -581,7 +581,7 @@ class RequirementController extends Controller
                 // $requirement->propertytypes()->attach(explode(',', $request->type));
 
                 if ($user) {
-                    $requirement->agents()->attach(explode(',', $user->id));
+                    $requirement->agents()->attach(explode(',', AgentProfile::where('user_id', $request->user()->id)->id));
                 }
 
                 return response()->json(['success' => true, 'data' => $requirement]);

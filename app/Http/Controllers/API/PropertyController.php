@@ -14,6 +14,7 @@ use App\Helpers\SmsHelper;
 use App\Office;
 use App\Feedback;
 use App\Transaction;
+use App\AgentProfile;
 
 class PropertyController extends Controller
 {
@@ -347,7 +348,7 @@ class PropertyController extends Controller
         ]);
 
         $property->propertytypes()->attach(explode(',', $request->type));
-        $property->agents()->attach(explode(',', $request->user()->id));
+        $property->agents()->attach(explode(',', AgentProfile::where('user_id', $request->user()->id)->id));
 
         return $property;
     }
