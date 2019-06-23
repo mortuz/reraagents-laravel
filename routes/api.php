@@ -60,6 +60,7 @@ Route::get('/property/premium/details', 'API\PropertyController@premiumDetail');
 Route::post('/auth/recover/password', 'API\AuthController@recoverPassword');
 
 Route::post('property/guest-post', 'API\PropertyController@postGuestProperty')->name('post.guest.property');
+Route::post('requirement/guest-post', 'API\RequirementController@postGuestRequirement')->name('post.guest.requirement');
 
 Route::post('/register', 'API\AuthController@register')->name('api.auth.register');
 

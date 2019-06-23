@@ -544,4 +544,58 @@ class RequirementController extends Controller
             return response()->json(['success' => true, 'data' => $requirement->user->mobile]);
         }
     }
+
+    public function postGuestRequirement(Request $request)
+    {
+        $this->validate($request, [
+            'state' => 'required',
+            'city' => 'required',
+            'mobile' => 'required',
+            'price' => 'required',
+            'requirement' => 'required'
+        ]);
+
+        $signer = new HS256(env('JWT_KEY'));
+        if ($request->token) {
+            $parser = new JwtParser($signer);
+            $claims = $parser->parse($request->token);
+
+            if ($request->otp != $claims['code']) {
+                return response()->json(['success' => false, 'errors' => true, 'message' => 'Invalid OTP']);
+            } else {
+                // create property
+
+                $user = User::where('mobile', $request->mobile)->where('mobile_verified_at', '!=', null)->first();
+
+                $requirement = Requirement::create([
+                    'state_id' => $request->state,
+                    'city_id'  => $request->city,
+                    'user_id'  => $user ? $user->id : 0,
+                    'mobile'   => $request->mobile,
+                    'raw_data' => json_encode([
+                        'budget' => $request->price,
+                        'details' => $request->requirement
+                    ]),
+                ]);
+
+                // $requirement->propertytypes()->attach(explode(',', $request->type));
+
+                if ($user) {
+                    $requirement->agents()->attach(explode(',', $user->id));
+                }
+
+                return response()->json(['success' => true, 'data' => $requirement]);
+            }
+        } else {
+            $generator = new JwtGenerator($signer);
+            $code = substr(str_shuffle("0123456789"), 0, 6);
+            $jwt = $generator->generate(['code' => $code]);
+
+            $smsHelper = new SmsHelper();
+
+            $smsHelper->sendOTP($request->mobile, $code);
+
+            return response()->json(['success' => false, 'otp_required' => true, 'token' => $jwt]);
+        }
+    }
 }

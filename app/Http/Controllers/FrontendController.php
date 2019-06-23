@@ -204,6 +204,20 @@ class FrontendController extends Controller
             ->with('keywords', $keywords);
     }
 
+    public function getBuyProperty()
+    {
+        $title = 'Post your requirement ';
+        $description = '';
+        $keywords = '';
+
+        return view('frontend.post-requirement')
+            ->with('states', State::all())
+            ->with('types', PropertyType::all())
+            ->with('title', $title)
+            ->with('description', $description)
+            ->with('keywords', $keywords);
+    }
+
     public function getAgentDetails($id)
     {
         $agent = AgentProfile::where('id', $id)->where('premium', 1)->first();

@@ -60,8 +60,8 @@
                     <p class="hero-tagline" style="color:#ffffff;">For all Agents communication</p>
                 </div>
                 <div class="col-md-12">
-                    {{-- <a href="{{ route('page.property.sell') }}"><button class="btn btn1 my-2 my-sm-0" >Post Your Requirement</button></a> --}}
-                    <a href="{{ route('page.property.sell') }}"><button class="btn btn1 my-2 my-sm-0" >Sell Property</button></a>
+                    <a href="{{ route('page.property.buy') }}"><button class="btn btn1 my-2 my-sm-0" >Post Your Requirement</button></a>
+                    <a href="{{ route('page.property.sell') }}"><button class="btn btn2 my-2 my-sm-0" >Sell Property</button></a>
                 </div>
             </div>
 

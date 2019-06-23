@@ -20,6 +20,9 @@ Route::get('/agent/{id}', 'FrontendController@getAgentDetails')->name('agent.det
 Route::get('/sell-your-property', 'FrontendController@getSellProperty')->name('page.property.sell');
 Route::post('/sell-your-property', 'FrontendController@postSellProperty');
 
+Route::get('/post-your-requirement', 'FrontendController@getBuyProperty')->name('page.property.buy');
+Route::post('/post-your-requirement', 'FrontendController@postBuyProperty');
+
 Route::get('/terms-and-conditions', 'FrontendController@getTermsAndConditions')->name('page.terms');
 Route::get('/privacy-policy', 'FrontendController@getPrivacy')->name('page.privacy');
 
