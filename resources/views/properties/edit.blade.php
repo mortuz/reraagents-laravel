@@ -46,12 +46,12 @@
             </div>
 
             <div class="form-group">
-              <label for="area">Area</label>
+              <label for="area">Area</label> <button type="button" class="btn btn-link btn-sm float-right p-1" onclick="launchOnTheFlowModal('Area', '{{ route('api.area.store') }}', true)"><i class="mdi mdi-plus"></i> Add area</button>
               <input id="area" name="area" data-preselect="{{ $property->area }}" data-url={{ route('api.area.index') }} data-dependency="city" type="text" class="form-control js-selectize"/>
             </div>
 
             <div class="form-group">
-              <label for="landmark">Landmark</label>
+              <label for="landmark">Landmark</label>  <button type="button" class="btn btn-link btn-sm float-right p-1" onclick="launchOnTheFlowModal('Landmark', '{{ route('api.landmark.store') }}', true)"><i class="mdi mdi-plus"></i> Add landmark</button>
               <input id="landmark" name="landmark" data-preselect="{{ $property->landmark }}" data-url={{ route('api.landmark.index') }} data-dependency="city" type="text" class="form-control js-selectize"/>
             </div>
 
@@ -71,7 +71,7 @@
             </div>
             
             <div class="form-group">
-              <label for="price">Price</label>
+              <label for="price">Price</label>  <button type="button" class="btn btn-link btn-sm float-right p-1" onclick="launchOnTheFlowModal('Price', '{{ route('api.price.store') }}', false)"><i class="mdi mdi-plus"></i> Add price</button>
               <input id="price" name="price" data-preselect="{{ $property->price }}" data-url={{ route('api.price.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
             </div>
             
@@ -93,7 +93,7 @@
             </div>
             
             <div class="form-group">
-              <label for="ventures">Ventures</label>
+              <label for="ventures">Ventures</label> <button type="button" class="btn btn-link btn-sm float-right p-1" onclick="launchOnTheFlowModal('Venture', '{{ route('api.venture.store') }}', false)"><i class="mdi mdi-plus"></i> Add venture</button>
               <input id="ventures" name="ventures" data-preselect="{{ $property->ventures }}" data-url={{ route('api.venture.index') }} data-dependency="city" type="text" class="form-control js-selectize"/>
             </div>
 

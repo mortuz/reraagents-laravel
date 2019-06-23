@@ -75,3 +75,11 @@ Route::get('/area', 'API\AreaController@index')->name('api.area.index');
 Route::get('/landmark', 'API\LandmarkController@index')->name('api.landmark.index');
 Route::get('/price', 'API\PriceController@index')->name('api.price.index');
 Route::get('/states', 'API\StatesController@index')->name('api.state.index');
+
+
+Route::group(['middleware' => 'adminToken'], function() {
+    Route::post('/area/store', 'API\AreaController@store')->name('api.area.store');
+    Route::post('/landmark/store', 'API\LandmarkController@store')->name('api.landmark.store');
+    Route::post('/price/store', 'API\PriceController@store')->name('api.price.store');
+    Route::post('/venture/store', 'API\VentureController@store')->name('api.venture.store');
+});

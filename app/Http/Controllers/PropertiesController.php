@@ -11,6 +11,7 @@ use App\AgentProfile;
 use Illuminate\Http\Request;
 use App\Feedback;
 use Notification;
+use Illuminate\Support\Facades\DB;
 use App\Notifications\PropertyApprovedNotification;
 use App\Notifications\PropertyRejectededNotification;
 use App\Notifications\PremiumPropertyNotification;
@@ -34,7 +35,9 @@ class PropertiesController extends Controller
      */
     public function create()
     {
+        $token = Auth::user()->tokens()->latest()->first()->id;
         return view('properties.create')
+                        ->with('token', $token)
                         ->with('states', State::all());
     }
 
@@ -146,7 +149,10 @@ class PropertiesController extends Controller
         $property->ventures = implode(',', $property->ventures()->pluck('ventures.id')->toArray());
         $property->raw = json_decode($property->raw_data, true);
 
+        $token = DB::table('oauth_access_tokens')->where('user_id', Auth::id())->latest()->first()->id;
+
         return view('properties.edit')
+                        ->with('token', $token)
                         ->with('property', $property)
                         ->with('states', State::all());
     }

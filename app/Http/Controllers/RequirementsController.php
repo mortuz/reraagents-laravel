@@ -35,7 +35,9 @@ class RequirementsController extends Controller
      */
     public function create()
     {
+        $token = Auth::user()->tokens()->latest()->first()->id;
         return view('requirements.create')
+            ->with('token', $token)
             ->with('states', State::all());
     }
 
@@ -143,7 +145,9 @@ class RequirementsController extends Controller
         $requirement->ventures = implode(',', $requirement->ventures()->pluck('ventures.id')->toArray());
         $requirement->raw = json_decode($requirement->raw_data, true);
 
+        $token = Auth::user()->tokens()->latest()->first()->id;
         return view('requirements.edit')
+            ->with('token', $token)
             ->with('requirement', $requirement)
             ->with('states', State::all())
             ->with('cstatus', CustomerStatus::all())

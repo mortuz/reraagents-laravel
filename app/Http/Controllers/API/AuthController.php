@@ -20,8 +20,8 @@ class AuthController extends Controller
             'state' => 'required',
             'city'  => 'required',
             'mobile' => 'required|unique:users,mobile',
-            'password' => 'required'
-            ]);
+            'password' => 'required|min:9'
+        ]);
             
             
         $user = User::create([

@@ -209,7 +209,6 @@
     function initSelectize() {
       var $selectize = $('.js-selectize');
       if ($selectize.length) {
-        console.log('init..', $cityField.val())
         $selectize.each(function() {
           var $that = $(this);
           var url = $that.attr('data-url');
@@ -241,11 +240,12 @@
               create: false,
               render: {
                 option: function(data, escape) {
-                  return `<div class="list-group-item">${data.name}</div>`;
+                  return `<div class="d-block py-3 pl-3">${data.name}</div>`;
                 }
               },
               load: function(query, callback) {
                 var self = this;
+                // if (!query.length) return callback();
                 $.get(url, data, function (response){
                   callback(response.data);
                   if (values) {
@@ -285,6 +285,64 @@
     $('body').on('click', '.custom-tag', function() {
       $(this).remove();
     });
+
+    @isset($token)
+      function launchOnTheFlowModal (field, url, isDependent) {
+
+        if(isDependent && !parseInt($cityField.val())) {
+          swal('Error', 'Please select city to continue', 'error');
+          return;
+        }
+        swal({
+          text: `Enter ${field}`,
+          content: "input",
+          button: {
+            text: `Create ${field}`,
+            closeModal: false,
+          },
+        })
+        .then(name => {
+          if (!name) throw null;
+        
+          return fetch(url, {
+            method: 'post',
+            headers: {
+              Accept: 'application/json',
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer {{ $token }}'
+            },
+            body: JSON.stringify({
+              'state': parseInt($stateField.val()),
+              'city': parseInt($cityField.val()),
+              'name': name
+            })
+          });
+        })
+        .then(results => {
+          return results.json();
+        })
+        .then(json => {
+          if (!json.success) {
+            return swal(json.message);
+          }
+        
+          swal({
+            title: "Success",
+            text: `${field} ${name} successfully created`,
+            icon: 'success',
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          if (err) {
+            swal("Oh noes!", "The AJAX request failed!", "error");
+          } else {
+            swal.stopLoading();
+            swal.close();
+          }
+        });
+      }
+    @endisset
 
 
   </script>

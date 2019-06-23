@@ -32,7 +32,20 @@ class AreaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'state' => 'required|min:1',
+            'city' => 'required|min:1',
+        ]);
+
+        Area::create([
+            'area' => $request->name,
+            'slug' => str_slug($request->name),
+            'state_id' => $request->state,
+            'city_id' => $request->city
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Area created successfully']);
     }
 
     /**

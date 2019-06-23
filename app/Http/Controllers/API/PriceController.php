@@ -32,7 +32,15 @@ class PriceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required'
+        ]);
+
+        Price::create([
+            'price' => $request->name,
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Price created successfully']);
     }
 
     /**

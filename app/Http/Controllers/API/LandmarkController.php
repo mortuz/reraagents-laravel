@@ -32,7 +32,20 @@ class LandmarkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'state' => 'required',
+            'city' => 'required|min:1',
+        ]);
+
+        Landmark::create([
+            'name' => $request->name,
+            'slug' => str_slug($request->name),
+            'state_id' => $request->state,
+            'city_id' => $request->city
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Landmark created successfully']);
     }
 
     /**
