@@ -35,6 +35,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('property/view', 'API\PropertyController@view');
     Route::get('property/premium/call', 'API\PropertyController@premiumCall');
     Route::get('property/office', 'API\PropertyController@office');
+    Route::post('property/renew', 'API\PropertyController@renew');
 
     Route::get('requirements', 'API\RequirementController@index');
     Route::get('requirements/my', 'API\RequirementController@my');

@@ -544,4 +544,17 @@ class PropertyController extends Controller
             return response()->json(['success' => false, 'otp_required' => true, 'token' => $jwt]);
         }
     }
+
+    public function renew(Request $request)
+    {
+        $propertyId = $request->property;
+        $property = Property::find($propertyId);
+
+        if ($property->user_id != $request->user()->id) {
+            return response()->json(['success' => false, 'message' => 'You do not own this poperty.']);
+        }
+
+        $property->expiry_date = Carbon::now()->addDays('30');
+        return response()->json(['success' => true, 'message' => 'Property has been renewed.']);
+    }
 }
