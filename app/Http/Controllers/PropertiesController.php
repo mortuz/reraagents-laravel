@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use App\Notifications\PropertyApprovedNotification;
 use App\Notifications\PropertyRejectededNotification;
 use App\Notifications\PremiumPropertyNotification;
+use Illuminate\Support\Carbon;
 
 class PropertiesController extends Controller
 {
@@ -49,7 +50,6 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $this->validate($request, [
             'state' => 'required',
             'city' => 'required|regex:/[1-9]/',
@@ -69,6 +69,7 @@ class PropertiesController extends Controller
             'handler' => $request->handler,
             'status' => $request->status,
             'mobile' => $request->contact,
+            'expiry_date' => Carbon::now()->addDays('30'),
             'user_id' => Auth::id(),
             'premium' => $request->premium ? $request->premium : 0,
             'raw_data' => json_encode([

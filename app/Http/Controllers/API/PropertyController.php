@@ -340,6 +340,7 @@ class PropertyController extends Controller
             'city_id'  => $request->city,
             'user_id'  => $request->user()->id,
             'mobile'   => $request->mobile,
+            'expiry_date' => Carbon::now()->addDays('30'),
             'raw_data' => json_encode([
                 'price' => $request->price,
                 'measurement' => $request->measurement,
@@ -514,6 +515,7 @@ class PropertyController extends Controller
                     'city_id'  => $request->city,
                     'user_id'  => $user ? $user->id : 0,
                     'mobile'   => $request->mobile,
+                    'expiry_date' => Carbon::now()->addDays('30'),
                     'raw_data' => json_encode([
                         'price' => $request->price,
                         'measurement' => $request->measurement,
