@@ -41,6 +41,7 @@ class PropertyController extends Controller
             $filter[] = ['city_id', $request->city];
         }
 
+        $filter[] = ['expiry_date', '<', Carbon::now()];
         $filter[] = ['status', 1];
         $filter[] = ['inactive', 0];
 
@@ -348,7 +349,7 @@ class PropertyController extends Controller
         ]);
 
         $property->propertytypes()->attach(explode(',', $request->type));
-        $property->agents()->attach(explode(',', AgentProfile::where('user_id', $request->user()->id)->id));
+        $property->agents()->attach(explode(',', AgentProfile::where('user_id', $request->user()->id)->first()->id));
 
         return $property;
     }
@@ -506,7 +507,7 @@ class PropertyController extends Controller
             } else {
                 // create property
 
-                $user = User::where('mobile', $request->mobile)->where('mobile_verified_at', '!=', null)->first();
+                $user = User::where('mobile', $request->mobile)->first();
 
                 $property = Property::create([
                     'state_id' => $request->state,

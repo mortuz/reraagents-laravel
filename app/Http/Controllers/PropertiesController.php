@@ -49,6 +49,7 @@ class PropertiesController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->all());
         $this->validate($request, [
             'state' => 'required',
             'city' => 'required|regex:/[1-9]/',

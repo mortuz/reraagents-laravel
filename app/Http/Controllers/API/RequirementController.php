@@ -565,7 +565,7 @@ class RequirementController extends Controller
             } else {
                 // create property
 
-                $user = User::where('mobile', $request->mobile)->where('mobile_verified_at', '!=', null)->first();
+                $user = User::where('mobile', $request->mobile)->first();
 
                 $requirement = Requirement::create([
                     'state_id' => $request->state,
@@ -581,7 +581,7 @@ class RequirementController extends Controller
                 // $requirement->propertytypes()->attach(explode(',', $request->type));
 
                 if ($user) {
-                    $requirement->agents()->attach(explode(',', AgentProfile::where('user_id', $request->user()->id)->id));
+                    $requirement->agents()->attach(explode(',', AgentProfile::where('user_id', $request->user()->id)->first()->id));
                 }
 
                 return response()->json(['success' => true, 'data' => $requirement]);
