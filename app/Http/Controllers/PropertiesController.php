@@ -168,6 +168,8 @@ class PropertiesController extends Controller
      */
     public function update(Request $request, Property $property)
     {
+
+        // dd($request->price);
         $this->validate($request, [
             'state' => 'required',
             'city' => 'required|regex:/[1-9]/',
@@ -187,11 +189,12 @@ class PropertiesController extends Controller
         $property->premium = $request->premium ? $request->premium : 0;
 
         $raw_data = json_encode([
-                'price' => $request->raw_price,
-                'measurement' => $request->raw_measurement,
-                'location' => $request->raw_location,
-                'details' => $request->raw_details
-            ]);
+            'price' => $request->raw_price,
+            'measurement' => $request->raw_measurement,
+            'location' => $request->raw_location,
+            'details' => $request->raw_details
+        ]);
+
         $property->raw_data = $raw_data;
 
         if ($request->bhk) {
