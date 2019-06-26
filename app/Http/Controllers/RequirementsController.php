@@ -285,6 +285,28 @@ class RequirementsController extends Controller
      */
     public function destroy(Requirement $requirement)
     {
-        //
+        //detach area
+        $requirement->areas()->detach();
+        //detach room
+        $requirement->rooms()->detach();
+        //detach face
+        $requirement->faces()->detach();
+        //detach landmark
+        $requirement->landmarks()->detach();
+        //detach price
+        $requirement->prices()->detach();
+        //detach propertytype
+        $requirement->propertytypes()->detach();
+        //detach builders
+        $requirement->builders()->detach();
+        //detach agents
+        $requirement->agents()->detach();
+        //detach ventures
+        $requirement->ventures()->detach();
+        // delete property
+        $requirement->delete();
+
+        Session::flash('success', 'Requirement successfully deleted.');
+        return redirect()->back();
     }
 }

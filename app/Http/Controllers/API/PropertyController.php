@@ -555,6 +555,7 @@ class PropertyController extends Controller
         }
 
         $property->expiry_date = Carbon::now()->addDays('30');
+        $property->save();
         return response()->json(['success' => true, 'message' => 'Property has been renewed.']);
     }
 }

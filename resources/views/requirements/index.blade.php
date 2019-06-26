@@ -32,7 +32,7 @@
 
                 @foreach ($requirements as $requirement)
                   <tr>
-                    <td>{{ $requirement->id }}</td>
+                    <td>{{ $requirement->id }}{!!$requirement->request_delete ? '<label class="badge badge-danger ml-3">Del</label>' : null !!}</td>
                     <td>{{ $requirement->state->name }}</td>
                     <td>{{ $requirement->city->name }}</td>
                     <td> {{ $requirement->prices->first() ? $requirement->prices->first()->price : '--'}} </td>
@@ -57,9 +57,9 @@
                         <i class="mdi mdi-pencil"></i>
                       </a>
 
-                      {{-- <button type="button" class="btn btn-gradient-danger btn-rounded btn-sm btn-delete" data-state="{{ $state->name }}" data-cities="{{ $state->cities->count() }}" data-action="{{ route('states.destroy', ['state' => $state->id]) }}">
+                      <button type="button" class="btn btn-gradient-danger btn-rounded btn-sm btn-delete" data-id="{{ $requirement->id }}" data-action="{{ route('requirement.destroy', ['requirement' => $requirement->id]) }}">
                         <i class="mdi mdi-delete"></i>
-                      </button> --}}
+                      </button>
 
                     </td>
                   </tr>
@@ -86,11 +86,11 @@
 @section('javascript')
     <script>
       $('.btn-delete').on('click', function(e) {
-        var state = $(this).attr('data-state');
+        var id = $(this).attr('data-id');
         var url = $(this).attr('data-action');
         swal({
           title: 'Are you sure?',
-          text: `${state} and it's ${cities} cities will be delete. Would you like to continue?`,
+          text: `Requirement ${id} will be deleted. Would you like to continue?`,
           icon: 'success',
           buttons: {
             cancel: {

@@ -22,11 +22,62 @@ class PropertiesController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('properties.index')->with('properties', Property::latest()->paginate());
+        // dd($request->all());
+        $results = null;
+        $filter = [];
+        if (!empty($request->state)) {
+            $filter[] = ['state_id', $request->state];
+        }
+        if (!empty($request->city)) {
+            $filter[] = ['city_id', $request->city];
+        }
+        if (!empty($request->status)) {
+            $filter[] = ['status', $request->status];
+        }
+        $results = Property::where($filter);
+
+        if(!empty($request->type)) {
+            $results->whereHas('propertytypes', function($query) use ($request) {
+                $query->whereIn('property_type_id', explode(',', $request->type));
+            });
+        }
+        if(!empty($request->area)) {
+            $results->whereHas('areas', function($query) use ($request) {
+                $query->whereIn('area_id', explode(',', $request->area));
+            });
+        }
+        if(!empty($request->price)) {
+            $results->whereHas('prices', function($query) use ($request) {
+                $query->whereIn('price_id', explode(',', $request->price));
+            });
+        }
+        $results = $results->latest()->paginate()->appends([
+            'state' => $request->state,
+            'city' => $request->city,
+            'type' => $request->type,
+            'areas' => $request->area,
+            'prices' => $request->price,
+            'status' => $request->status,
+        ]);
+        // dd( Property::where($filter)->latest()->paginate());
+        
+        return view('properties.index')
+                ->with('properties', $results)
+                ->with('states', State::all())
+                ->with('filters', [
+                    'state' => $request->state,
+                    'city' => $request->city,
+                    'type' => $request->type,
+                    'areas' => $request->area,
+                    'prices' => $request->price,
+                    'status' => $request->status,
+                ])
+                ;
     }
 
     /**
@@ -276,7 +327,29 @@ class PropertiesController extends Controller
      */
     public function destroy(Property $property)
     {
-        //
+        //detach area
+        $property->areas()->detach();
+        //detach room
+        $property->rooms()->detach();
+        //detach face
+        $property->faces()->detach();
+        //detach landmark
+        $property->landmarks()->detach();
+        //detach price
+        $property->prices()->detach();
+        //detach propertytype
+        $property->propertytypes()->detach();
+        //detach builders
+        $property->builders()->detach();
+        //detach agents
+        $property->agents()->detach();
+        //detach ventures
+        $property->ventures()->detach();
+        // delete property
+        $property->delete();
+
+        Session::flash('success', 'Property successfully deleted.');
+        return redirect()->back();
     }
 
     public function premiumEdit(Property $property)

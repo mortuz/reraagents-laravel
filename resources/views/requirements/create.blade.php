@@ -181,17 +181,12 @@
   @endsection
 
   @section('javascript')
-    
-      <script>
+    <script>
+      $(document).on('city_init', function() {
+        initSelectize();
+      });
 
-        $(document).on('city_init', function() {
-          console.log('selectize')
-          initSelectize();
-        });
-
-        $(document).on('city_changed', function() {
-          console.log('city changed');
-        });
-
-      </script>
+      $(document).on('city_changed', function() {
+      });
+    </script>
   @endsection

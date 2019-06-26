@@ -44,6 +44,7 @@ class RequirementController extends Controller
             $filter[] = ['city_id', $request->city];
         }
 
+        $filter[] = ['request_delete', 0];
         $filter[] = ['status', 1];
         $filter[] = ['inactive', 0];
 
@@ -183,9 +184,19 @@ class RequirementController extends Controller
      * @param  \App\Requirement  $requirement
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Requirement $requirement)
+    public function destroy(Request $request)
     {
-        //
+        $requirementId = $request->requirement;
+        $requirement = Requirement::find($requirementId);
+
+        if($request->user()->id != $requirement->user_id) {
+            return response()->json(['success' => false, 'message' => 'You are not the owner of this account.']);
+        }
+
+        $requirement->request_delete = 1;
+        $requirement->save();
+
+        return response()->json(['success' => true, 'message' => 'You have successfully request deletion.']);
     }
 
     public function create($request)
@@ -295,6 +306,7 @@ class RequirementController extends Controller
                 'created_at'    => $requirement->created_at,
                 'updated_at'    => $requirement->updated_at,
                 'working_agent' => $requirement->working_agent,
+                'request_delete' => $requirement->request_delete,
                 'property_type' => $requirement->propertytypes->first() ? $requirement->propertytypes->first()->type : null,
             ];
         });

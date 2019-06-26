@@ -14,17 +14,93 @@
     <div class="col-12 grid-margin">
       <div class="card">
         <div class="card-body">
+          <form action=""  autocomplete="off">
+            <div class="row">
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="state">State</label>
+                  <select name="state" id="state" class="form-control js-state-field">
+                    <option value="0">All states</option>
+                    @foreach ($states as $state)
+                      <option value="{{$state->id}}" {{$filters['state'] == $state->id ? 'selected' : ''}}>{{$state->name}}</option>
+                    @endforeach
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="city">City</label>
+                  <select name="city" id="city" class="form-control js-city-field{{ $errors->has('city') ? ' is-invalid' : '' }}" data-preselect="{{ $filters['city'] }}">
+                  </select>
+
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="type">Property type</label>
+                  <input id="type" name="type" data-preselect="{{ $filters['type'] }}" data-url={{ route('api.propertytype.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="area">Area</label>
+                  <input id="area" name="area" data-preselect="{{ $filters['areas'] }}" data-url={{ route('api.area.index') }} data-dependency="city" type="text" class="form-control js-selectize"/>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="price">Price</label>
+                  <input id="price" name="price" data-preselect="{{ $filters['prices'] }}" data-url={{ route('api.price.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label for="status">Status</label>
+                  <select class="form-control js-status" id="status" name="status">
+                    <option value="">All</option>
+                    <option value="0" {{ $filters['status'] == 0 ? 'selected' : '' }}>New</option>
+                    <option value="1" {{ $filters['status'] == 1 ? 'selected' : '' }}>Approved</option>
+                    <option value="2" {{ $filters['status'] == 2 ? 'selected' : '' }}>Rejected</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-3">
+                <button class="btn btn-gradient-primary mt-3" type="submit">Filter</button>
+                <a href="{{route('properties.index')}}" class="btn btn-gradient-secondary mt-3">Clear</a>
+              </div>
+
+            </div>
+            
+          </form>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 grid-margin">
+      <div class="card">
+        <div class="card-body">
           <h4 class="card-title">Property list</h4>
           <div class="table-responsive">
             <table class="table">
               <thead>
                 <tr>
                   <th class="scope"> ID </th>
-                  <th> State </th>
+                  <th> Type </th>
                   <th> City </th>
+                  <th> Area </th>
+                  <th> Landmark </th>
                   <th> Price </th>
-                  <th> Status </th>
-                  <th> Last updated </th>
+                  <th> Measurement </th>
+                  <th> Details </th>
+                  <th> Expiry date </th>
+                  <th> Status</th>
                   <th> Action </th>
                 </tr>
               </thead>
@@ -32,10 +108,36 @@
 
                 @foreach ($properties as $property)
                   <tr>
-                    <td>{{ $property->id }}</td>
-                    <td>{{ $property->state->name }} {!!$property->premium ? '<label class="badge badge-sm badge-danger">Premium</label>' : '' !!}</td>
+                    <td>{{ $property->id }} {!!$property->premium ? '<label class="badge badge-sm badge-danger">Premium</label>' : '' !!}</td>
+                    <td>
+                      @foreach ($property->propertytypes as $type)
+                        <label>{{$type->type}}</label> <br>
+                      @endforeach
+                    </td>
                     <td>{{ $property->city->name }}</td>
-                    <td> {{ $property->prices->first() ? $property->prices->first()->price : '--'}} </td>
+                    <td>
+                      @foreach ($property->areas as $area)
+                          <label>{{ $area->area }}</label> <br>
+                      @endforeach
+                    </td>
+                    <td>
+                      @foreach ($property->landmarks as $landmark)
+                          <label>{{ $landmark->name }}</label> <br>
+                      @endforeach
+                    </td>
+                    <td>
+                      @if ($property->prices->first())
+                        @foreach ($property->prices as $price)
+                          <label>{{ $price->price }}</label> <br>
+                        @endforeach
+                      @else
+                        '--'
+                      @endif
+                    </td>
+                    
+                    <td style="max-width: 100px; white-space: normal;"> {{ json_decode($property->raw_data)->measurement }} </td>
+                    <td style="max-width: 200px; white-space: normal;"> <span>{{ json_decode($property->raw_data)->details }}</span> </td>
+                    <td> {{ \Carbon\Carbon::parse($property->expiry_date)->format('d-m-Y') }} </td>
                     <td>
                       @switch($property->status)
                         @case(0)
@@ -51,15 +153,14 @@
                             
                       @endswitch
                     </td>
-                    <td> {{ $property->updated_at->diffForHumans() }} </td>
                     <td>
                       <a href="{{ route('properties.edit', ['property' => $property->id]) }}" class="btn btn-gradient-light btn-rounded btn-sm" title="Edit">
                         <i class="mdi mdi-pencil"></i>
                       </a>
 
-                      {{-- <button type="button" class="btn btn-gradient-danger btn-rounded btn-sm btn-delete" data-state="{{ $state->name }}" data-cities="{{ $state->cities->count() }}" data-action="{{ route('states.destroy', ['state' => $state->id]) }}">
+                      <button type="button" class="btn btn-gradient-danger btn-rounded btn-sm btn-delete" data-id="{{ $property->id }}" data-action="{{ route('properties.destroy', ['property' => $property->id]) }}">
                         <i class="mdi mdi-delete"></i>
-                      </button> --}}
+                      </button>
 
                     </td>
                   </tr>
@@ -86,11 +187,11 @@
 @section('javascript')
     <script>
       $('.btn-delete').on('click', function(e) {
-        var state = $(this).attr('data-state');
+        var id = $(this).attr('data-id');
         var url = $(this).attr('data-action');
         swal({
           title: 'Are you sure?',
-          text: `${state} and it's ${cities} cities will be delete. Would you like to continue?`,
+          text: `Property ${id} will be permanently deleted. Would you like to continue?`,
           icon: 'success',
           buttons: {
             cancel: {
@@ -121,6 +222,12 @@
           }
         );
 
+      });
+      $(document).on('city_init', function() {
+        initSelectize();
+      });
+
+      $(document).on('city_changed', function() {
       });
     </script>
 @endsection
