@@ -41,7 +41,7 @@ class PropertyController extends Controller
             $filter[] = ['city_id', $request->city];
         }
 
-        $filter[] = ['expiry_date', '<', Carbon::now()];
+        $filter[] = ['expiry_date', '>', Carbon::now()];
         $filter[] = ['status', 1];
         $filter[] = ['inactive', 0];
 
