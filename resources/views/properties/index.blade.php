@@ -60,8 +60,8 @@
                 <div class="form-group">
                   <label for="status">Status</label>
                   <select class="form-control js-status" id="status" name="status">
-                    <option value="">All</option>
-                    <option value="0" {{ $filters['status'] == 0 ? 'selected' : '' }}>New</option>
+                    <option value="" {{ $filters['status'] === '' ? 'selected' : '' }}>All</option>
+                    <option value="0" {{ $filters['status'] === '0' ? 'selected' : '' }}>New</option>
                     <option value="1" {{ $filters['status'] == 1 ? 'selected' : '' }}>Approved</option>
                     <option value="2" {{ $filters['status'] == 2 ? 'selected' : '' }}>Rejected</option>
                   </select>
