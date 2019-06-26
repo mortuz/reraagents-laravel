@@ -17,6 +17,17 @@
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
 
     <title>{{ $title }} - RERA Agents - All certified agents by RERA</title>
+    @if (env(APP_ENV) != 'production')
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142678288-1"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-142678288-1');
+        </script>
+    @endif
 </head>
 
 <body>

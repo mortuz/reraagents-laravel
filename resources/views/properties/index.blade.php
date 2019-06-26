@@ -131,7 +131,7 @@
                           <label>{{ $price->price }}</label> <br>
                         @endforeach
                       @else
-                        '--'
+                        --
                       @endif
                     </td>
                     
