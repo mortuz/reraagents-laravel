@@ -8,6 +8,7 @@ use App\Office;
 use App\AgentProfile;
 use App\State;
 use App\PropertyType;
+use Carbon\Carbon;
 
 class FrontendController extends Controller
 {
@@ -50,6 +51,7 @@ class FrontendController extends Controller
         // if (request()->price) {
         //     $filter[] = ['price', request()->price];
         // }
+        $filter[] = ['expiry_date', '>', Carbon::now()];
 
         $properties = Property::where($filter)->latest()->paginate(15)->appends([
             'state' => request()->state,
