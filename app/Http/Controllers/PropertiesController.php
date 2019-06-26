@@ -36,7 +36,7 @@ class PropertiesController extends Controller
         if (!empty($request->city)) {
             $filter[] = ['city_id', $request->city];
         }
-        if (!empty($request->status)) {
+        if ($request->status != '') {
             $filter[] = ['status', $request->status];
         }
         $results = Property::where($filter);
