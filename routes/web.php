@@ -27,6 +27,10 @@ Route::get('/terms-and-conditions', 'FrontendController@getTermsAndConditions')-
 Route::get('/privacy-policy', 'FrontendController@getPrivacy')->name('page.privacy');
 
 Auth::routes();
+View::composer(['*'], function ($view) {
+    // View::share('env', env('APP_ENV'));
+    $view->with('lo', 'lo');
+});
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     
