@@ -15,6 +15,7 @@ use App\Notifications\RequirementRejectedNotification;
 use App\Notifications\RequirementCommentAddedNotification;
 use App\Notifications\RequirementReleasedNotification;
 use App\AgentProfile;
+use App\Notifications\NewRequirementAvailableNotification;
 
 class RequirementsController extends Controller
 {
@@ -241,7 +242,8 @@ class RequirementsController extends Controller
                 if ($requirement->user_id == $agent->user_id || $request->user()->id == $agent->user_id) continue;
                 array_push($users, $agent->user);
             }
-            Notification::send($users, new RequirementReleasedNotification($requirement));
+
+            Notification::send($users, new NewRequirementAvailableNotification($requirement));
         }
 
         if ($request->release_message) {
@@ -250,23 +252,31 @@ class RequirementsController extends Controller
                 'user_id' => Auth::id(),
                 'message' => $request->release_message
             ]);
-
-            Notification::send($requirement->user, new RequirementCommentAddedNotification($requirement));
+            
+            if($requirement->user_id > 0) {
+                Notification::send($requirement->user, new RequirementCommentAddedNotification($requirement));
+            }
         }
         
 
         // send notification
         if ($request->status != $requirement->status) {
             if ($request->status == 1) {
-                Notification::send($requirement->user, new RequirementReleasedNotification($requirement));
+                if ($requirement->user_id > 0) {
+                    Notification::send($requirement->user, new RequirementReleasedNotification($requirement));
+                }
             }
 
             if ($request->status == 2) {
-                Notification::send($requirement->user, new RequirementApprovedNotification($requirement));
+                if ($requirement->user_id > 0) {
+                    Notification::send($requirement->user, new RequirementApprovedNotification($requirement));
+                }
             }
 
             if ($request->status == 3) {
-                Notification::send($requirement->user, new RequirementRejectedNotification($requirement));
+                if ($requirement->user_id > 0) {
+                    Notification::send($requirement->user, new RequirementRejectedNotification($requirement));
+                }
             }
         }
 

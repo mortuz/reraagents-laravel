@@ -19,6 +19,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\RequirementStatusChangeNotification;
 use App\Notifications\PremiumPropertyNotification;
+use App\Notifications\NewRequirementAvailableNotification;
 
 class RequirementController extends Controller
 {
@@ -473,9 +474,9 @@ class RequirementController extends Controller
             if ($requirement->user_id == $agent->user_id || $request->user()->id == $agent->user_id) continue;
             array_push($users, $agent->user);
         }
-        Notification::send($users, new PremiumPropertyNotification($requirement));
+        Notification::send($users, new NewRequirementAvailableNotification($requirement));
 
-        return response()->json(['success' => true, 'message' => 'Requirement successfully released.']);
+        return response()->json(['success' => true, 'message' => 'Requirement successfully released.', 'users' =>$users]);
     }
 
     public function updateDetails(Request $request)
