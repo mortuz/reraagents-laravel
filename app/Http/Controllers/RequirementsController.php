@@ -319,4 +319,19 @@ class RequirementsController extends Controller
         Session::flash('success', 'Requirement successfully deleted.');
         return redirect()->back();
     }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function getDeleteRequests(Request $request)
+    {
+        $filter[] = ['request_delete', 1];
+
+        $requirements = Requirement::where($filter)->latest()->paginate();
+
+        return view('requirements.delete')
+            ->with('requirements', $requirements);
+    }
 }

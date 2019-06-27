@@ -27,10 +27,7 @@ Route::get('/terms-and-conditions', 'FrontendController@getTermsAndConditions')-
 Route::get('/privacy-policy', 'FrontendController@getPrivacy')->name('page.privacy');
 
 Auth::routes();
-View::composer(['*'], function ($view) {
-    // View::share('env', env('APP_ENV'));
-    $view->with('lo', 'lo');
-});
+
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
     
@@ -60,6 +57,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('advertisement', 'AdvertisementController');
         Route::resource('properties', 'PropertiesController');
+        Route::get('/property/request/delete', 'PropertiesController@getRequestDelete')->name('property.delete.request');
         Route::get('/property/premium/{property}', 'PropertiesController@premiumEdit')->name('property.premium.edit');
         Route::put('/property/premium/{property}', 'PropertiesController@premiumUpdate')->name('property.premium.update');
         Route::resource('landmark', 'LandmarkController');
@@ -67,7 +65,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('price', 'PriceController');
         Route::resource('certificate', 'CertificatesController');
         Route::resource('requirement', 'RequirementsController');
-
+        Route::get('/requirement/request/delete', 'RequirementsController@getDeleteRequests')->name('requirement.delete.request');
         Route::get('/finance', 'FinanceController@index')->name('finance.index');
     });
 });

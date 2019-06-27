@@ -27,7 +27,6 @@ class PropertiesController extends Controller
      */
     public function index(Request $request)
     {
-        // dd($request->all());
         $results = null;
         $filter = [];
         if (!empty($request->state)) {
@@ -407,5 +406,64 @@ class PropertiesController extends Controller
 
         Session::flash('success', 'Property successfully updated.');
         return redirect()->route('properties.index');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function getRequestDelete(Request $request)
+    {
+        $results = null;
+        $filter[] = ['inactive', 1];
+        if (!empty($request->state)) {
+            $filter[] = ['state_id', $request->state];
+        }
+        if (!empty($request->city)) {
+            $filter[] = ['city_id', $request->city];
+        }
+        if ($request->status != '') {
+            $filter[] = ['status', $request->status];
+        }
+        $results = Property::where($filter);
+
+        if (!empty($request->type)) {
+            $results->whereHas('propertytypes', function ($query) use ($request) {
+                $query->whereIn('property_type_id', explode(',', $request->type));
+            });
+        }
+        if (!empty($request->area)) {
+            $results->whereHas('areas', function ($query) use ($request) {
+                $query->whereIn('area_id', explode(',', $request->area));
+            });
+        }
+        if (!empty($request->price)) {
+            $results->whereHas('prices', function ($query) use ($request) {
+                $query->whereIn('price_id', explode(',', $request->price));
+            });
+        }
+        $results = $results->latest()->paginate()->appends([
+            'state' => $request->state,
+            'city' => $request->city,
+            'type' => $request->type,
+            'areas' => $request->area,
+            'prices' => $request->price,
+            'status' => $request->status,
+        ]);
+        // dd( Property::where($filter)->latest()->paginate());
+
+        return view('properties.delete')
+            ->with('properties', $results)
+            ->with('states', State::all())
+            ->with('filters', [
+                'state' => $request->state,
+                'city' => $request->city,
+                'type' => $request->type,
+                'areas' => $request->area,
+                'prices' => $request->price,
+                'status' => $request->status,
+            ]);
     }
 }

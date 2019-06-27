@@ -102,16 +102,31 @@
       <div class="collapse" id="properties">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="{{ route('properties.index') }}">Properties</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('property.delete.request') }}">Delete requests</a></li>
         </ul>
       </div>
     </li>
 
     <li class="nav-item">
+      <a class="nav-link" data-toggle="collapse" href="#requirements" aria-expanded="false" aria-controls="requirements">
+        <span class="menu-title">Requirements</span>
+        <i class="menu-arrow"></i>
+        <i class="mdi mdi-crosshairs-gps menu-icon"></i>
+      </a>
+      <div class="collapse" id="requirements">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="{{ route('requirement.index') }}">Requirements</a></li>
+          <li class="nav-item"> <a class="nav-link" href="{{ route('requirement.delete.request') }}">Delete requests</a></li>
+        </ul>
+      </div>
+    </li>
+
+    {{-- <li class="nav-item">
       <a class="nav-link" href="{{ route('requirement.index') }}">
         <span class="menu-title">Requiments</span>
         <i class="mdi mdi-clipboard-account menu-icon"></i>
       </a>
-    </li>
+    </li> --}}
 
     <li class="nav-item">
       <a class="nav-link" href="{{ route('finance.index') }}">
