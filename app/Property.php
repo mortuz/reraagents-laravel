@@ -32,7 +32,14 @@ class Property extends Model
 
     public function getFirstImageAttribute()
     {
-        return json_decode($this->images);
+        $imgs = json_decode($this->images);
+
+        if ($imgs) {
+            return str_replace(' ', '%20', $imgs[0]);
+        } else {
+            return 'https://via.placeholder.com/250x200?text=N/A';
+        }
+        return ;
     }
 
     public function areas()

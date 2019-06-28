@@ -102,7 +102,7 @@
                         <div class="card ml-1 mr-1 bx-shadow mt-3">
                             <div class="row no-gutters">
                                 <div class="col-md-4">
-                                    <div class="premium-img" style="background-image: url('{{ $property->first_image ? $property->first_image[0] : 'https://via.placeholder.com/250x200?text=N/A' }} ')"></div>
+                                    <div class="premium-img" style="background-image: url('{{ asset($property->first_image) }}')"></div>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
