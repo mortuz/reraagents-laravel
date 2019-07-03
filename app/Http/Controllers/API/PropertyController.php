@@ -160,8 +160,8 @@ class PropertyController extends Controller
         // verify mobile no
         $users = User::where('mobile', $request->mobile)->where('mobile_verified_at', '!=', null)->get();
         $properties = Property::where('mobile', $request->mobile)->get();
-        // $users->count() || $properties->count()
-        if (false) {
+
+        if ($users->count() || $properties->count()) {
             $property = $this->create($request);
 
             return response()->json(['success' => true, 'data' => $property]);
