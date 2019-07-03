@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'mobile', 'role'
+        'name', 'email', 'password', 'mobile', 'role', 'state_id', 'city_id'
     ];
 
     /**
@@ -45,7 +45,7 @@ class User extends Authenticatable
     
     public function agent()
     {
-        return $this->belongsTo('App\AgentProfile');
+        return $this->belongsTo('App\AgentProfile', 'id', 'user_id');
     }
 
     public function certificates()
@@ -57,4 +57,14 @@ class User extends Authenticatable
     // {
     //     return $this->hasMany('App\ExpoToken');
     // }
+
+    public function state()
+    {
+        return $this->belongsTo('App\State');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo('App\City');
+    }
 }

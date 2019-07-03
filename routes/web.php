@@ -66,6 +66,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('certificate', 'CertificatesController');
         Route::resource('requirement', 'RequirementsController');
         Route::get('/requirement/request/delete', 'RequirementsController@getDeleteRequests')->name('requirement.delete.request');
+        Route::get('/premium-ad-requests', 'PremiumAdRequestsController@index')->name('premium.request.index');
+        Route::get('/premium-ad-requests/edit/{id}', 'PremiumAdRequestsController@edit')->name('premium.request.edit');
+        Route::patch('/premium-ad-requests/update/{id}', 'PremiumAdRequestsController@update')->name('premium.request.update');
+        Route::delete('/premium-ad-requests/delete/{id}', 'PremiumAdRequestsController@delete')->name('premium.request.delete');
         Route::get('/finance', 'FinanceController@index')->name('finance.index');
+        Route::resource('callers', 'CallerController');
     });
 });

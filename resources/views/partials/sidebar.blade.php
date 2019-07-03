@@ -72,6 +72,13 @@
     </li>
 
     <li class="nav-item">
+      <a class="nav-link" href="{{ route('callers.index') }}">
+        <span class="menu-title">Callers</span>
+        <i class="mdi mdi-office menu-icon"></i>
+      </a>
+    </li>
+
+    <li class="nav-item">
       <a class="nav-link" href="{{ route('agents.index') }}">
         <span class="menu-title">Agents</span>
         <i class="mdi mdi-clipboard-account menu-icon"></i>
@@ -89,6 +96,13 @@
     <li class="nav-item">
       <a class="nav-link" href="{{ route('builders.index') }}">
         <span class="menu-title">Builders</span>
+        <i class="mdi mdi-account menu-icon"></i>
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="{{ route('premium.request.index') }}">
+        <span class="menu-title">Premium requests</span>
         <i class="mdi mdi-account menu-icon"></i>
       </a>
     </li>
