@@ -16,6 +16,7 @@ class CreatePremiumAdRequestsTable extends Migration
         Schema::create('premium_ad_requests', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('user_id');
+            $table->integer('property_id')->unsigned();
             $table->integer('invoice_id')->nullable();
             $table->string('invoice_url')->nullable();
             $table->boolean('paid')->default(0);

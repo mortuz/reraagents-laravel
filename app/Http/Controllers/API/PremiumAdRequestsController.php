@@ -27,10 +27,11 @@ class PremiumAdRequestsController extends Controller
     public function store(Request $request)
     {
         $this->validate($request,[
-            'interest' => 'required'
+            'interest' => 'required',
+            'property' => 'required'
         ]);
 
-        $check = PremiumAdRequest::where('user_id', $request->user()->id)
+        $check = PremiumAdRequest::where('property_id', $request->property)
                                     ->where('paid', 0)
                                     ->first();
 
@@ -40,6 +41,7 @@ class PremiumAdRequestsController extends Controller
 
         PremiumAdRequest::create([
             'user_id' => $request->user()->id,
+            'property_id' => $request->property
         ]);
 
         return response()->json(['success' => true, 'message' => 'Our agent will be in touch with you shortly.']);

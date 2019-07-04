@@ -9,6 +9,7 @@ class PremiumAdRequest extends Model
     protected $fillable = [
         'user_id',
         'invoice_id',
+        'property_id',
         'invoice_url',
         'paid'
     ];

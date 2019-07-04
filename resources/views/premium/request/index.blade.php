@@ -23,6 +23,7 @@
                   <th> Name </th>
                   <th> Status </th>
                   <th> Ciy </th>
+                  <th> Property </th>
                   <th> Mobile </th>
                   <th> Paid </th>
                   <th> Requested at </th>
@@ -37,6 +38,7 @@
                     <td> <strong>{{ $req->user->name }}</strong> </td>
                     <td> {{ $req->user->agent->state->name }} </td>
                     <td> {{ $req->user->agent->city->name }} </td>
+                    <td> <a href="{{ route('show.property', ['id' => $req->property_id]) }}" target="_blank">{{ $req->property_id}}</a> </td>
                     <td> {{ $req->user->mobile }} </td>
                     <td> {{ $req->created_at->format('d-m-Y h:m a') }} </td>
                     <td>
