@@ -471,7 +471,7 @@ class RequirementController extends Controller
         $users = [];
 
         foreach ($agents as $agent) {
-            if ($requirement->user_id == $agent->user_id || $request->user()->id == $agent->user_id) continue;
+            if ($request->user()->id == $agent->user_id) continue;
             array_push($users, $agent->user);
         }
         Notification::send($users, new NewRequirementAvailableNotification($requirement));

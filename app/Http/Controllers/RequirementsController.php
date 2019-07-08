@@ -6,6 +6,7 @@ use Auth;
 use Session;
 use App\State;
 use App\Requirement;
+use App\AgentProfile;
 use App\CustomerStatus;
 use App\RequirementMessage;
 use Illuminate\Http\Request;
@@ -14,7 +15,6 @@ use App\Notifications\RequirementApprovedNotification;
 use App\Notifications\RequirementRejectedNotification;
 use App\Notifications\RequirementCommentAddedNotification;
 use App\Notifications\RequirementReleasedNotification;
-use App\AgentProfile;
 use App\Notifications\NewRequirementAvailableNotification;
 
 class RequirementsController extends Controller
@@ -261,21 +261,28 @@ class RequirementsController extends Controller
 
         // send notification
         if ($request->status != $requirement->status) {
-            if ($request->status == 1) {
-                if ($requirement->user_id > 0) {
-                    Notification::send($requirement->user, new RequirementReleasedNotification($requirement));
-                }
-            }
+            if ($requirement->user_id > 0) {
 
-            if ($request->status == 2) {
-                if ($requirement->user_id > 0) {
-                    Notification::send($requirement->user, new RequirementApprovedNotification($requirement));
-                }
-            }
+                switch($requirement->status) {
+                    case 1:
+                        Notification::send($requirement->user, new RequirementReleasedNotification($requirement));
+                        $agents = AgentProfile::where('city_id', $requirement->city_id)->get();
+                        $users = [];
 
-            if ($request->status == 3) {
-                if ($requirement->user_id > 0) {
-                    Notification::send($requirement->user, new RequirementRejectedNotification($requirement));
+                        foreach ($agents as $agent) {
+                            if ( $requirement->user_id == $agent->user_id) continue;
+                            array_push($users, $agent->user);
+                        }
+                        Notification::send($users, new NewRequirementAvailableNotification($requirement));
+                        break;
+                    case 2:
+                        Notification::send($requirement->user, new RequirementApprovedNotification($requirement));
+                        break;
+                    case 3:
+                        Notification::send($requirement->user, new RequirementRejectedNotification($requirement));
+                        break;
+                    default:
+                        break;
                 }
             }
         }
