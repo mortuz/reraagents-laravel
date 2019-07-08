@@ -7,6 +7,9 @@ use App\Certificate;
 use App\State;
 use Illuminate\Validation\Rule;
 use Session;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\CertificateApprovedNotification;
+use App\Notifications\CertificateRejectedNotification;
 
 class CertificatesController extends Controller
 {
@@ -83,6 +86,12 @@ class CertificatesController extends Controller
         $certificate->state_id = $request->state;
         $certificate->expiry_date = $request->expiry_date;
         $certificate->status = $request->status;
+
+        if ($request->status == 1) {
+            Notification::send($certificate->user, new CertificateApprovedNotification());
+        } elseif($request->status == 2) {
+            Notification::send($certificate->user, new CertificateRejectedNotification());
+        } else {}
 
         $certificate->save();
 
