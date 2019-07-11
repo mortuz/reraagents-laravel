@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo('App\City');
     }
+
+    public function AauthAcessToken()
+    {
+        return $this->hasMany('\App\OauthAccessToken');
+    }
 }
