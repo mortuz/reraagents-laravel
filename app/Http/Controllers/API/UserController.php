@@ -58,7 +58,9 @@ class UserController extends Controller
         $data['property']['my'] = Property::where('user_id', $request->user()->id)->get()->count();
 
         $data['app_url'] = 'https://play.google.com/store/apps/details?id=in.idevia.reraagents';
-        $data['version'] = '1.6';
+
+        $data['version'] = '2.0';
+
         $data['ads'] = $ads;
 
         return response()->json(['success' => true, 'data' => $data]);
