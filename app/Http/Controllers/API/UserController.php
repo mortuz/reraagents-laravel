@@ -65,4 +65,26 @@ class UserController extends Controller
 
         return response()->json(['success' => true, 'data' => $data]);
     }
+
+    public function checkRole(Request $request)
+    {
+        $this->validate($request, [
+            'mobile' => 'required',
+            'role' => 'required'
+        ]);
+
+        $user = User::where('mobile', $request->mobile)
+                        ->where('role', $request->role)
+                        ->first();
+
+        return response()->json(['success' => $user ? true : false]);
+    }
+
+    public function logoutApi(Request $request)
+    {
+        $request->user()->AauthAcessToken()->delete();
+
+        return response()->json(['success' =>true]);
+    }
 }
+

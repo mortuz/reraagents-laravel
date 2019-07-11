@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(VenturesTableSeeder::class);
         // $this->call(AgentProfilesTableSeeder::class);
         // $this->call(CustomerStatusTableSeeder::class);
-        $this->call( LoanPurposesTableSeeder::class);
+        // $this->call(LoanPurposesTableSeeder::class);
+        $this->call(DesignationsTableSeeder::class);
     }
 }

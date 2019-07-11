@@ -43,6 +43,8 @@ class CallerController extends Controller
             'city' => 'required|min:1',
             'email' => 'nullable|email|unique:users,email',
             'mobile' => 'required|unique:users,mobile',
+            'state' => 'required',
+            'city' => 'required',
             'password' => 'required',
         ]);
 
@@ -52,6 +54,8 @@ class CallerController extends Controller
             'email' => $request->email,
             'mobile' => $request->mobile,
             'password' => bcrypt($request->password),
+            'state_id' => $request->state,
+            'city_id' => $request->city,
             'role' => 2
         ]);
         
