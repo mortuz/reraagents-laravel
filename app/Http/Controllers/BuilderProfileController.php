@@ -44,7 +44,7 @@ class BuilderProfileController extends Controller
             'name' => 'required',
             'state' => 'required',
             'city' => 'required',
-            'mobile' => 'required',
+            'mobile' => 'required|unique:users,mobile',
             'password' => 'required',
         ]);
 

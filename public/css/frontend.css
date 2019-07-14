@@ -273,3 +273,12 @@ img {
         flex: 1;
     }
 }
+
+.thankyou-hero {
+    width: 100%;
+    max-width: 415px;
+    height: 300px;
+    margin: auto;
+    display: block;
+    margin-bottom: 50px;
+}

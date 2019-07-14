@@ -25,6 +25,7 @@ Route::post('/post-your-requirement', 'FrontendController@postBuyProperty');
 
 Route::get('/terms-and-conditions', 'FrontendController@getTermsAndConditions')->name('page.terms');
 Route::get('/privacy-policy', 'FrontendController@getPrivacy')->name('page.privacy');
+Route::get('/thank-you', 'FrontendController@getThankYou')->name('page.thankyou');
 
 Auth::routes();
 
