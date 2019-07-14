@@ -192,6 +192,18 @@ class FrontendController extends Controller
             ->with('keywords', $keywords);
     }
 
+    public function getThankYou()
+    {
+        $title = 'Thank you ';
+        $description = '';
+        $keywords = '';
+
+        return view('frontend.thankyou')
+            ->with('title', $title)
+            ->with('description', $description)
+            ->with('keywords', $keywords);
+    }
+
     public function getSellProperty()
     {
         $title = 'Sell your property ';
