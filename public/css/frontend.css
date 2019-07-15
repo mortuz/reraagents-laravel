@@ -288,3 +288,6 @@ img {
 .card-text {
     margin-bottom: 0px;
 }
+.btn {
+    text-shadow: none;
+}
