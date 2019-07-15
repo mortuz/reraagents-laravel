@@ -120,6 +120,9 @@ h6 {
 
 .card-t1 {
     color: #0287d7;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .color-grey {
@@ -274,11 +277,14 @@ img {
     }
 }
 
-.thankyou-hero {
+.thankyou-img {
     width: 100%;
     max-width: 415px;
     height: 300px;
     margin: auto;
     display: block;
     margin-bottom: 50px;
+}
+.card-text {
+    margin-bottom: 0px;
 }

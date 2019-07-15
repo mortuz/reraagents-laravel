@@ -31,7 +31,7 @@
 
 <body>
 
-    <section class="bg-hero" style="background-image: url({{ asset('img/img3.jpeg') }}">
+    <section class="bg-hero" style="background-image: url('{{ asset('img/img3.jpeg') }}')">
         
       <nav class="navbar navbar-expand-lg fixed-nav navbar-light pt-3">
         <a class="navbar-brand" href="{{ route('index') }}">
@@ -63,7 +63,7 @@
                 </li> --}}
             </ul>
         </div>
-    </nav>
+      </nav>
 
         <div class="container text-center header-text">
             <div class="row ">
@@ -71,8 +71,8 @@
                     <p class="hero-tagline" style="color:#ffffff;">For all Agents communication</p>
                 </div>
                 <div class="col-md-12">
-                    <a href="{{ route('page.property.buy') }}"><button class="btn btn1 my-2 my-sm-0" >Post Your Requirement</button></a>
-                    <a href="{{ route('page.property.sell') }}"><button class="btn btn2 my-2 my-sm-0" >Sell Property</button></a>
+                    <a href="{{ route('page.property.buy') }}" class="btn btn1 my-2 my-sm-0">Post Your Requirement</a>
+                    <a href="{{ route('page.property.sell') }}" class="btn btn2 my-2 my-sm-0">Sell Property</a>
                 </div>
             </div>
 
@@ -134,7 +134,7 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th><i class="fa fa-phone" aria-hidden="true"></i></i></th>
+                                        <th><i class="fa fa-phone" aria-hidden="true"></i></th>
                                         <td>
                                             +91 986 665 7007
                                         </td>
@@ -171,7 +171,7 @@
                     </ul>
                 </div>
                 <div class="col-md-3 align-self-center my-3">
-                    <img class="logofoot" src="{{ asset('img/logofooter.png') }}">
+                    <img class="logofoot" src="{{ asset('img/logofooter.png') }}" alt="rera agents logo">
                 </div>
             </div>
             <hr class="white-hr">
