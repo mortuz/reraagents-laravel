@@ -35,7 +35,8 @@
         
       <nav class="navbar navbar-expand-lg fixed-nav navbar-light pt-3">
         <a class="navbar-brand" href="{{ route('index') }}">
-            <img class="logo-header" src="{{ asset('img/rera_new.png') }}" alt=""></a>
+            <img class="logo-header" src="{{ asset('img/rera_new.png') }}" alt="">
+        </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#topNav"
             aria-controls="topNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -68,7 +69,7 @@
         <div class="container text-center header-text">
             <div class="row ">
                 <div class="col-md-12 hero-text">
-                    <p class="hero-tagline" style="color:#ffffff;">For all Agents communication</p>
+                    <h1 class="hero-tagline" style="color:#ffffff;">For all Agents communication</h1>
                 </div>
                 <div class="col-md-12">
                     <a href="{{ route('page.property.buy') }}" class="btn btn1 my-2 my-sm-0">Post Your Requirement</a>
