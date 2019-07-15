@@ -115,6 +115,8 @@ class CallerController extends Controller
             $caller->password = bcrypt($request->password);
         }
 
+        $caller->save();
+
         Session::flash('success', 'Caller successfully updated.');
         return redirect()->route('callers.index');
 
