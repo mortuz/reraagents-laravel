@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use App\State;
 use Session;
+use Illuminate\Validation\Rule;
 
 class CallerController extends Controller
 {
