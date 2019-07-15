@@ -98,6 +98,7 @@
     </section> --}}
 
     <section class="container pt-5" id="filterForm">
+        <h1 class="d-none">Filter results</h1>
         <div class="row">
             <div class="col-12">
                 <form class="form-inline filter-form">

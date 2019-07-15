@@ -86,7 +86,7 @@ class PropertiesController extends Controller
      */
     public function create()
     {
-        $token = Auth::user()->tokens()->latest()->first()->id;
+        $token = Auth::user()->tokens()->latest()->first() ? Auth::user()->tokens()->latest()->first()->id : null;
         return view('properties.create')
                         ->with('token', $token)
                         ->with('states', State::all());

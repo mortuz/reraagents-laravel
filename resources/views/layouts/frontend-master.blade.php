@@ -86,7 +86,7 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th><i class="fa fa-phone" aria-hidden="true"></i></i></th>
+                                        <th><i class="fa fa-phone" aria-hidden="true"></i></th>
                                         <td>
                                             +91 986 665 7007
                                         </td>
