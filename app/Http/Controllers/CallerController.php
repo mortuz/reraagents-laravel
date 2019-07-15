@@ -6,7 +6,6 @@ use App\User;
 use Illuminate\Http\Request;
 use App\State;
 use Session;
-use Illuminate\Validation\Rule;
 
 class CallerController extends Controller
 {
@@ -42,8 +41,8 @@ class CallerController extends Controller
             'name' => 'required',
             'state' => 'required',
             'city' => 'required|min:1',
-            'email' => ['nullable', 'email', Rule::unique('users', 'email')->ignore($agent->user->id)],
-            'mobile' => ['required', 'regex:/[0-9]{10}/', Rule::unique('users', 'mobile')->ignore($agent->user->id)],
+            'email' => 'nullable|email|unique:users,email',
+            'mobile' => 'required|unique:users,mobile',
             'state' => 'required',
             'city' => 'required',
             'password' => 'required',
@@ -103,8 +102,8 @@ class CallerController extends Controller
             'name' => 'required',
             'state' => 'required',
             'city' => 'required|min:1',
-            'email' => 'nullable|email|unique:users,email',
-            'mobile' => 'required|unique:users,mobile',
+            'email' => ['nullable', 'email', Rule::unique('users', 'email')->ignore($caller->id)],
+            'mobile' => ['required', 'regex:/[0-9]{10}/', Rule::unique('users', 'mobile')->ignore($caller->id)],
         ]);
 
         $caller->name = $request->name;
