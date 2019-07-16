@@ -114,7 +114,7 @@
                         <label>{{$type->type}}</label> <br>
                       @endforeach
                     </td>
-                    <td>{{ $property->city->name }}</td>
+                    <td>{{ $property->city ? $property->city->name : null }}</td>
                     <td>
                       @foreach ($property->areas as $area)
                           <label>{{ $area->area }}</label> <br>
