@@ -142,7 +142,7 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">
-                                            <p class="card-text">{{ $property->state->name }} >> <span class="color-dark">{{ $property->city->name }}</span> 
+                                            <p class="card-text">{{ $property->state->name }} >> <span class="color-dark">{{ $property->city ? $property->city->name : null }}</span> 
                                                 @if ($property->propertytypes->first())
                                                     >> <span class="color-dark">{{ $property->propertytypes->first()->type }}</span>                                                
                                                 @endif
@@ -170,7 +170,7 @@
                         @else
                             <div class="card ml-1 mr-1 bx-shadow mt-3">
                                 <div class="card-body">
-                                    <p class="card-text">{{ $property->state->name }} >> <span class="color-dark">{{ $property->city->name }}</span>
+                                    <p class="card-text">{{ $property->state->name }} >> <span class="color-dark">{{ $property->city ? $property->city->name : null }}</span>
                                         @if ($property->propertytypes->first())
                                             >> <span class="color-dark">{{ $property->propertytypes->first()->type }}</span>                                                
                                         @endif
