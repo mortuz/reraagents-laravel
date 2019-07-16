@@ -291,3 +291,6 @@ img {
 .btn {
     text-shadow: none;
 }
+#pagination-wrapper .pagination {
+    flex-wrap: wrap !important;
+}
