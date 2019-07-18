@@ -288,7 +288,11 @@ class RequirementsController extends Controller
                 if ($requirement->status == 1) {
                     $agents = AgentProfile::where('city_id', $requirement->city_id)->get();
                     $users = [];
-                    Notification::send($agents, new NewRequirementAvailableNotification($requirement));
+                    foreach ($agents as $agent) {
+                        if ($requirement->user_id == $agent->user_id) continue;
+                        array_push($users, $agent->user);
+                    }
+                    Notification::send($users, new NewRequirementAvailableNotification($requirement));
                 }
             }
         }
