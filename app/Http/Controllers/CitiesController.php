@@ -45,7 +45,7 @@ class CitiesController extends Controller
         $city = City::where('state_id', $request->state)->where('slug', str_slug($request->name))->first();
         if($city) {
             Session::flash('error', 'City already exists');
-            return redirect()->route('cities.index');
+            return redirect()->back();
         }
 
         City::create([
@@ -99,7 +99,7 @@ class CitiesController extends Controller
         $cities = City::where('state_id', $request->state)->where('id', '!=', $city->id)->where('slug', str_slug($request->name))->get();
         if ($cities->count()) {
             Session::flash('error', 'City already exists');
-            return redirect()->route('cities.index');
+            return redirect()->back();
         }
 
         $city->name = $request->name;
