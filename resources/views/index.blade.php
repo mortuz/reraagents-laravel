@@ -147,7 +147,7 @@
                                                         >> <span>{{ $property->propertytypes->first()->type }}</span>                                                
                                                     @endif
                                                 </p>
-                                                <h5 class="card-title card-t1">{{ $property->raw_data->details }}</h5>
+                                                <h5 class="card-title card-t1 text-truncate">{{ $property->raw_data->details }}</h5>
 
                                                 <p class="card-text"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;
                                                     @if($property->areas->first()) 
@@ -187,7 +187,7 @@
                                             <span class="color-grey" style="font-weight:bold;">{{ $property->updated_at->format('Y-m-d') }}</span>
                                         </p>
                             
-                                        <h5 class="card-title card-t1">{{ $property->raw_data->details }}</h5>
+                                        <h5 class="card-title card-t1 text-truncate">{{ $property->raw_data->details }}</h5>
                                         <p class="card-text"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;
                                             @if($property->areas->first()) 
                                                 {{$property->areas->first()->area}}

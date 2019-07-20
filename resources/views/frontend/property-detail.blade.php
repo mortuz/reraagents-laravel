@@ -99,10 +99,11 @@
                 <h3 class="h5 ml-2">You might also like</h3>
                 @foreach ($premiumProperties as $property)
                   @if ($property->premium)
+                    <div class="col-md-6">
                       <div class="card ml-1 mr-1 bx-shadow mt-3">
                           <div class="row no-gutters">
                               <div class="col-md-4">
-                                  <div class="premium-img" style="background-image: url('{{ $property->images ? $property->images[0] : asset('img/na.jpeg') }} ')"></div>
+                                  <div class="premium-img" style="background-image: url('{{ $property->firstImage }} ')"></div>
                               </div>
                               <div class="col-md-8">
                                   <div class="card-body">
@@ -111,7 +112,7 @@
                                               >> <span>{{ $property->propertytypes->first()->type }}</span>                                                
                                           @endif
                                       </p>
-                                      <h5 class="card-title card-t1">{{ $property->decoded_raw_data->details }}</h5>
+                                      <h5 class="card-title card-t1 text-truncate">{{ $property->decoded_raw_data->details }}</h5>
 
                                       <p class="card-text"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;
                                           @if($property->areas->first()) 
@@ -137,7 +138,9 @@
                               </div>
                           </div>
                       </div>
+                    </div>
                   @else
+                    <div class="col-md-6">
                       <div class="card ml-1 mr-1 bx-shadow mt-3">
                           <div class="card-body">
                               <p class="card-text">{{ $property->state->name }} >> <span>{{ $property->city ? $property->city->name : null }}</span>
@@ -151,7 +154,7 @@
                                   <span class="color-grey" style="font-weight:bold;">{{ $property->updated_at->format('Y-m-d') }}</span>
                               </p>
                   
-                              <h5 class="card-title card-t1">{{ $property->decoded_raw_data->details }}</h5>
+                              <h5 class="card-title card-t1 text-truncate">{{ $property->decoded_raw_data->details }}</h5>
                               <p class="card-text"><i class="fa fa-map-marker" aria-hidden="true"></i>&nbsp;
                                   @if($property->areas->first()) 
                                       {{$property->areas->first()->area}}
@@ -167,6 +170,7 @@
                               </a>
                           </div>
                       </div>
+                    </div>
                   @endif
                 @endforeach
               </div>

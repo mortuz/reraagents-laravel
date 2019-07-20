@@ -37,7 +37,7 @@ class Property extends Model
         if ($imgs) {
             return str_replace(' ', '%20', $imgs[0]);
         } else {
-            return 'https://via.placeholder.com/250x200?text=N/A';
+            return asset('img/na.jpeg');
         }
         return ;
     }
