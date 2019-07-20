@@ -102,7 +102,7 @@
         <div class="row">
             <div class="col-12">
                 <form class="form-inline filter-form">
-                    <div class="form-group mb-2">
+                    <div class="form-group mb-2 mr-2">
                         <label for="state" class="sr-only">State</label>
                         <select name="state" id="state" class="form-control js-state-field">
                             <option value="0">Choose state</option>
@@ -111,7 +111,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group mx-sm-3 mb-2">
+                    <div class="form-group mr-3 mb-2">
                         <label for="city" class="sr-only">City</label>
                         <select name="city" id="city" class="form-control js-city-field" data-preselect="{{ $filter_city }}">
                             <option value="">Choose city</option>
@@ -165,7 +165,7 @@
                                                     <span class="color-red" style="font-weight:bold;">{{ $property->id }}</span> , <span class="color-grey" style="font-weight:bold;">{{ $property->updated_at->format('Y-m-d') }}</span></span>
                                                 </p>
 
-                                                <a class="btn btn-primary mt-3 font-weight-normal" style="font-size: 14px" href="{{ route('show.property', ['id' => $property->id]) }}" target="_blank">
+                                                <a class="btn btn-primary font-weight-normal" style="font-size: 14px" href="{{ route('show.property', ['id' => $property->id]) }}" target="_blank">
                                                     More Information
                                                 </a>
 
