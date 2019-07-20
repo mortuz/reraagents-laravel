@@ -28,7 +28,7 @@ class FrontendController extends Controller
         ];
 
         // $filter[] = ['state', $request->getParam('state')];
-        $states = State::orderBy('name')->all();
+        $states = State::orderBy('name')->get();
 
         if (request()->state > 0) {
             $filter[] = ['state_id', request()->state];
