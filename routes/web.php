@@ -55,6 +55,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/agents/premium/{id}/edit', 'AgentProfileController@editPremium')->name('agents.premium.make');
         Route::post('/agents/premium/{id}/edit', 'AgentProfileController@updatePremium');
 
+        Route::get('/call-records', 'CallRecordsController@index')->name('call.records.index');
+
 
         Route::resource('advertisement', 'AdvertisementController');
         Route::resource('properties', 'PropertiesController');

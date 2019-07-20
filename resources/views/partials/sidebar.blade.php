@@ -79,6 +79,13 @@
     </li>
 
     <li class="nav-item">
+      <a class="nav-link" href="{{ route('call.records.index') }}">
+        <span class="menu-title">Call records</span>
+        <i class="mdi mdi-office menu-icon"></i>
+      </a>
+    </li>
+
+    <li class="nav-item">
       <a class="nav-link" href="{{ route('agents.index') }}">
         <span class="menu-title">Agents</span>
         <i class="mdi mdi-clipboard-account menu-icon"></i>

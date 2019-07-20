@@ -17,4 +17,19 @@ class CallRecord extends Model
         'paid_user',
         'added_by'
     ];
+
+    public function city()
+    {
+        return $this->belongsTo('App\City');
+    }
+
+    public function state()
+    {
+        return $this->belongsTo('App\State');
+    }
+
+    public function designation()
+    {
+        return $this->belongsTo('App\Designation');
+    }
 }
