@@ -102,7 +102,7 @@
               @foreach ($premiumProperties as $property)
                   @if ($property->premium)
                     <div class="col-md-6">
-                      <div class="card ml-1 mr-1 bx-shadow mt-3">
+                      <div class="card ml-1 mr-1 bx-shadow">
                           <div class="row no-gutters">
                               <div class="col-md-4">
                                   <div class="premium-img" style="background-image: url('{{ $property->firstImage }} ')"></div>
@@ -175,7 +175,7 @@
                     </div>
                   @endif
                 @endforeach
-                
+
             </div>
           </div>
         </section>
