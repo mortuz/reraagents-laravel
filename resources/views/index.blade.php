@@ -117,7 +117,7 @@
                             <option value="">Choose city</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary mb-2">Filter results</button>
+                    <button type="submit" class="btn btn-primary mb-2" style="font-size:14px">Filter results</button>
                 </form>
             </div>
         </div>
