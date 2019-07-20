@@ -1,4 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:400,500,700');
 body{
+    font-family: 'Roboto', sans-serif;
     background-color: #f4f4f4;
     color: #666666;
     overflow-x: hidden;
@@ -118,11 +120,17 @@ h6 {
     color: #666666;
 }
 
+.card-body p{
+    color: #999999;
+}
+
 .card-t1 {
     color: #0287d7;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 16px;
+    margin-top: 0.5rem;
 }
 
 .color-grey {

@@ -108,7 +108,7 @@
 
                 @foreach ($properties as $property)
                   <tr>
-                    <td>{{ $property->id }} {!!$property->premium ? '<label class="badge badge-sm badge-danger">Premium</label>' : '' !!}</td>
+                    <td>{{ $property->id }} {!! $property->premium ? '<label class="badge badge-sm badge-danger">Premium</label>' : '' !!}</td>
                     <td>
                       @foreach ($property->propertytypes as $type)
                         <label>{{$type->type}}</label> <br>
@@ -128,7 +128,7 @@
                     <td>
                       @if ($property->prices->first())
                         @foreach ($property->prices as $price)
-                          <label>{{ $price->price }}</label> <br>
+                          <label> {{ $price->price }}</label> <br>
                         @endforeach
                       @else
                         --

@@ -8,7 +8,7 @@
             <div class="carousel-inner">
             @foreach ($property->images as $index => $image)
                 <div class="carousel-item {{$index == 0 ? 'active' : '' }}">
-                    <img style="max-height:600px;" src="{{ asset($image) }}" class="d-block w-100 slider-img" alt="...">
+                    <img src="{{ asset($image) }}" class="d-block w-100 slider-img" alt="...">
                 </div>
             @endforeach
             </div>
