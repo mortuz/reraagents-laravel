@@ -97,7 +97,9 @@
             <div class="row">
               <div class="col-12">
                 <h3 class="h5 ml-2">You might also like</h3>
-                @foreach ($premiumProperties as $property)
+              </div>
+
+              @foreach ($premiumProperties as $property)
                   @if ($property->premium)
                     <div class="col-md-6">
                       <div class="card ml-1 mr-1 bx-shadow mt-3">
@@ -173,7 +175,7 @@
                     </div>
                   @endif
                 @endforeach
-              </div>
+                
             </div>
           </div>
         </section>
