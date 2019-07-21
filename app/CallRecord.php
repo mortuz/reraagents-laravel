@@ -15,7 +15,7 @@ class CallRecord extends Model
         'mobile',
         'comment',
         'paid_user',
-        'added_by'
+        'user_id'
     ];
 
     public function city()
@@ -31,5 +31,10 @@ class CallRecord extends Model
     public function designation()
     {
         return $this->belongsTo('App\Designation');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\CallerComment');
     }
 }

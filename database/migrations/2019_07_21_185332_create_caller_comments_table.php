@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCallRecordsTable extends Migration
+class CreateCallerCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreateCallRecordsTable extends Migration
      */
     public function up()
     {
-        Schema::create('call_records', function (Blueprint $table) {
+        Schema::create('caller_comments', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('state_id')->unsigned();
-            $table->integer('city_id')->unsigned();
-            $table->integer('designation_id')->unsigned();
-            $table->string('mobile');
-            $table->boolean('paid_user')->default(0);
             $table->integer('user_id')->unsigned();
+            $table->integer('call_record_id')->unsigned();
+            $table->string('comment');
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreateCallRecordsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('call_records');
+        Schema::dropIfExists('caller_comments');
     }
 }

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Designation;
 use App\State;
+use App\City;
+use App\CallerComment;
 
 class CallRecordsController extends Controller
 {
@@ -33,19 +35,25 @@ class CallRecordsController extends Controller
             'designation_id' => 'required',
             'state_id' => 'required',
             'city_id' => 'required',
-            'comment' => 'required'
         ]);
 
-        CallRecord::updateOrCreate(
+        $record = CallRecord::firstOrCreate(
             ['mobile' => $request->mobile],
             [
                 'designation_id' => $request->designation_id,
                 'state_id' => $request->state_id,
                 'city_id' => $request->city_id,
-                'comment' => $request->comment,
-                'added_by' => $request->user()->id
+                'user_id' => $request->user()->id
             ]
         );
+
+        if ($request->comment) {
+            CallerComment::create([
+                'user_id' => $request->user()->id,
+                'call_record_id' => $record->id,
+                'comment' => $request->comment
+            ]);
+        }
 
         return response()->json(['success' => true]);
     }
@@ -91,17 +99,16 @@ class CallRecordsController extends Controller
         ]);
 
         $record = CallRecord::where('mobile', $request->mobile)->first();
-
-        $data = [
-            'states' => [],
-            'designations' => []
-        ];
+        if ($record) {
+            $record->comments = $record->comments;
+        }
 
         // if(!$record) {
-            $data = [
-                'states' => State::all(),
-                'designations' => Designation::all()
-            ];
+        $data = [
+            'states' => State::orderBy('name')->get(),
+            'cities' =>City::where('state_id', $record ? $record->state_id : null)->orderBy('name')->get(),
+            'designations' => Designation::orderBy('designation')->get()
+        ];
         // }
 
         return response()->json(['success' => true, 'record' => $record, 'data' => $data]);
