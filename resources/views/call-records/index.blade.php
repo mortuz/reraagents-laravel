@@ -37,7 +37,7 @@
                     <td>
                       @foreach ($callRecord->comments as $index => $comment)
                           <p><strong>{{++$index}}.</strong> {!! nl2br(e($comment->comment)) !!}</p>
-                          <p><i>added <strong>{{$comment->create_at->diffForHumans() }}</strong></i></p>
+                          <p><i>added <strong>{{$comment->created_at->diffForHumans() }}</strong></i></p>
                       @endforeach
                     </td>
                     {{-- <td>
