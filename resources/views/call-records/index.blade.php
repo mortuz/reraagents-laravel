@@ -37,6 +37,7 @@
                     <td>
                       @foreach ($callRecord->comments as $comment)
                           <p>{!! $comment->comment !!}</p>
+                          <hr>
                       @endforeach
                     </td>
                     {{-- <td>
