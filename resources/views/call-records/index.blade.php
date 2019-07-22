@@ -36,7 +36,7 @@
                     <td> {{ $callRecord->city->name }} </td>
                     <td>
                       @foreach ($callRecord->comments as $index => $comment)
-                          <p>{{++$index}}{!! nl2br(e($comment->comment)) !!}</p>
+                          <p><strong>{{++$index}}.</strong> {!! nl2br(e($comment->comment)) !!}</p>
                       @endforeach
                     </td>
                     {{-- <td>
