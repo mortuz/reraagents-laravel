@@ -36,7 +36,7 @@
                     <td> {{ $callRecord->city->name }} </td>
                     <td>
                       @foreach ($callRecord->comments as $comment)
-                          <p>{{$comment->comment}}</p>
+                          <p>{!! $comment->comment !!}</p>
                       @endforeach
                     </td>
                     {{-- <td>
