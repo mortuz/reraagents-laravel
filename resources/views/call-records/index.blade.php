@@ -36,8 +36,10 @@
                     <td> {{ $callRecord->city->name }} </td>
                     <td>
                       @foreach ($callRecord->comments as $index => $comment)
-                          <p><strong>{{++$index}}.</strong> {!! nl2br(e($comment->comment)) !!}</p>
-                          <p><i>added <strong>{{$comment->created_at->diffForHumans() }}</strong></i></p>
+                          <div class="bg-light p-3 mb-2">
+                            <p><strong>{{++$index}}.</strong> {!! nl2br(e($comment->comment)) !!}</p>
+                            <p><i>added <strong>{{$comment->created_at->diffForHumans() }}</strong></i></p> 
+                          </div>
                       @endforeach
                     </td>
                     {{-- <td>
