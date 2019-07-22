@@ -34,7 +34,11 @@
                     <td> {{ $callRecord->designation->designation }} </td>
                     <td> {{ $callRecord->state->name }} </td>
                     <td> {{ $callRecord->city->name }} </td>
-                    <td>{{ $callRecord->comment }}</td>
+                    <td>
+                      @foreach ($callRecord->comments as $comment)
+                          <p>{{$comment->comment}}</p>
+                      @endforeach
+                    </td>
                     {{-- <td>
                       <a href="{{ route('bhk.edit', ['property_type' => $bhk->id]) }}" class="btn btn-gradient-light btn-rounded btn-sm" title="Edit">
                         <i class="mdi mdi-pencil"></i>
