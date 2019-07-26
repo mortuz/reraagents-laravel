@@ -50,18 +50,18 @@ class PropertyController extends Controller
         // }
 
         $properties = Property::where($filter)
-                                ->where('premium', 0)
+                                // ->where('premium', 0)
                                 ->limit( $items_per_page)
                                 ->offset(($page - 1) * $items_per_page)
                                 ->latest()
                                 ->get();
                                 
-        $premiumProperties = Property::where($filter)
-                                ->where('premium', 1)
-                                ->limit( $premium_items_per_page)
-                                ->offset(($page - 1) * $premium_items_per_page)
-                                ->latest()
-                                ->get();
+        // $premiumProperties = Property::where($filter)
+        //                         ->where('premium', 1)
+        //                         ->limit( $premium_items_per_page)
+        //                         ->offset(($page - 1) * $premium_items_per_page)
+        //                         ->latest()
+        //                         ->get();
                                 
         $formattedProperties = [];
 
@@ -81,29 +81,6 @@ class PropertyController extends Controller
                 'heading'       => json_decode($property->raw_data)->details,
                 'landmark'      => count($property->landmarks) == 0 ? null : $property->landmarks->first()->name,
                 'raw'           => json_decode($property->raw_data),
-                'features'      => $property->features,
-                'created_at'    => $property->created_at,
-                'updated_at'    => $property->updated_at,
-                'expiry_date'   => $property->expiry_date,
-            ];
-        });
-
-        $premiumProperties->transform(function ($property) {
-            return [
-                'id'            => $property->id,
-                'state'         => $property->state->name,
-                'state_id'      => $property->state_id,
-                'city_id'       => $property->city_id,
-                'city'          => $property->city->name,
-                'features'      => $property->features,
-                'premium'       => $property->premium,
-                'property_type' => $property->propertytypes->first()->type,
-                'area'          => count($property->areas) == 0 ? null : $property->areas->first()->area,
-                'landmark'      => count($property->landmarks) == 0 ? null : $property->landmarks->first()->name,
-                'measurement'   => json_decode($property->raw_data)->measurement,
-                'price'         => count($property->prices) ? $property->prices->first()->price : '--',
-                'heading'       => json_decode($property->raw_data)->details,
-                'raw'           => json_decode($property->raw_data),
                 'images'        => json_decode($property->images),
                 'google_map'    => $property->google_map,
                 'youtube_link'  => $property->youtube_link,
@@ -115,6 +92,33 @@ class PropertyController extends Controller
             ];
         });
 
+        // $premiumProperties->transform(function ($property) {
+        //     return [
+        //         'id'            => $property->id,
+        //         'state'         => $property->state->name,
+        //         'state_id'      => $property->state_id,
+        //         'city_id'       => $property->city_id,
+        //         'city'          => $property->city->name,
+        //         'features'      => $property->features,
+        //         'premium'       => $property->premium,
+        //         'property_type' => $property->propertytypes->first()->type,
+        //         'area'          => count($property->areas) == 0 ? null : $property->areas->first()->area,
+        //         'landmark'      => count($property->landmarks) == 0 ? null : $property->landmarks->first()->name,
+        //         'measurement'   => json_decode($property->raw_data)->measurement,
+        //         'price'         => count($property->prices) ? $property->prices->first()->price : '--',
+        //         'heading'       => json_decode($property->raw_data)->details,
+        //         'raw'           => json_decode($property->raw_data),
+        //         'images'        => json_decode($property->images),
+        //         'google_map'    => $property->google_map,
+        //         'youtube_link'  => $property->youtube_link,
+        //         'website'       => $property->website,
+        //         'features'      => $property->features,
+        //         'created_at'    => $property->created_at,
+        //         'updated_at'    => $property->updated_at,
+        //         'expiry_date'   => $property->expiry_date,
+        //     ];
+        // });
+
         $index = 0;
         $featuredIndex = 0;
 
@@ -122,17 +126,17 @@ class PropertyController extends Controller
             foreach ($properties as $property) {
 
                 // if ($index > 1 && $index % 3 == 0) {
-                    if ($premiumProperties->count() > $featuredIndex) {
-                        array_push($formattedProperties, $premiumProperties[$featuredIndex]);
-                    }
-                    $featuredIndex++;
+                    // if ($premiumProperties->count() > $featuredIndex) {
+                    //     array_push($formattedProperties, $premiumProperties[$featuredIndex]);
+                    // }
+                    // $featuredIndex++;
                 // }
 
                 array_push($formattedProperties, $property);
                 $index++;
             }
         } else {
-            $formattedProperties = $premiumProperties;
+            // $formattedProperties = $premiumProperties;
         }
 
         return response()->json(['success' => true, 'data' => $formattedProperties, 'page' => $page]);
