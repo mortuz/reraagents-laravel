@@ -285,7 +285,7 @@ class RequirementsController extends Controller
                         break;
                 }
             } else {
-                if ($requirement->status == 1) {
+                if ($request->status == 1) {
                     $agents = AgentProfile::where('city_id', $requirement->city_id)->get();
                     $users = [];
                     foreach ($agents as $agent) {
