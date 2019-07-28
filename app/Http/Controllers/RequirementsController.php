@@ -263,7 +263,7 @@ class RequirementsController extends Controller
         if ($request->status != $requirement->status) {
             if ($requirement->user_id > 0) {
 
-                switch($requirement->status) {
+                switch($request->status) {
                     case 1:
                         Notification::send($requirement->user, new RequirementReleasedNotification($requirement));
                         $agents = AgentProfile::where('city_id', $requirement->city_id)->get();
