@@ -38,9 +38,9 @@ class UserController extends Controller
         }
 
         // look for any ads
-        if (!$ad) {
-            $ad = Advertisement::first();
-        }
+        // if (!$ad) {
+        //     $ad = Advertisement::first();
+        // }
 
         if (!$ad) {
             $ads = [];
