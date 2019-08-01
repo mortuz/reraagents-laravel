@@ -51,7 +51,7 @@ class NewRequirementAvailableNotification extends Notification
             ->enableSound()
             ->title($title)
             ->setChannelId( 'requirement-available')
-            ->setJsonData(['my_requirement' => true, 'requirement_id' => $this->requirement->id, 'action' => 'available', 'description' => $description])
+            ->setJsonData(['requirement' => true, 'requirement_id' => $this->requirement->id, 'action' => 'available', 'description' => $description])
             ->body($description);
     }
 

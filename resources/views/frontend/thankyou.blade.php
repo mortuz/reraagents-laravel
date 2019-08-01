@@ -4,7 +4,7 @@
     <section>
 
       <div class="container mt-4">
-          <div class="row mb-3 align-items-center">
+          <div class="row mb-3 align-items-center text-center">
 
               <div class="col-md-8 offset-md-2">
                 <div class="card">

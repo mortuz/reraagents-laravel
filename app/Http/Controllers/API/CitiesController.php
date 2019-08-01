@@ -66,6 +66,6 @@ class CitiesController extends Controller
     public function citiesFromState()
     {
         $id = request()->state;
-        return response()->json(['success' => true, 'data' => City::where('state_id', $id)->get()]);
+        return response()->json(['success' => true, 'data' => City::where('state_id', $id)->orderBy('name')->get()]);
     }
 }

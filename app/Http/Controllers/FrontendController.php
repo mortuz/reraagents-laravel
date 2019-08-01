@@ -84,6 +84,14 @@ class FrontendController extends Controller
     public function showProperty($id)
     {
         $property =  Property::find($id);
+
+        if(!$property) {
+            return view('frontend.sold-out')
+                ->with('title', 'Sold out')
+                ->with('description', 'Property sold your')
+                ->with('keywords', '');
+        }
+
         $property->raw_data = json_decode($property->raw_data);
         $office = Office::where('city_id', $property->city_id)->first();
         $premium = [];

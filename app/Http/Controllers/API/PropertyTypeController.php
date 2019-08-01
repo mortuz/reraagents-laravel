@@ -15,7 +15,7 @@ class PropertyTypeController extends Controller
      */
     public function index()
     {
-        $propertyTypes = PropertyType::all()->transform(function ($type) {
+        $propertyTypes = PropertyType::orderBy('type')->get()->transform(function ($type) {
             return [
                 'name' => $type->type,
                 'id'   => $type->id
