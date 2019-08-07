@@ -12,6 +12,17 @@ use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    public function authCheck(Request $request)
+    {
+        $user = User::where('mobile', $request->mobile)->first();
+
+        if(!$user) {
+            return $request->json(['success' => false, 'User is not registered.']);
+        }
+
+        return $request->json(['success' => false, 'User is registered']);
+    }
+
     public function user(Request $request)
     {
         $agent = AgentProfile::where('user_id', $request->user()->id)->first();
@@ -86,5 +97,6 @@ class UserController extends Controller
 
         return response()->json(['success' =>true]);
     }
+
 }
 
