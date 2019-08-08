@@ -24,7 +24,7 @@
                             @endif
                         </p>
 
-                        <h6>{{ $agent->user->mobile }}</h6>
+                        {{-- <h6>{{ $agent->user->mobile }}</h6> --}}
 
                       </div>
                     </div>
@@ -61,7 +61,7 @@
                                         @endif
                                     </p>
 
-                                    <h6>{{ $a->user->mobile }}</h6>
+                                    {{-- <h6>{{ $a->user->mobile }}</h6> --}}
 
                                 </div>
                             </div>

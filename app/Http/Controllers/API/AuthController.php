@@ -12,6 +12,26 @@ use App\Helpers\SmsHelper;
 
 class AuthController extends Controller
 {
+    public function authCheck(Request $request)
+    {
+        $this->validate($request, [
+            'mobile' => 'required',
+        ]);
+
+        $user = User::where('mobile', $request->mobile)->first();
+
+        if (!$user) {
+            return response()->json(['registered' => false, 'User is not registered.']);
+        }
+        $code = $this->generateOtp();
+        $smsHelper = new SmsHelper;
+        // $smsHelper->sendPassword($user->mobile, $code);
+
+        $user->password = Hash::make($code);
+        $user->save();
+        return response()->json(['registered' => true, 'message' => 'OTP is sent to your mobile no.', 'otp' => $code]);
+    }
+
     public function register(Request $request)
     {
         $this->validate($request, [
@@ -20,15 +40,17 @@ class AuthController extends Controller
             'state' => 'required',
             'city'  => 'required',
             'mobile' => 'required|unique:users,mobile',
-            'password' => 'required|min:9'
         ]);
-            
-            
+
+        $code = $this->generateOtp();
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password),
+            'password' => Hash::make($code),
             'mobile' => $request->mobile,
+            'state_id' => $request->state,
+            'city_id'  => $request->city,
             'role' => '5'
         ]);
 
@@ -37,6 +59,10 @@ class AuthController extends Controller
             'city_id'  => $request->city,
             'user_id'  => $user->id
         ]);
+
+        // send otp
+        $smsHelper = new SmsHelper;
+        // $smsHelper->sendPassword($user->mobile, $code);
             
         // return response(dd($user));
         // $guzzle = new Client();
@@ -54,7 +80,7 @@ class AuthController extends Controller
 
         // dd($response);
 
-        return response(['success' => true, 'data' => 'Successfully signed up.']);
+        return response(['success' => true, 'data' => 'Successfully signed up.', 'otp' => $code]);
     }
 
     public function recoverPassword(Request $request)
@@ -66,9 +92,7 @@ class AuthController extends Controller
             return response()->json(['success' => false, 'data' => 'Mobile is not registered.']);
         }
 
-        $code = substr(str_shuffle("0123456789"), 0, 6);
-        
-
+        $code = $this->generateOtp();
 
         // change password
         $user->password = Hash::make($code);
@@ -79,5 +103,10 @@ class AuthController extends Controller
 
         // return response
         return response()->json(['success' => true, 'message' => 'Your password has been sent to your registered mobile no.']);
+    }
+
+    private function generateOtp()
+    {
+        return substr(str_shuffle("0123456789"), 0, 6);
     }
 }

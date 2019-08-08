@@ -24,6 +24,7 @@ use Illuminate\Http\Request;
 // });
 
 Route::post('/user/check-role', 'API\UserController@checkRole');
+Route::get('/auth/check', 'API\AuthController@authCheck');
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', 'API\UserController@user')->name('api.user');

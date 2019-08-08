@@ -234,7 +234,7 @@
                                             @endif
                                         </p>
 
-                                        <h6 style="font-size: 14px">{{ $agent->user->mobile }}</h6>
+                                        {{-- <h6 style="font-size: 14px">{{ $agent->user->mobile }}</h6> --}}
 
                                     </div>
                                 </div>
