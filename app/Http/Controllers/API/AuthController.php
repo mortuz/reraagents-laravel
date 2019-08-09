@@ -25,7 +25,7 @@ class AuthController extends Controller
         }
         $code = $this->generateOtp();
         $smsHelper = new SmsHelper;
-        // $smsHelper->sendPassword($user->mobile, $code);
+        $smsHelper->sendPassword($user->mobile, $code);
 
         $user->password = Hash::make($code);
         $user->save();
@@ -62,7 +62,7 @@ class AuthController extends Controller
 
         // send otp
         $smsHelper = new SmsHelper;
-        // $smsHelper->sendPassword($user->mobile, $code);
+        $smsHelper->sendPassword($user->mobile, $code);
             
         // return response(dd($user));
         // $guzzle = new Client();
