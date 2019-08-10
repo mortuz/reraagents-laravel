@@ -35,7 +35,7 @@ class AuthController extends Controller
         return response()->json(['registered' => true, 'message' => 'OTP is sent to your mobile no.', 'otp' => $code]);
     }
 
-    public function register(Request $request)
+    public function reg1(Request $request)
     {
         $this->validate($request, [
             'email' => 'nullable|email|unique:users,email',
