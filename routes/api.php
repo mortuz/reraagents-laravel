@@ -28,6 +28,7 @@ Route::get('/auth/check', 'API\AuthController@authCheck');
 
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', 'API\UserController@user')->name('api.user');
+    Route::post('/profile/update', 'API\UserController@profileUpdate');
     Route::post('/expo-token/store', 'API\ExpoTokenController@store');
     Route::post('/logout', 'API\UserController@logoutApi');
 
@@ -74,7 +75,7 @@ Route::post('/auth/recover/password', 'API\AuthController@recoverPassword');
 Route::post('property/guest-post', 'API\PropertyController@postGuestProperty')->name('post.guest.property');
 Route::post('requirement/guest-post', 'API\RequirementController@postGuestRequirement')->name('post.guest.requirement');
 
-Route::post('/register', 'API\AuthController@register')->name('api.auth.register');
+Route::post('/reg', 'API\AuthController@register')->name('api.auth.register');
 
 Route::get('/cities', 'API\CitiesController@citiesFromState')->name('get.cities');
 Route::get('/ventures/city', 'API\VentureController@venturesFromCity')->name('api.get.ventures');

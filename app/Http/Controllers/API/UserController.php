@@ -9,6 +9,7 @@ use App\AgentProfile;
 use App\Advertisement;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
@@ -79,6 +80,31 @@ class UserController extends Controller
                         ->first();
 
         return response()->json(['success' => $user ? true : false]);
+    }
+
+    public function profileUpdate(Request $request)
+    {
+        $this->validate($request, [
+            'name'  => 'required',
+            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($request->user()->id)],
+            'state' => 'required',
+            'city'  => 'required',
+        ]);
+
+        $user = $request->user();
+        $agent = AgentProfile::where('user_id', $request->user()->id)->first();
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->state_id = $request->state;
+        $user->city_id = $request->city;
+        $agent->state_id = $request->state;
+        $agent->city_id = $request->city;
+        $agent->save();
+
+        $user->save();
+
+        return response()->json(['success' => true, 'message' => 'Profile successfully updated.']);
     }
 
     public function logoutApi(Request $request)
