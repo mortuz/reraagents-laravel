@@ -9,6 +9,7 @@ use GuzzleHttp\Client;
 use App\User;
 use App\AgentProfile;
 use App\Helpers\SmsHelper;
+use Carbon\Carbon;
 
 class AuthController extends Controller
 {
@@ -54,6 +55,7 @@ class AuthController extends Controller
             'mobile' => $request->mobile,
             'state_id' => $request->state,
             'city_id'  => $request->city,
+            'mobile_verified_at' => Carbon::now(),
             'role' => '5'
         ]);
 
