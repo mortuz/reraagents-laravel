@@ -351,7 +351,13 @@ class PropertyController extends Controller
                 'location' => $request->location,
                 'details' => $request->details
             ]),
+            'office_id' => $request->address
         ]);
+        
+        if (!$request->isAgent) {
+            $request->user()->role = 0;
+            $request->user()->save();
+        }
 
         $property->propertytypes()->attach(explode(',', $request->type));
         $property->agents()->attach(explode(',', AgentProfile::where('user_id', $request->user()->id)->first()->id));
@@ -499,7 +505,7 @@ class PropertyController extends Controller
             'price' => 'required',
             'measurement' => 'required',
             'location' => 'required',
-            'details' => 'required'
+            'details' => 'required',
         ]);
 
         $signer = new HS256(env('JWT_KEY'));

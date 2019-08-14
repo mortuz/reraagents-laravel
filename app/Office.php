@@ -6,7 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Office extends Model
 {
-    protected $fillable= ['state_id', 'city_id', 'address', 'mobile', 'url', 'govt', 'map'];
+    protected $fillable= [
+        'state_id', 
+        'city_id', 
+        'address', 
+        'mobile', 
+        'url', 
+        'govt', 
+        'map', 
+        'verified',
+        'verified_at',
+        'user_id',
+        'coordinates'
+    ];
 
     public function state()
     {

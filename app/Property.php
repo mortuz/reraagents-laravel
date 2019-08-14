@@ -22,7 +22,8 @@ class Property extends Model
         'premium',
         'expiry_date',
         'handled_by',
-        'status'
+        'status',
+        'office_id'
     ];
 
     public function getDecodedRawDataAttribute()
