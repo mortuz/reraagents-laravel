@@ -345,13 +345,13 @@ class PropertyController extends Controller
             'user_id'  => $request->user()->id,
             'mobile'   => $request->mobile,
             'expiry_date' => Carbon::now()->addDays('30'),
+            'office_id' => $request->address ? $request->address : 0,
             'raw_data' => json_encode([
                 'price' => $request->price,
                 'measurement' => $request->measurement,
                 'location' => $request->location,
                 'details' => $request->details
             ]),
-            'office_id' => $request->address
         ]);
         
         if (!$request->isAgent) {

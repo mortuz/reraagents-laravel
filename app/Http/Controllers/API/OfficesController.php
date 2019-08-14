@@ -56,7 +56,7 @@ class OfficesController extends Controller
         Office::create([
             'state_id' => $request->state,
             'city_id' => $request->city,
-            'address' => $request->address,
+            'address' => $request->address ? $request->address : 0,
             'coordinates' => $request->coordinates,
             'website' => $request->website,
             'user_id' => $request->user()->id,
