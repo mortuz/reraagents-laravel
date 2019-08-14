@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Office extends Model
 {
-    protected $fillable= [
+    protected $fillable = [
         'state_id', 
         'city_id', 
         'address', 
@@ -17,7 +17,8 @@ class Office extends Model
         'verified',
         'verified_at',
         'user_id',
-        'coordinates'
+        'coordinates',
+        'name'
     ];
 
     public function state()

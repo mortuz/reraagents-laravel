@@ -61,6 +61,7 @@ class OfficesController extends Controller
             'website' => $request->website,
             'user_id' => $request->user()->id,
             'mobile' => $request->mobile,
+            'name'  => $request->name
         ]);
 
         return response()->json(['success' => true, 'message' => 'Office successfully created.']);
