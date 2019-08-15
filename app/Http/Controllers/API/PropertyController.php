@@ -394,14 +394,18 @@ class PropertyController extends Controller
 
         $property = Property::find($propertyId);
 
-        $certificates = $request->user()->certificates()
-                            ->where('status', 1)
-                            ->where('state_id', $property->state_id)
-                            ->get();
+        // check address
+        $office = Office::find($property->office_id)->first();
 
         // if no certificate found
-        if (!$certificates->count()) {
-            return response()->json(['success' => false, 'permission' => false]);
+        if($office && $office->verified !== 1) {
+            $certificates = $request->user()->certificates()
+                ->where('status', 1)
+                ->where('state_id', $property->state_id)
+                ->get();
+            if (!$certificates->count()) {
+                return response()->json(['success' => false, 'permission' => false]);
+            }
         }
 
         Transaction::updateOrCreate([
@@ -411,7 +415,9 @@ class PropertyController extends Controller
 
         // if handled by company i.e., handled_by = 1
         if ($property->handled_by) {
-            $office = Office::where('city_id', $property->city_id)->first();
+            if(!$office) {
+                $office = Office::where('city_id', $property->city_id)->first();
+            }
             // return city office no.
             return response()->json(['success' => true, 'data' => $office->mobile]);
         }
