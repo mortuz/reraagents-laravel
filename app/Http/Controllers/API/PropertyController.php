@@ -431,12 +431,18 @@ class PropertyController extends Controller
         $request = request();
         $propertyId = $request->property;
         $property = Property::find($propertyId);
+        // check address
+        $office = Office::find($property->office_id)->first();
         
         if (!$property) {
             return response()->json(['success' => false, 'errors' => true, 'message' => 'Property not available.']);
         }
         // fetch regional office in the city
-        $regionalOffice = Office::where('city_id', $property->city_id)->where('govt', 0)->first();
+        if(!$office) {
+            $office = Office::where('city_id', $property->city_id)->where('govt', 0)->first();
+        }
+
+        // $office->state_name = $office->state->name;
 
         // fetch govt office in the state
         $govtOffice = Office::where('state_id', $property->state_id)->where('govt', 1)->first();
@@ -450,7 +456,7 @@ class PropertyController extends Controller
 
         $data = [
             'govt'       => $govtOffice,
-            'regional'   => $regionalOffice,
+            'regional'   => $office,
             'additional' => $additional
         ];
 
