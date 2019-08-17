@@ -26,12 +26,12 @@ class AuthController extends Controller
         }
         $code = $this->generateOtp();
         $smsHelper = new SmsHelper;
+        $user->password = Hash::make($code);
         if(env('APP_ENV') !== 'local') {
             $smsHelper->sendPassword($user->mobile, $code);
             $code = 0;
         }
 
-        $user->password = Hash::make($code);
         $user->save();
         return response()->json(['registered' => true, 'message' => 'OTP is sent to your mobile no.', 'otp' => $code]);
     }
