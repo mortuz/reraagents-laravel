@@ -23,6 +23,9 @@
                   <th> State </th>
                   <th> City </th>
                   <th> Address </th>
+                  <th> name </th>
+                  <th> Agent </th>
+                  <th> Verified </th>
                   <th> Govt </th>
                   <th> Last updated </th>
                   <th> Action </th>
@@ -36,6 +39,22 @@
                     <td> <strong>{{ $office->state->name }}</strong> </td>
                     <td>@if ($office->hasCity()) {{$office->city->name}} @endif</td>
                     <td>{{$office->address}}</td>
+                    <td>{{$office->name}}</td>
+                    <td>
+                      @if($office->agent)
+                        <strong>
+                          {{$office->agent->name}} <br>
+                          {{$office->agent->mobile}}
+                        </strong>
+                      @endif
+                    </td>
+                    <td>
+                      @if($office->verified == 1)
+                        <label class="badge badge-gradient-success">Yes</label>
+                      @else
+                        <label class="badge badge-gradient-light">No</label>
+                      @endif
+                    </td>
                     <td>
                       @if ($office->govt == 1)
                         <label class="badge badge-gradient-success">Yes</label>
@@ -43,6 +62,7 @@
                         <label class="badge badge-gradient-light">No</label>                          
                       @endif
                     </td>
+                    
                     <td> {{ $office->updated_at->diffForHumans() }} </td>
                     <td>
                       <a href="{{ route('office.edit', ['office' => $office->id]) }}" class="btn btn-gradient-light btn-rounded btn-sm" title="Edit">

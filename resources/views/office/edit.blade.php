@@ -19,6 +19,17 @@
             
             @csrf
             @method('patch')
+
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input name="name" id="name" type="text" class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ $office->name }}"/>
+              @if ($errors->has('name'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('name') }}</strong>
+                </span>
+              @endif
+            </div>
+
             <div class="form-group">
               <label for="state">State</label>
               <select name="state" id="state" class="form-control js-state-field{{ $errors->has('name') ? ' is-invalid' : '' }}">
@@ -56,7 +67,7 @@
             <div class="form-group">
               <label for="url">Url</label>
 
-            <input name="url" id="url" type="text" class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}" value="{{ $office->url }}"/>
+              <input name="url" id="url" type="text" class="form-control{{ $errors->has('url') ? ' is-invalid' : '' }}" value="{{ $office->url }}"/>
               @if ($errors->has('url'))
                 <span class="invalid-feedback" role="alert">
                     <strong>{{ $errors->first('url') }}</strong>
@@ -89,7 +100,12 @@
 
             <div class="form-check mx-sm-2">
               <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="govt" {{ $office->govt ? 'checked' : '' }} value="1"> It is a Government office <i class="input-helper"></i></label>
+              <input type="checkbox" class="form-check-input" name="govt" {{ $office->govt ? 'checked' : '' }} value="1"> It is a Government office <i class="input-helper"></i></label>
+            </div>
+
+            <div class="form-check mx-sm-2">
+              <label class="form-check-label">
+              <input type="checkbox" class="form-check-input" name="verified" {{ $office->verified ? 'checked' : '' }} value="1"> Verified <i class="input-helper"></i></label>
             </div>
 
             <button class="btn btn-gradient-primary mt-3" type="submit">Update Office</button>

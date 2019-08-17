@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Session;
 use App\Office;
 use App\State;
@@ -43,13 +44,16 @@ class OfficeController extends Controller
         ]);
 
         Office::create([
+            'name'     => $request->name,
             'state_id' => $request->state,
             'city_id'  => $request->city,
             'mobile'   => $request->mobile,
             'address'  => $request->address,
             'url'      => $request->url,
             'map'      => $request->map,
+            'user_id'  => Auth::id(),
             'govt'     => $request->govt ? $request->govt : 0,
+            'verified' => $request->verified ? $request->verified : 0,
         ]);
 
         Session::flash('success', 'Office successfully added.');
@@ -94,6 +98,7 @@ class OfficeController extends Controller
             'state' => 'required',
         ]);
 
+        $office->name = $request->name;
         $office->state_id = $request->state;
         $office->city_id = $request->city;
         $office->mobile = $request->mobile;
@@ -101,6 +106,7 @@ class OfficeController extends Controller
         $office->url = $request->url;
         $office->map = $request->map;
         $office->govt = $request->govt ? $request->govt : 0;
+        $office->verified = $request->verified ? $request->verified : 0;
 
         $office->save();
 
