@@ -432,7 +432,7 @@ class PropertyController extends Controller
         $propertyId = $request->property;
         $property = Property::find($propertyId);
         // check address
-        $office = Office::find($property->office_id)->first();
+        $office = Office::find($property->office_id);
         
         if (!$property) {
             return response()->json(['success' => false, 'errors' => true, 'message' => 'Property not available.']);
