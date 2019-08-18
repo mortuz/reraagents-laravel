@@ -415,10 +415,12 @@ class PropertyController extends Controller
 
         // if handled by company i.e., handled_by = 1
         if ($property->handled_by) {
-            if(!$office) {
-                $office = Office::where('city_id', $property->city_id)->first();
-            }
+            $office = Office::where('city_id', $property->city_id)->first();
             // return city office no.
+            return response()->json(['success' => true, 'data' => $office->mobile]);
+        }
+
+        if ($office) {
             return response()->json(['success' => true, 'data' => $office->mobile]);
         }
 

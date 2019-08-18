@@ -207,13 +207,19 @@ class RequirementController extends Controller
             'city_id'  => $request->city,
             'user_id'  => $request->user()->id,
             'mobile'   => $request->mobile,
+            'office_id' => $request->address ? $request->address : 0,
             'raw_data' => json_encode([
                 'budget' => $request->budget,
                 'details' => $request->details
             ]),
         ]);
 
-        $requirement->agents()->attach(explode(',', $request->user()->id));
+        if (!$request->isAgent) {
+            $request->user()->role = 0;
+            $request->user()->save();
+        }
+
+        $requirement->agents()->attach(explode(',', AgentProfile::where('user_id', $request->user()->id)->first()->id));
 
         return $requirement;
     }
@@ -379,14 +385,19 @@ class RequirementController extends Controller
             return response()->json(['success' => false, 'message' => "You are not working on this requirement."]);;
         }
 
-        $certificates = $request->user()->certificates()
-            ->where('status', 1)
-            ->where('state_id', $requirement->state_id)
-            ->get();
+        // check address
+        $office = Office::find($requirement->office_id)->first();
 
-        // if no certificate found
-        if (!$certificates->count()) {
-            return response()->json(['success' => false, 'permission' => false]);
+        if ($office && $office->verified !== 1) {
+            $certificates = $request->user()->certificates()
+                ->where('status', 1)
+                ->where('state_id', $requirement->state_id)
+                ->get();
+
+            // if no certificate found
+            if (!$certificates->count()) {
+                return response()->json(['success' => false, 'permission' => false]);
+            }
         }
 
         $requirement->working_agent = $request->user()->id;
@@ -412,6 +423,10 @@ class RequirementController extends Controller
             if ($requirement->handled_by) {
                 $office = Office::where('city_id', $requirement->city_id)->first();
                 // return city office no.
+                return response()->json(['success' => true, 'data' => $office->mobile]);
+            }
+
+            if($office) {
                 return response()->json(['success' => true, 'data' => $office->mobile]);
             }
             // return property no

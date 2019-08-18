@@ -19,6 +19,7 @@ class Requirement extends Model
         'working_agent',
         'customer_status_id',
         'handled_by',
+        'office_id',
         'status'
     ];
 

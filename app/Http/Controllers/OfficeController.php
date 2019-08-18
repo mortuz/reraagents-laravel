@@ -6,6 +6,7 @@ use Auth;
 use Session;
 use App\Office;
 use App\State;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class OfficeController extends Controller
@@ -54,6 +55,7 @@ class OfficeController extends Controller
             'user_id'  => Auth::id(),
             'govt'     => $request->govt ? $request->govt : 0,
             'verified' => $request->verified ? $request->verified : 0,
+            'verified_at' => $request->verified ? Carbon::now() : null,
         ]);
 
         Session::flash('success', 'Office successfully added.');
@@ -107,6 +109,7 @@ class OfficeController extends Controller
         $office->map = $request->map;
         $office->govt = $request->govt ? $request->govt : 0;
         $office->verified = $request->verified ? $request->verified : 0;
+        $office->verified_at = $request->verified ? Carbon::now() : null;
 
         $office->save();
 
