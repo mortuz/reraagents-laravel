@@ -414,7 +414,8 @@ class PropertyController extends Controller
         ], []);
 
         // if handled by company i.e., handled_by = 1
-        $office = Office::where('id', $property->office_id)->where('verified', 1)->first();
+        // $office = Office::where('id', $property->office_id)->where('verified', 1)->first();
+
         if ($office) {
             // return office no.
             return response()->json(['success' => true, 'data' => $office->mobile]);

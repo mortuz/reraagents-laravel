@@ -362,7 +362,7 @@ class RequirementController extends Controller
         // if status approved status == 2
 
         if($requirement->status == 2) {
-            $office = Office::find('id', 41);
+            $office = Office::find(41);
 
             if($office) {
                 // return city office no.
