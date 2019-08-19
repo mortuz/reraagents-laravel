@@ -333,18 +333,16 @@ class RequirementController extends Controller
             return response()->json(['success' => false, 'message' => "Requirement is already taken over by some other agent"]);;
         }
 
-        $office = Office::where('id', $requirement->office_id)->where('verified', 1)->first();
+        $office = Office::where('user_id', $request->user()->id)->where('verified', 1)->first();
 
-        if (!$office) {
-            $certificates = $request->user()->certificates()
-                ->where('status', 1)
-                ->where('state_id', $requirement->state_id)
-                ->get();
+        $certificates = $request->user()->certificates()
+            ->where('status', 1)
+            ->where('state_id', $requirement->state_id)
+            ->get();
 
-            // if no certificate found
-            if (!$certificates->count()) {
-                return response()->json(['success' => false, 'permission' => false]);
-            }
+        // check agents verified address or certificate
+        if (!$office && !$certificates->count()) {
+            return response()->json(['success' => false, 'permission' => false]);
         }
 
         $requirement->working_agent = $request->user()->id;
@@ -395,18 +393,16 @@ class RequirementController extends Controller
         }
 
         // check address
-        $office = Office::find($requirement->office_id)->first();
+        $office = Office::where('user_id', $request->user()->id)->where('verified', 1)->first();
 
-        if ($office && $office->verified !== 1) {
-            $certificates = $request->user()->certificates()
-                ->where('status', 1)
-                ->where('state_id', $requirement->state_id)
-                ->get();
+        $certificates = $request->user()->certificates()
+            ->where('status', 1)
+            ->where('state_id', $requirement->state_id)
+            ->get();
 
-            // if no certificate found
-            if (!$certificates->count()) {
-                return response()->json(['success' => false, 'permission' => false]);
-            }
+        // check agents verified address or certificate
+        if (!$office && !$certificates->count()) {
+            return response()->json(['success' => false, 'permission' => false]);
         }
 
         $requirement->working_agent = $request->user()->id;
@@ -528,6 +524,7 @@ class RequirementController extends Controller
         if($currentStatus != $request->status) {
             // send notification
             Notification::send($requirement->user, new RequirementStatusChangeNotification($requirement));
+
             // create transaction
             RequirementStatusTransaction::create([
                 'customer_status_id' => $request->status,

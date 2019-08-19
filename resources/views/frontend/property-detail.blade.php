@@ -62,6 +62,7 @@
                   <div class="card-body">
                     <div class="card-title">This property is available at:</div>
 
+                      <h5>{!!$office ? $office->name . '<br>' : '' !!}</h5>
                       <h4 class="card-t1">
                         {!! nl2br(e($office->address)) !!}
                       </h4>

@@ -93,7 +93,7 @@ class FrontendController extends Controller
         }
 
         $property->raw_data = json_decode($property->raw_data);
-        $office = Office::where('city_id', $property->city_id)->first();
+        $office = Office::find($property->office_id);
         $premium = [];
         $premiumProperty = null;
 
