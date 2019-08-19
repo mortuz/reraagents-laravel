@@ -333,14 +333,18 @@ class RequirementController extends Controller
             return response()->json(['success' => false, 'message' => "Requirement is already taken over by some other agent"]);;
         }
 
-        $certificates = $request->user()->certificates()
-            ->where('status', 1)
-            ->where('state_id', $requirement->state_id)
-            ->get();
+        $office = Office::where('id', $requirement->office_id)->where('verified', 1)->first();
 
-        // if no certificate found
-        if (!$certificates->count()) {
-            return response()->json(['success' => false, 'permission' => false]);
+        if (!$office) {
+            $certificates = $request->user()->certificates()
+                ->where('status', 1)
+                ->where('state_id', $requirement->state_id)
+                ->get();
+
+            // if no certificate found
+            if (!$certificates->count()) {
+                return response()->json(['success' => false, 'permission' => false]);
+            }
         }
 
         $requirement->working_agent = $request->user()->id;
@@ -358,13 +362,18 @@ class RequirementController extends Controller
         // if status approved status == 2
 
         if($requirement->status == 2) {
-            $office = Office::where('city_id', $requirement->city_id)->first();
-            // return city office no.
-            return response()->json(['success' => true, 'data' => $office->mobile]);
+            $office = Office::find('id', 41);
+
+            if($office) {
+                // return city office no.
+                return response()->json(['success' => true, 'data' => $office->mobile]);
+            }
+            return response()->json(['success' => true, 'data' => $requirement->mobile]);
+            
         } else {
             // if handled by company i.e., handled_by = 1
-            if ($requirement->handled_by) {
-                $office = Office::where('city_id', $requirement->city_id)->first();
+            $office = Office::where('id', $requirement->property_id)->where('verified', 1)->first();
+            if ($office) {
                 // return city office no.
                 return response()->json(['success' => true, 'data' => $office->mobile]);
             }
@@ -415,18 +424,16 @@ class RequirementController extends Controller
         // if status approved status == 2
 
         if ($requirement->status == 2) {
-            $office = Office::where('city_id', $requirement->city_id)->first();
-            // return city office no.
-            return response()->json(['success' => true, 'data' => $office->mobile]);
-        } else {
-            // if handled by company i.e., handled_by = 1
-            if ($requirement->handled_by) {
-                $office = Office::where('city_id', $requirement->city_id)->first();
-                // return city office no.
+            $office = Office::find('id', 41);
+
+            if ($office) {
                 return response()->json(['success' => true, 'data' => $office->mobile]);
             }
-
-            if($office) {
+            return response()->json(['success' => true, 'data' => $requirement->mobile]);
+        } else {
+            // if handled by company i.e., handled_by = 1
+            $office = Office::where('id', $requirement->property_id)->where('verified', 1)->first();
+            if ($office) {
                 return response()->json(['success' => true, 'data' => $office->mobile]);
             }
             // return property no
@@ -444,7 +451,7 @@ class RequirementController extends Controller
             return response()->json(['success' => false, 'errors' => true, 'message' => 'Requirement not available.']);
         }
         // fetch regional office in the city
-        $regionalOffice = Office::where('city_id', $requirement->city_id)->where('govt', 0)->first();
+        $regionalOffice = Office::find($requirement->office_id);
 
         // fetch govt office in the state
         $govtOffice = Office::where('state_id', $requirement->state_id)->where('govt', 1)->first();

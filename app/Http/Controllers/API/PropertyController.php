@@ -395,10 +395,10 @@ class PropertyController extends Controller
         $property = Property::find($propertyId);
 
         // check address
-        $office = Office::find($property->office_id)->first();
+        $office = Office::where('id', $property->office_id)->where('verified', 1)->first();
 
         // if no certificate found
-        if($office && $office->verified !== 1) {
+        if(!$office) {
             $certificates = $request->user()->certificates()
                 ->where('status', 1)
                 ->where('state_id', $property->state_id)
@@ -414,13 +414,9 @@ class PropertyController extends Controller
         ], []);
 
         // if handled by company i.e., handled_by = 1
-        if ($property->handled_by) {
-            $office = Office::where('city_id', $property->city_id)->first();
-            // return city office no.
-            return response()->json(['success' => true, 'data' => $office->mobile]);
-        }
-
+        $office = Office::where('id', $property->office_id)->where('verified', 1)->first();
         if ($office) {
+            // return office no.
             return response()->json(['success' => true, 'data' => $office->mobile]);
         }
 
@@ -433,16 +429,12 @@ class PropertyController extends Controller
         $request = request();
         $propertyId = $request->property;
         $property = Property::find($propertyId);
-        // check address
-        $office = Office::find($property->office_id);
         
         if (!$property) {
-            return response()->json(['success' => false, 'errors' => true, 'message' => 'Property not available.']);
+            return response()->json(['success' => false, 'errors' => true, 'message' => 'Property sold out.']);
         }
-        // fetch regional office in the city
-        if(!$office) {
-            $office = Office::where('city_id', $property->city_id)->where('govt', 0)->first();
-        }
+        // check address
+        $office = Office::find($property->office_id);
 
         // $office->state_name = $office->state->name;
 

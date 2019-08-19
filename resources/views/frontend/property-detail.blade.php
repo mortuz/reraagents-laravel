@@ -62,9 +62,9 @@
                   <div class="card-body">
                     <div class="card-title">This property is available at:</div>
 
-                      <p class="font-weight-bold">
+                      <h4 class="card-t1">
                         {!! nl2br(e($office->address)) !!}
-                      </p>
+                      </h4>
                       @if ($office->map)
                         <a href="{{ $office->map }}" target="_blank" class="btn btn-light">View on Map</a>
                       @endif
