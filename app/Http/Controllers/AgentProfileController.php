@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AgentProfile;
 use App\Landmark;
 use App\Area;
+use App\Designation;
 use Illuminate\Http\Request;
 use App\State;
 use App\User;
@@ -30,7 +31,9 @@ class AgentProfileController extends Controller
      */
     public function create()
     {
-        return view('agents.create')->with('states', State::all());
+        return view('agents.create')
+        ->with('designations', Designation::orderBy('designation')->get())
+        ->with('states', State::all());
     }
 
     /**
@@ -65,6 +68,7 @@ class AgentProfileController extends Controller
             'email' => $request->email,
             'mobile' => $request->mobile,
             'password' => bcrypt($request->password),
+            'designation_id' => $request->designation,
             'role' => 5
         ]);
 
@@ -111,7 +115,10 @@ class AgentProfileController extends Controller
      */
     public function edit(AgentProfile $agent)
     {
-        return view('agents.edit')->with('agent', $agent)->with('states', State::all());
+        return view('agents.edit')
+            ->with('agent', $agent)
+            ->with('designations', Designation::orderBy('designation')->get())
+            ->with('states', State::all());
     }
 
     /**
@@ -143,6 +150,7 @@ class AgentProfileController extends Controller
         $agent->user->name = $request->name;
         $agent->user->email = $request->email;
         $agent->user->mobile = $request->mobile;
+        $agent->user->designation_id = $request->designation;
 
         if ($request->password) {
             $agent->user->password = $request->password;

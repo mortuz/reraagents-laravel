@@ -75,6 +75,21 @@
                 @endif
               </div>
 
+              <div class="form-group">
+              <label for="designation">Designation</label>
+              <select name="designation" id="designation" class="form-control">
+                @foreach ($designations as $designation)
+                    <option value="{{ $designation->id }}" {{ $agent->user->designation_id == $designation->id ? 'selected' : '' }}>{{ $designation->designation }}</option>
+                @endforeach
+              </select>
+
+              @if ($errors->has('designation'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('designation') }}</strong>
+                </span>
+              @endif
+            </div>
+
           </div>
         </div>
       </div>

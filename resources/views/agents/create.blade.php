@@ -74,6 +74,21 @@
                 @endif
               </div>
 
+            <div class="form-group">
+              <label for="designation">Designation</label>
+              <select name="designation" id="designation" class="form-control">
+                @foreach ($designations as $designation)
+                    <option value="{{ $designation->id }}" {{ old('designation') == $designation->id ? 'selected' : '' }}>{{ $designation->designation }}</option>
+                @endforeach
+              </select>
+
+              @if ($errors->has('designation'))
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('designation') }}</strong>
+                </span>
+              @endif
+            </div>
+
           </div>
         </div>
       </div>
@@ -96,7 +111,6 @@
                     <strong>{{ $errors->first('state') }}</strong>
                 </span>
               @endif
-
             </div>
 
             <div class="form-group">
@@ -132,6 +146,7 @@
                   </span>
                 @endif
               </div>
+              
 
           </div>
         </div>
