@@ -93,13 +93,13 @@
               <label for="state">State</label>
               <select name="state" id="state" class="form-control js-state-field{{ $errors->has('state') ? ' is-invalid' : '' }}">
                 @foreach ($states as $state)
-                    <option value="{{ $state->id }}" {{ $agent->state_id == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
+                  <option value="{{ $state->id }}" {{ $agent->state_id == $state->id ? 'selected' : '' }}>{{ $state->name }}</option>
                 @endforeach
               </select>
-
+              
               @if ($errors->has('state'))
                 <span class="invalid-feedback" role="alert">
-                    <strong>{{ $errors->first('state') }}</strong>
+                  <strong>{{ $errors->first('state') }}</strong>
                 </span>
               @endif
 

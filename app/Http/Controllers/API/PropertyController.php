@@ -544,7 +544,7 @@ class PropertyController extends Controller
                 $property->propertytypes()->attach(explode(',', $request->type));
 
                 if ($user) {
-                    $property->agents()->attach(explode(',', $user->id));
+                    $property->agents()->attach(explode(',', AgentProfile::where('user_id', $user->id)->first()->id));
                 }
 
                 return response()->json(['success' => true, 'data' => $property]);
