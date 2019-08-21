@@ -122,6 +122,7 @@ class PropertiesController extends Controller
             'expiry_date' => Carbon::now()->addDays('30'),
             'user_id' => Auth::id(),
             'premium' => $request->premium ? $request->premium : 0,
+            'office_id' => $request->office ? $request->office : 0,
             'raw_data' => json_encode([
                 'price' => $request->price,
                 'measurement' => $request->measurement,
@@ -237,6 +238,7 @@ class PropertiesController extends Controller
         $property->handled_by = $request->handler;
         $property->mobile = $request->contact;
         $property->premium = $request->premium ? $request->premium : 0;
+        $property->office_id =  $request->office ? $request->office : 0;
 
         $raw_data = json_encode([
             'price' => $request->raw_price,

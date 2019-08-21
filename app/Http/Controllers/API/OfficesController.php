@@ -100,4 +100,25 @@ class OfficesController extends Controller
     {
         //
     }
+
+    public function fetchOffice(Request $request)
+    {
+        $city = $request->city;
+
+        $offices = Office::where('city_id', $city)->where('govt', 0)->get();
+
+        $offices->transform(function($office) {
+            return [
+                'id' => $office->id,
+                'name' => $office->name,
+                'state' => $office->state->name,
+                'city' => $office->city->name,
+                'address' => $office->address,
+                'mobile' => $office->mobile,
+                'verified' => $office->verified
+            ];
+        });
+
+        return response()->json(['success' => true, 'data' => $offices]);
+    }
 }

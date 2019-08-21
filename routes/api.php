@@ -62,7 +62,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('requirement/get-comments', 'API\RequirementMessageController@show');
     Route::post('requirement/post-comment', 'API\RequirementMessageController@store');
     
-    Route::apiResource('office', 'API\OfficesController');
+    Route::post('/office/store', 'API\OfficesController@store');
+    Route::get('/office/index', 'API\OfficesController@index');
     Route::apiResource('certificate', 'API\CertificatesController');
     Route::apiResource('finance', 'API\FinanceController');
     Route::get('/finances', 'API\FinanceController@index');
@@ -97,4 +98,5 @@ Route::group(['middleware' => 'adminToken'], function() {
     Route::post('/landmark/store', 'API\LandmarkController@store')->name('api.landmark.store');
     Route::post('/price/store', 'API\PriceController@store')->name('api.price.store');
     Route::post('/venture/store', 'API\VentureController@store')->name('api.venture.store');
+    Route::get('/office/fetch-office', 'API\OfficesController@fetchOffice')->name('api.office.index');
 });

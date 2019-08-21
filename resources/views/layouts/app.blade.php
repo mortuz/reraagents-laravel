@@ -229,40 +229,37 @@
           }
 
           let select = $(this).selectize({ 
-              optionMap: {},
-              delimiter: ',',
-              valueField: 'id',
-              labelField: 'name',
-              searchField: 'name',
-              hideSelected: true,
-              preload: true,
-              persist: false,
-              create: false,
-              render: {
-                option: function(data, escape) {
-                  return `<div class="d-block py-3 pl-3">${data.name}</div>`;
-                }
-              },
-              load: function(query, callback) {
-                var self = this;
-                // if (!query.length) return callback();
-                $.get(url, data, function (response){
-                  callback(response.data);
-                  if (values) {
-                    self.setValue(values.split(','), true);
-                    $that.attr('data-preselect','');
-                    values = '';
-                  }
-
-                }, 'json');
+            optionMap: {},
+            delimiter: ',',
+            valueField: 'id',
+            labelField: 'name',
+            searchField: 'name',
+            hideSelected: true,
+            preload: true,
+            persist: false,
+            create: false,
+            render: {
+              option: function(data, escape) {
+                return `<div class="d-block py-3 pl-3">${data.name}</div>`;
               }
-            });
+            },
+            load: function(query, callback) {
+              var self = this;
+              // if (!query.length) return callback();
+              $.get(url, data, function (response){
+                callback(response.data);
+                if (values) {
+                  self.setValue(values.split(','), true);
+                  $that.attr('data-preselect','');
+                  values = '';
+                }
 
-            select[0].selectize.refreshItems();
+              }, 'json');
+            }
+          });
 
-            // console.log(select[0].selectize.setValue([1,2], true));
+          select[0].selectize.refreshItems();
 
-          
         });
       }
     }
@@ -335,7 +332,7 @@
         .catch(err => {
           console.log(err);
           if (err) {
-            swal("Oh noes!", "The AJAX request failed!", "error");
+            swal("Oh no!", "The AJAX request failed!", "error");
           } else {
             swal.stopLoading();
             swal.close();

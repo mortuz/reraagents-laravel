@@ -69,10 +69,11 @@ class RequirementsController extends Controller
             'mobile' => $request->contact,
             'user_id' => Auth::id(),
             'premium' => $request->premium ? $request->premium : 0,
+            'office_id' => $request->office ? $request->office : 0,
             'raw_data' => json_encode([
                 'budget' => $request->raw_budget,
                 'details' => $request->raw_details
-            ]),
+            ])
         ]);
 
         if ($request->bhk) {
@@ -175,6 +176,7 @@ class RequirementsController extends Controller
         ]);
 
         $requirement->state_id = $request->state;
+        $requirement->office_id = $request->office ? $request->office : 0;
         $requirement->city_id = $request->city;
         $requirement->handled_by = $request->handler;
         $requirement->mobile = $request->contact;

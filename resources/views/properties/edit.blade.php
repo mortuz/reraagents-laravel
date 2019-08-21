@@ -198,6 +198,11 @@
                   @endif
                 </div>
 
+                <div class="form-group">
+                   <label for="office">Office</label>
+                  <input id="office" name="office" data-preselect="{{ $property->office_id }}" data-url={{ route('api.office.index') }} data-dependency="city" type="text" class="form-control js-office"/>
+                </div>
+
               </div>
             </div>
           </div>
@@ -216,8 +221,8 @@
       <script>
 
          $(document).on('city_init', function() {
-          console.log('selectize')
           initSelectize();
+          initOfficeSelectize();
         });
 
         $('.js-status').on('change', function() {
@@ -230,5 +235,77 @@
             $('.js-message').addClass('d-none');
           }
         });
+
+        function initOfficeSelectize() {
+          $officeSelectize = $('.js-office');
+
+          var url = $officeSelectize.attr('data-url');
+          // if (!url) return;
+          var dependency = $officeSelectize.attr('data-dependency');
+
+          
+          var data = {};
+          var values = $officeSelectize.attr('data-preselect');
+
+          if (dependency == 'city') {
+            if ((!$cityField.val() || $cityField.val() <= 0))
+            return;
+            data = { 'city' : $cityField.val() };
+          } else if (dependency == 'state') {
+            data = {'state': $stateField.val()}
+          } else {
+            data = {};
+          }
+
+          let select = $officeSelectize.selectize({ 
+            optionMap: {},
+            // delimiter: ',',
+            valueField: 'id',
+            labelField: 'name',
+            searchField: 'name',
+            hideSelected: false,
+            maxItems: 1,
+            preload: true,
+            persist: false,
+            create: false,
+            render: {
+              option: function(data, escape) {
+                return `<div class="d-block py-3 pl-3">
+                  <h5>${data.name} ${data.verified ? '<span class="mdi mdi-checkbox-marked-circle text-success"></span></h5>' : '' }
+                  <p class="m-1"><strong>${data.mobile}</strong></p>
+                  <p class="m-1"><strong>${data.address}</strong></p>
+                  <p class="m-1"><span class="text-muted">${data.city}</span>, ${data.state}</p>
+                </div>`;
+              }
+            },
+            load: function(query, callback) {
+              var self = this;
+              $.ajax({
+                url: url,
+                data: data,
+                ContentType: 'application/json',
+                  Accept: 'application/json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', 'Bearer {{$token}}');
+                },
+                success: function(response) {
+                  console.log('office ajax', response);
+                  callback(response.data);
+                  if (values) {
+                    self.setValue(values.split(','), true);
+                    $officeSelectize.attr('data-preselect','');
+                    values = '';
+                  }
+                },
+                error: function(err) {
+                  console.log('office ajax', err.responseText);
+                }
+              })
+            }
+          });
+
+          select[0].selectize.refreshItems();
+        }
+        // initiOfficeSelectize();
       </script>
   @endsection

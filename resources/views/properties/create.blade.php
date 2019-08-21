@@ -193,6 +193,11 @@
                   @endif
                 </div>
 
+                <div class="form-group">
+                  <label for="office">Office</label>
+                  <input id="office" name="office" data-preselect="{{ old('office') }}" data-url={{ route('api.office.index') }} data-dependency="city" type="text" class="form-control js-office"/>
+                </div>
+
               </div>
             </div>
           </div>
@@ -209,13 +214,15 @@
 @section('javascript')
   <script>
 
-      $(document).on('city_init', function() {
-        console.log('selectize')
-        initSelectize();
-      });
+    $(document).on('city_init', function() {
+      console.log('selectize')
+      initSelectize();
+      initOfficeSelectize();
+    });
 
-      $(document).on('city_changed', function() {
-        console.log('city changed');
-      });        
+    $(document).on('city_changed', function() {
+      console.log('city changed');
+      initOfficeSelectize();
+    });      
   </script>
 @endsection
