@@ -75,6 +75,6 @@ class User extends Authenticatable
 
     public function designation()
     {
-        return $this->belongsTo('App\Designation');
+        return $this->belongsToMany('App\Designation');
     }
 }

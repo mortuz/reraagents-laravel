@@ -205,9 +205,9 @@ class PropertiesController extends Controller
         $token = DB::table('oauth_access_tokens')->where('user_id', Auth::id())->latest()->first()->id;
 
         return view('properties.edit')
-                        ->with('token', $token)
-                        ->with('property', $property)
-                        ->with('states', State::all());
+                ->with('token', $token)
+                ->with('property', $property)
+                ->with('states', State::all());
     }
 
     /**

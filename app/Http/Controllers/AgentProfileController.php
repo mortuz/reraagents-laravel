@@ -9,6 +9,8 @@ use App\Designation;
 use Illuminate\Http\Request;
 use App\State;
 use App\User;
+use Auth;
+use Illuminate\Support\Facades\DB;
 use Session;
 use Illuminate\Validation\Rule;
 
@@ -31,9 +33,10 @@ class AgentProfileController extends Controller
      */
     public function create()
     {
+        $token = DB::table('oauth_access_tokens')->where('user_id', Auth::id())->latest()->first()->id;
         return view('agents.create')
-        ->with('designations', Designation::orderBy('designation')->get())
-        ->with('states', State::all());
+            ->with('token', $token)
+            ->with('states', State::all());
     }
 
     /**
@@ -68,7 +71,6 @@ class AgentProfileController extends Controller
             'email' => $request->email,
             'mobile' => $request->mobile,
             'password' => bcrypt($request->password),
-            'designation_id' => $request->designation,
             'role' => 5
         ]);
 
@@ -86,6 +88,10 @@ class AgentProfileController extends Controller
             'account_no' => $request->account_no,
             'ifsc' => $request->ifsc
         ]);
+
+        if($request->designation) {
+            $user->designation()->attach(explode(',', $request->designation));
+        }
 
         Session::flash('success', 'Agent successfully added');
 
@@ -115,9 +121,11 @@ class AgentProfileController extends Controller
      */
     public function edit(AgentProfile $agent)
     {
+        $token = DB::table('oauth_access_tokens')->where('user_id', Auth::id())->latest()->first()->id;
+        $agent->user->designation = implode(',', $agent->user->designation()->pluck('designations.id')->toArray());
         return view('agents.edit')
             ->with('agent', $agent)
-            ->with('designations', Designation::orderBy('designation')->get())
+            ->with('token', $token)
             ->with('states', State::all());
     }
 
@@ -150,7 +158,10 @@ class AgentProfileController extends Controller
         $agent->user->name = $request->name;
         $agent->user->email = $request->email;
         $agent->user->mobile = $request->mobile;
-        $agent->user->designation_id = $request->designation;
+
+        if ($request->designation) {
+            $agent->user->designation()->sync(explode(',', $request->designation));
+        }
 
         if ($request->password) {
             $agent->user->password = $request->password;

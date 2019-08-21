@@ -25,7 +25,6 @@
                   <th> Mobile </th>
                   <th> State </th>
                   <th> City </th>
-                  <th> Designation </th>
                   <th> Action </th>
                 </tr>
               </thead>
@@ -38,7 +37,6 @@
                     <td> {{ $agent->user->mobile }} </td>
                     <td> {{ $agent->state->name }} </td>
                     <td>{{$agent->city->name}}</td>
-                    <td> {{ $agent->user->designation ? $agent->user->designation->designation : '--' }} </td>
                     <td>
                       <a href="{{ route('agents.edit', ['agent' => $agent->id]) }}" class="btn btn-gradient-light btn-rounded btn-sm" title="Edit">
                         <i class="mdi mdi-pencil"></i>

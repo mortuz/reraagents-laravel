@@ -76,19 +76,9 @@
               </div>
 
               <div class="form-group">
-              <label for="designation">Designation</label>
-              <select name="designation" id="designation" class="form-control">
-                @foreach ($designations as $designation)
-                    <option value="{{ $designation->id }}" {{ $agent->user->designation_id == $designation->id ? 'selected' : '' }}>{{ $designation->designation }}</option>
-                @endforeach
-              </select>
-
-              @if ($errors->has('designation'))
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $errors->first('designation') }}</strong>
-                </span>
-              @endif
-            </div>
+                <label for="designation">Designation</label> <button type="button" class="btn btn-link btn-sm float-right p-1" onclick="launchOnTheFlowModal('Designation', '{{ route('api.designation.store') }}', false)"><i class="mdi mdi-plus"></i> Add designation</button>
+                <input id="designation" name="designation" data-preselect="{{ $agent->user->designation }}" data-url={{ route('api.designation.index') }} data-dependency="" type="text" class="form-control js-selectize"/>
+              </div>
 
           </div>
         </div>

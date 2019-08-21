@@ -68,7 +68,11 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::apiResource('finance', 'API\FinanceController');
     Route::get('/finances', 'API\FinanceController@index');
     Route::post('/finances/store', 'API\FinanceController@store');
+
+    
 });
+
+Route::get('/designation', 'API\DesignationController@index')->name('api.designation.index');
 
 Route::get('/loan-purposes', 'API\LoanPurposeController@index');
 Route::get('/property/premium/details', 'API\PropertyController@premiumDetail');
@@ -99,4 +103,5 @@ Route::group(['middleware' => 'adminToken'], function() {
     Route::post('/price/store', 'API\PriceController@store')->name('api.price.store');
     Route::post('/venture/store', 'API\VentureController@store')->name('api.venture.store');
     Route::get('/office/fetch-office', 'API\OfficesController@fetchOffice')->name('api.office.index');
+    Route::post('/designation', 'API\DesignationController@store')->name('api.designation.store');
 });
