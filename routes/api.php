@@ -62,8 +62,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('requirement/get-comments', 'API\RequirementMessageController@show');
     Route::post('requirement/post-comment', 'API\RequirementMessageController@store');
     
-    Route::post('/office/store', 'API\OfficesController@store');
-    Route::get('/office/index', 'API\OfficesController@index');
+    Route::post('/office', 'API\OfficesController@store');
+    Route::get('/office', 'API\OfficesController@index');
     Route::apiResource('certificate', 'API\CertificatesController');
     Route::apiResource('finance', 'API\FinanceController');
     Route::get('/finances', 'API\FinanceController@index');
