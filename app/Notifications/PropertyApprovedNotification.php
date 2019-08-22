@@ -40,7 +40,7 @@ class PropertyApprovedNotification extends Notification
     {
         $title = 'Property id: ' . $this->property->id . ' Approved';
 
-        $raw_data = json_decode($this->property->raw_data);
+        $raw_data = json_decode($this->property->raw_data) ?? 'Description';
 
         $description = substr($raw_data->details, 0, 150);
         // dd( $notifiable->service);
