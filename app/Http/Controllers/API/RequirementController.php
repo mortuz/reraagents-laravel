@@ -370,7 +370,7 @@ class RequirementController extends Controller
             
         } else {
             // if handled by company i.e., handled_by = 1
-            $office = Office::where('id', $requirement->property_id)->where('verified', 1)->first();
+            $office = Office::where('id', $requirement->office_id)->where('verified', 1)->first();
             if ($office) {
                 // return city office no.
                 return response()->json(['success' => true, 'data' => $office->mobile]);
@@ -428,7 +428,7 @@ class RequirementController extends Controller
             return response()->json(['success' => true, 'data' => $requirement->mobile]);
         } else {
             // if handled by company i.e., handled_by = 1
-            $office = Office::where('id', $requirement->property_id)->where('verified', 1)->first();
+            $office = Office::where('id', $requirement->office_id)->where('verified', 1)->first();
             if ($office) {
                 return response()->json(['success' => true, 'data' => $office->mobile]);
             }
