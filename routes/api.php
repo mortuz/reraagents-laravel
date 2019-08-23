@@ -29,6 +29,7 @@ Route::get('/auth/check', 'API\AuthController@authCheck');
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/user', 'API\UserController@user')->name('api.user');
     Route::post('/profile/update', 'API\UserController@profileUpdate');
+    Route::post('/profile/avatar', 'API\UserController@updateAvatar');
     Route::post('/expo-token/store', 'API\ExpoTokenController@store');
     Route::post('/logout', 'API\UserController@logoutApi');
 

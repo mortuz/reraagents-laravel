@@ -112,7 +112,7 @@ class RequirementController extends Controller
                 $claims = $parser->parse($request->token);
 
                 if ($request->otp != $claims['code']) {
-                    return response()->json(['success' => false, 'errors' => true, 'message' => 'Invalid OTP']);
+                    return response()->json(['success' => false, 'errors' => true, 'token' => $request->token, 'message' => 'Invalid OTP']);
                 } else {
                     // create requirement
                     $requirement = $this->create($request);

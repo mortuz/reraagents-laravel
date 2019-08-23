@@ -18,6 +18,7 @@ class UserController extends Controller
     {
         $agent = AgentProfile::where('user_id', $request->user()->id)->first();
         $data = [];
+        $data['user']['avatar'] = $request->user()->avatar;
         $data['user']['name'] = $request->user()->name;
         $data['user']['email'] = $request->user()->email;
         $data['user']['mobile'] = $request->user()->mobile;
@@ -98,13 +99,37 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->state_id = $request->state;
         $user->city_id = $request->city;
-        $agent->state_id = $request->state;
-        $agent->city_id = $request->city;
+        $agent->state = $request->user()->state->name;
+        $agent->city = $request->user()->city->name;
+        
         $agent->save();
 
         $user->save();
 
         return response()->json(['success' => true, 'message' => 'Profile successfully updated.']);
+    }
+
+    public function updateAvatar(Request $request)
+    {
+        $this->validate($request, [
+            'image' => 'required|image'
+        ]);
+
+        $image = $request->image;
+        $image_new_name = time() . $image->getClientOriginalName();
+        $image->move('uploads/avatars', $image_new_name);
+
+        if($request->user()->avatar !== 'img/user.png') {
+            unlink(public_path($request->user()->avatar));
+        }
+
+        $request->user()->avatar = 'uploads/avatars/' . $image_new_name;
+
+        $request->user()->save();
+
+        // remove old if not default
+
+        return response()->json(['success' => true, 'message' => 'Profile picture successfully updated.', 'avatar' => $request->user()->avatar]);
     }
 
     public function logoutApi(Request $request)
