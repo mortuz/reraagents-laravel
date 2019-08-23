@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="col-md-3 light-text mb-3">
-                    <h5 class="footer-heading">Contact us</h5>
+                    {{-- <h5 class="footer-heading">Contact us</h5>
                     <ul class="list-unstyled">
                         <li>
                             <table>
@@ -109,7 +109,7 @@
                             </table>
                         </li>
 
-                    </ul>
+                    </ul> --}}
                 </div>
 
 

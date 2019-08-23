@@ -69,7 +69,7 @@
         <div class="container text-center header-text">
             <div class="row ">
                 <div class="col-md-12 hero-text">
-                    <h1 class="hero-tagline" style="color:#ffffff;">For all Agents communication</h1>
+                    <h1 class="hero-tagline" style="color:#ffffff;">For all your Property Requirements</h1>
                 </div>
                 <div class="col-md-12">
                     <a href="{{ route('page.property.buy') }}" class="btn btn1 my-2 my-sm-0">Post Your Requirement</a>
@@ -111,7 +111,7 @@
                 </div>
 
                 <div class="col-md-3 light-text mb-3">
-                    <h5 class="footer-heading">Contact us</h5>
+                    {{-- <h5 class="footer-heading">Contact us</h5>
                     <ul class="list-unstyled">
                         <li>
                             <table>
@@ -158,7 +158,7 @@
                             </table>
                         </li>
 
-                    </ul>
+                    </ul> --}}
                 </div>
 
 
