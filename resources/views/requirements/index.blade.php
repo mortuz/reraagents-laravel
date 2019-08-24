@@ -24,6 +24,7 @@
                   <th> City </th>
                   <th> Price </th>
                   <th> Status </th>
+                  <th> Agent </th>
                   <th> Details </th>
                   <th> Working agent </th>
                   <th> Assigned office </th>
@@ -56,6 +57,12 @@
                         @default
                             
                       @endswitch
+                    </td>
+                    <td>
+                      <p>
+                        {{ $requirement->user->name }} <br>
+                      {{ $requirement->mobile }}
+                      </p>
                     </td>
                     <td>{{ json_decode($requirement->raw_data)->details }}</td>
                     <td>
