@@ -194,6 +194,9 @@ class RequirementsController extends Controller
         if($request->visit_date) {
             $requirement->visit_date = $request->visit_date;
         }
+        if($request->cstatus) {
+            $requirement->customer_status_id = $request->cstatus;
+        }
 
         if ($request->bhk) {
             $requirement->rooms()->sync(explode(',', $request->bhk));
@@ -275,13 +278,13 @@ class RequirementsController extends Controller
                             if ( $requirement->user_id == $agent->user_id) continue;
                             array_push($users, $agent->user);
                         }
-                        Notification::send($users, new NewRequirementAvailableNotification($requirement));
+                        // Notification::send($users, new NewRequirementAvailableNotification($requirement));
                         break;
                     case 2:
                         Notification::send($requirement->user, new RequirementApprovedNotification($requirement));
                         break;
                     case 3:
-                        Notification::send($requirement->user, new RequirementRejectedNotification($requirement));
+                        // Notification::send($requirement->user, new RequirementRejectedNotification($requirement));
                         break;
                     default:
                         break;
@@ -294,7 +297,7 @@ class RequirementsController extends Controller
                         if ($requirement->user_id == $agent->user_id) continue;
                         array_push($users, $agent->user);
                     }
-                    Notification::send($users, new NewRequirementAvailableNotification($requirement));
+                    // Notification::send($users, new NewRequirementAvailableNotification($requirement));
                 }
             }
         }

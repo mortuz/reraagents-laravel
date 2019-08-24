@@ -20,10 +20,16 @@
               <thead>
                 <tr>
                   <th class="scope"> ID </th>
-                  <th> State </th>
+                  {{-- <th> State </th> --}}
                   <th> City </th>
                   <th> Price </th>
                   <th> Status </th>
+                  <th> Details </th>
+                  <th> Working agent </th>
+                  <th> Assigned office </th>
+                  <th> Call Date </th>
+                  <th> Visit Date </th>
+                  <th> Customer status </th>
                   <th> Last updated </th>
                   <th> Action </th>
                 </tr>
@@ -33,7 +39,7 @@
                 @foreach ($requirements as $requirement)
                   <tr>
                     <td>{{ $requirement->id }}{!!$requirement->request_delete ? '<label class="badge badge-danger ml-3">Del</label>' : null !!}</td>
-                    <td>{{ $requirement->state->name }}</td>
+                    {{-- <td>{{ $requirement->state->name }}</td> --}}
                     <td>{{ $requirement->city->name }}</td>
                     <td> {{ $requirement->prices->first() ? $requirement->prices->first()->price : '--'}} </td>
                     <td>
@@ -51,6 +57,32 @@
                             
                       @endswitch
                     </td>
+                    <td>{{ json_decode($requirement->raw_data)->details }}</td>
+                    <td>
+                      @if ($requirement->working_agent > 0)
+                        <h3 class="h4">{{ $requirement->workingAgent->user->name }}</h3>
+                        <p>
+                          {{ $requirement->workingAgent->user->mobile }} <br>
+                          {{ $requirement->workingAgent->state->name }} <br>
+                          {{ $requirement->workingAgent->city->name }} <br>
+                        </p>
+                      @else
+                        --
+                      @endif
+                    </td>
+                    <td>
+                      @if($requirement->office_id > 0)
+                        <h5>{{ $requirement->office->name }}</h5>
+                        <p>
+                          <strong>{{ $requirement->office->mobile }}</strong> <br>
+                          {{ $requirement->office->address }}
+                        </p>
+                      @else
+                      @endif
+                    </td>
+                    <td>{{$requirement->call_date ?? '--'}}</td>
+                    <td>{{$requirement->visit_date ?? '--'}}</td>
+                    <td>{{$requirement->customerStatus ? $requirement->customerStatus->status : '--' }}</td>
                     <td> {{ $requirement->updated_at->diffForHumans() }} </td>
                     <td>
                       <a href="{{ route('requirement.edit', ['requirement' => $requirement->id]) }}" class="btn btn-gradient-light btn-rounded btn-sm" title="Edit">

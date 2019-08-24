@@ -101,4 +101,9 @@ class Requirement extends Model
     {
         return $this->belongsTo('App\CustomerStatus', 'customer_status_id', 'id');
     }
+
+    public function office()
+    {
+        return $this->belongsTo('App\Office');
+    }
 }
