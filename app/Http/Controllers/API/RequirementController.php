@@ -323,14 +323,8 @@ class RequirementController extends Controller
     public function view()
     {
         $request = request();
-
         $requirementId = $request->requirement;
-
         $requirement = Requirement::find($requirementId);
-
-        if ($requirement->working_agent != 0) {
-            return response()->json(['success' => false, 'message' => "Requirement is already taken over by some other agent"]);;
-        }
 
         $office = Office::where('user_id', $request->user()->id)->where('verified', 1)->first();
 
@@ -344,13 +338,8 @@ class RequirementController extends Controller
             return response()->json(['success' => false, 'permission' => false]);
         }
 
-        $requirement->working_agent = $request->user()->id;
-        $requirement->save();
-
-        // Transaction::updateOrCreate([
-        //     'user_id' => $request->user()->id,
-        //     'property_id' => $propertyId
-        // ], []);
+        // $requirement->working_agent = $request->user()->id;
+        // $requirement->save();
 
         RequirementTransaction::create([
             'requirement_id' => $requirement->id,
@@ -363,19 +352,19 @@ class RequirementController extends Controller
 
             if($office) {
                 // return city office no.
-                return response()->json(['success' => true, 'data' => $office->mobile]);
+                return response()->json(['success' => true, 'permission' => true, 'data' => $office->mobile]);
             }
-            return response()->json(['success' => true, 'data' => $requirement->mobile]);
+            return response()->json(['success' => true, 'permission' => true, 'data' => $requirement->mobile]);
             
         } else {
             // if handled by company i.e., handled_by = 1
             $office = Office::where('id', $requirement->office_id)->where('verified', 1)->first();
             if ($office) {
                 // return city office no.
-                return response()->json(['success' => true, 'data' => $office->mobile]);
+                return response()->json(['success' => true, 'permission' => true, 'data' => $office->mobile]);
             }
             // return property no
-            return response()->json(['success' => true, 'data' => $requirement->mobile]);
+            return response()->json(['success' => true, 'permission' => true, 'data' => $requirement->mobile]);
         }
     }
 
