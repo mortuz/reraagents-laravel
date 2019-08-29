@@ -60,7 +60,7 @@
                     </td>
                     <td>
                       <p>
-                        {{ $requirement->user->name }} <br>
+                        {{ $requirement->user ? $requirement->user->name : '--' }} <br>
                       {{ $requirement->mobile }}
                       </p>
                     </td>
