@@ -18,7 +18,9 @@ class Office extends Model
         'verified_at',
         'user_id',
         'coordinates',
-        'name'
+        'name',
+        'logo',
+        'terms'
     ];
 
     public function state()

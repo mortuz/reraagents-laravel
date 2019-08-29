@@ -96,13 +96,12 @@ class RequirementController extends Controller
         ]);
 
         // verify mobile no
-        $users = User::where('mobile', $request->mobile)->where('mobile_verified_at', '!=', null)->get();
+        $users = User::where('mobile', $request->mobile)->get();
         $properties = Property::where('mobile', $request->mobile)->get();
         $requirement = Requirement::where('mobile', $request->mobile)->get();
 
         if ($users->count() || $properties->count() || $requirement->count()) {
             $requirement = $this->create($request);
-
             return response()->json(['success' => true, 'data' => $requirement]);
         } else {
             // generate OTP and token

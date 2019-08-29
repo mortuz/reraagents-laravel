@@ -162,7 +162,7 @@ class PropertyController extends Controller
         ]);
 
         // verify mobile no
-        $users = User::where('mobile', $request->mobile)->where('mobile_verified_at', '!=', null)->get();
+        $users = User::where('mobile', $request->mobile)->get();
         $properties = Property::where('mobile', $request->mobile)->get();
 
         if ($users->count() || $properties->count()) {
@@ -173,6 +173,7 @@ class PropertyController extends Controller
             // generate OTP and token
             $signer = new HS256(env('JWT_KEY'));
             if ($request->token) {
+
                 $parser = new JwtParser($signer);
                 $claims = $parser->parse($request->token);
 
@@ -238,7 +239,7 @@ class PropertyController extends Controller
             'details' => 'required'
         ]);
 
-        $users = User::where('mobile', $request->mobile)->where('mobile_verified_at', '!=', null)->get();
+        $users = User::where('mobile', $request->mobile)->get();
         $properties = Property::where('mobile', $request->mobile)->get();
         
         if ($users->count() || $properties->count()) {
@@ -305,7 +306,7 @@ class PropertyController extends Controller
 
     public function my()
     {
-        $properties = Property::where('user_id', request()->user()->id)->where('inactive', 0)->get();
+        $properties = Property::where('user_id', request()->user()->id)->where('inactive', 0)->latest()->get();
 
         $properties->transform(function ($property) {
             $feedback = Feedback::where('property_id', $property->id)->first();
@@ -329,7 +330,8 @@ class PropertyController extends Controller
                 'price'         => $property->prices->first() ? $property->prices->first()->price : json_decode($property->raw_data)->price,
                 'landmark'      => $property->landmarks->first() ? $property->landmarks->first()->name : null,
                 'heading'       => json_decode($property->raw_data)->details,
-                'message'       => $feedback ? $feedback->message : null
+                'message'       => $feedback ? $feedback->message : null,
+                'office'        => $property->office_id
             ];
         });
 
@@ -354,7 +356,7 @@ class PropertyController extends Controller
             ]),
         ]);
         
-        if (!$request->isAgent) {
+        if (!$request->isAgent && $request->user()->role !== 10) {
             $request->user()->role = 0;
             $request->user()->save();
         }
@@ -368,15 +370,16 @@ class PropertyController extends Controller
     public function modify($property, $request)
     {
         $raw = json_encode([
-                'price' => $request->price,
-                'measurement' => $request->measurement,
-                'location' => $request->location,
-                'details' => $request->details
-            ]);
+            'price' => $request->price,
+            'measurement' => $request->measurement,
+            'location' => $request->location,
+            'details' => $request->details
+        ]);
 
         $property->state_id = $request->state;
         $property->city_id = $request->city;
         $property->mobile = $request->mobile;
+        $property->office_id = $request->address ? $request->address : 0;
         $property->raw_data = $raw;
         $property->status = 0;
         

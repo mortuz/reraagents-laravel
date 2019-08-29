@@ -50,8 +50,19 @@ class OfficesController extends Controller
             'coordinates' => 'required',
             // 'mobile' => ['required', 'mobile', Rule::unique('users', 'mobile')->ignore($request->user()->id)],
             'mobile' => 'required',
-            'name' => 'required'
+            'name' => 'required',
+            
         ]);
+
+        $logo = '';
+
+        if($request->logo) {
+            $image = $request->logo;
+            $image_new_name = time() . $image->getClientOriginalName();
+            $image->move('uploads/offices', $image_new_name);
+            $logo = 'uploads/offices/' . $image_new_name;
+        }
+
 
         Office::create([
             'state_id' => $request->state,
@@ -61,7 +72,9 @@ class OfficesController extends Controller
             'website' => $request->website,
             'user_id' => $request->user()->id,
             'mobile' => $request->mobile,
-            'name'  => $request->name
+            'name'  => $request->name,
+            'terms' => $request->terms,
+            'logo' => $logo
         ]);
 
         return response()->json(['success' => true, 'message' => 'Office successfully created.']);
@@ -115,10 +128,38 @@ class OfficesController extends Controller
                 'city' => $office->city->name,
                 'address' => $office->address,
                 'mobile' => $office->mobile,
-                'verified' => $office->verified
+                'verified' => $office->verified,
+                'terms' => $office->terms,
+                'logo'  => $office->logo
             ];
         });
 
         return response()->json(['success' => true, 'data' => $offices]);
+    }
+
+    public function updateLogo(Request $request)
+    {
+        $this->validate($request, [
+            'image' => 'required|image',
+            'office' => 'required'
+        ]);
+
+        $image = $request->image;
+        $image_new_name = time() . $image->getClientOriginalName();
+        $image->move('uploads/offices', $image_new_name);
+
+        if ($request->user()->avatar) {
+            unlink(public_path($request->user()->avatar));
+        }
+
+        $office = Office::find($request->office);
+
+        $office->logo = 'uploads/offices/' . $image_new_name;
+
+        $office->save();
+
+        // remove old if not default
+
+        return response()->json(['success' => true, 'message' => 'Logo successfully updated.', 'logo' => $request->user()->avatar]);
     }
 }
