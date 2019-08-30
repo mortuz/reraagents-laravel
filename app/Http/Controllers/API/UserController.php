@@ -62,7 +62,7 @@ class UserController extends Controller
 
         $data['app_url'] = 'https://play.google.com/store/apps/details?id=in.idevia.reraagents';
 
-        $data['version'] = '3.5';
+        $data['version'] = '3.6';
 
         $data['ads'] = $ads;
 
@@ -99,8 +99,8 @@ class UserController extends Controller
         $user->email = $request->email;
         $user->state_id = $request->state;
         $user->city_id = $request->city;
-        $agent->state = $request->user()->state->name;
-        $agent->city = $request->user()->city->name;
+        $agent->state_id = $request->state;
+        $agent->city_id = $request->city;
         
         $agent->save();
 

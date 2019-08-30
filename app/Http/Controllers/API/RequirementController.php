@@ -50,7 +50,7 @@ class RequirementController extends Controller
         $filter[] = ['inactive', 0];
 
         $requirements = Requirement::where($filter)
-            ->where('working_agent', 0)
+            // ->where('working_agent', 0)
             ->limit($items_per_page)
             ->offset(($page - 1) * $items_per_page)
             ->latest()

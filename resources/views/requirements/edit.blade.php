@@ -204,7 +204,7 @@
                   <select class="form-control" id="status" name="cstatus">
                     <option value="0">Please select</option>
                     @foreach ($cstatus as $st)
-                      <option value="{{ $st->id }}" {{ $st->id == $requirement->customer_status_id? ' selected' : '' }}>{{ $st->status }}</option>    
+                      <option value="{{ $st->id }}" {{ $st->id == $requirement->customer_status_id ? ' selected' : '' }}>{{ $st->status }}</option>    
                     @endforeach
                   </select>
                 </div>

@@ -248,7 +248,7 @@ class RequirementsController extends Controller
                 array_push($users, $agent->user);
             }
 
-            Notification::send($users, new NewRequirementAvailableNotification($requirement));
+            // Notification::send($users, new NewRequirementAvailableNotification($requirement));
         }
 
         if ($request->release_message) {
