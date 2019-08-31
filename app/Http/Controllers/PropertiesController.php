@@ -251,38 +251,56 @@ class PropertiesController extends Controller
 
         if ($request->bhk) {
             $property->rooms()->sync(explode(',', $request->bhk));
+        } else {
+            $property->rooms()->detach();
         }
         
         if ($request->face) {
             $property->faces()->sync(explode(',', $request->face));
+        } else {
+            $property->faces()->detach();
         }
 
         if ($request->area) {
             $property->areas()->sync(explode(',', $request->area));
+        } else {
+            $property->areas()->detach();
         }
 
         if ($request->landmark) {
             $property->landmarks()->sync(explode(',', $request->landmark));
+        } else {
+            $property->landmarks()->detach();
         }
 
         if ($request->price) {
             $property->prices()->sync(explode(',', $request->price));
+        } else {
+            $property->prices()->detach();
         }
 
         if ($request->type) {
             $property->propertytypes()->sync(explode(',', $request->type));
+        } else {
+            $property->propertytypes()->detach();
         }
 
         if ($request->builders) {
             $property->builders()->sync(explode(',', $request->builders));
+        } else {
+            $property->builders()->detach();
         }
 
         if ($request->agents) {
             $property->agents()->sync(explode(',', $request->agents));
+        } else {
+            $property->agents()->detach();
         }
 
         if ($request->ventures) {
             $property->ventures()->sync(explode(',', $request->ventures));
+        } else {
+            $property->ventures()->detach();
         }
 
         // if status rejected i.e., status == 2

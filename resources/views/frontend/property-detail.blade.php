@@ -22,12 +22,19 @@
                       </div>
                       <div class="col-md-6 mt-4">
                         <div class="">
+                          @if ($property->areas->first() || $property->landmarks->first())
                             <p>
                               <img class="icons-property" src="{{ asset('img/icons/placeholder.svg') }}" alt=""> &nbsp; Area : 
-                              <span class="font-weight-bold">{{ $property->areas->first() ? $property->areas->first()->area : '' }} @if($property->landmarks->first()) , {{$property->landmarks->first()->name}} @endif</span>
+                              <span class="font-weight-bold">{{$property->areas->first()->area}} @if($property->landmarks->first()) , {{$property->landmarks->first()->name}} @endif</span>
                             </p>
-                            <p><img class="icons-property" src="{{ asset('img/icons/price-tag.svg') }}" alt=""> &nbsp; Price : 
-                              <span class="font-weight-bold">{{ $property->prices->first() ? $property->prices->first()->price : '' }}</span></p>
+                          @endif
+
+                          @if ($property->prices->first())
+                              <p><img class="icons-property" src="{{ asset('img/icons/price-tag.svg') }}" alt=""> &nbsp; Price : 
+                              <span class="font-weight-bold">{{ $property->prices->first()->price }}</span></p>
+                          @endif
+                          
+                            
                             <p><img class="icons-property" src="{{ asset('img/icons/tools-and-utensils.svg') }}" alt=""> &nbsp; Measurement : 
                               <span style="font-weight:bold;">{{ $property->raw_data->measurement }}</span></p>
                         </div>
@@ -35,17 +42,22 @@
                       
                       <div class="col-md-6 mt-4">
                           <div class="">
-                              <p><img class="icons-property" src="{{ asset('img/icons/compass.svg') }}" alt=""> &nbsp; Face : 
-                                @foreach ($property->faces as $face)
-                                    <button class="btn btn-outline-primary btn-sm">{{ $face->face }}</button>
-                                @endforeach
-                              </p>
 
+                            @if ($property->faces->count())
+                                <p><img class="icons-property" src="{{ asset('img/icons/compass.svg') }}" alt=""> &nbsp; Face : 
+                                  @foreach ($property->faces as $face)
+                                      <button class="btn btn-outline-primary btn-sm">{{ $face->face }}</button>
+                                  @endforeach
+                                </p>
+                            @endif
+
+                            @if ($property->rooms->count())
                               <p><img class="icons-property" src="{{ asset('img/icons/hotel.svg') }}" alt=""> &nbsp; Rooms : 
                                 @foreach ($property->rooms as $room)
-                                  <button class="btn btn-outline-primary btn-sm">{{ $room->type }}</button>
+                                <button class="btn btn-outline-primary btn-sm">{{ $room->type }}</button>
                                 @endforeach
                               </p>
+                            @endif
                           </div>
                       </div>
                     </div>
@@ -62,10 +74,22 @@
                   <div class="card-body">
                     <div class="card-title">This property Information is available in office:</div>
 
+                    @if ($office->logo)
+                        <img src="{{asset($office->logo)}}" alt="{{$office->name}}" class="my-3" height="30">
+                    @endif
+
                       <h5>{!!$office ? $office->name . '<br>' : '' !!}</h5>
                       <h4 class="card-t1">
                         {!! nl2br(e($office->address)) !!}
                       </h4>
+
+                      @if ($office->terms)
+                        <p class="mb-0 text-danger mt-3">Terms and conditions:</p>
+                        <h5 class=" h6 mt-1">
+                          {!! nl2br(e($office->terms)) !!}
+                        </h5>
+                      @endif
+
                       @if ($office->map)
                         <a href="{{ $office->map }}" target="_blank" class="btn btn-light">View on Map</a>
                       @endif
