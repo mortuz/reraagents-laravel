@@ -60,7 +60,7 @@
               <div class="col-12">
                 <div class="card">
                   <div class="card-body">
-                    <div class="card-title">This property is available at:</div>
+                    <div class="card-title">This property Information is available in office:</div>
 
                       <h5>{!!$office ? $office->name . '<br>' : '' !!}</h5>
                       <h4 class="card-t1">
