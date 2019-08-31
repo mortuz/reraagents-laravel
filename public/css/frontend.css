@@ -159,8 +159,8 @@ label.error {
 }
 
 .premium-img::before {
-    content: 'PREMIUM';
-    padding: 10px 50px;
+    content: 'OWNER LISTING';
+    padding: 10px 10px;
     background-color: #0287d7;
     color:#ffffff;
     position: absolute;

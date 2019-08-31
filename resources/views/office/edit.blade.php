@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Edit office</div>
 
-          <form autocomplete="off" action="{{ route('office.update', ['office' => $office]) }}" method="POST">
+          <form autocomplete="off" action="{{ route('office.update', ['office' => $office]) }}" method="POST" enctype="multipart/form-data">
             
             @csrf
             @method('patch')
@@ -28,6 +28,19 @@
                     <strong>{{ $errors->first('name') }}</strong>
                 </span>
               @endif
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="logo">Logo</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input{{ $errors->has('logo') ? ' is-invalid' : '' }}" id="logo" name="logo" accept="image/*">
+                <label class="custom-file-label" for="logo">Choose file</label>
+                @if ($errors->has('logo'))
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('logo') }}</strong>
+                  </span>
+                @endif
+              </div>
             </div>
 
             <div class="form-group">
@@ -98,6 +111,11 @@
 
             </div>
 
+            <div class="form-group">
+              <label class="form-label" id="terms">Terms and conditions</label>
+              <textarea class="form-control" name="terms" id="terms" rows="5">{{$office->terms}}</textarea>
+            </div>
+
             <div class="form-check mx-sm-2">
               <label class="form-check-label">
               <input type="checkbox" class="form-check-input" name="govt" {{ $office->govt ? 'checked' : '' }} value="1"> It is a Government office <i class="input-helper"></i></label>
@@ -107,6 +125,7 @@
               <label class="form-check-label">
               <input type="checkbox" class="form-check-input" name="verified" {{ $office->verified ? 'checked' : '' }} value="1"> Verified <i class="input-helper"></i></label>
             </div>
+
 
             <button class="btn btn-gradient-primary mt-3" type="submit">Update Office</button>
 

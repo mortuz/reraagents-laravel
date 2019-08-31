@@ -15,7 +15,7 @@
         <div class="card-body">
           <div class="card-title">Add office</div>
 
-          <form autocomplete="off" action="{{ route('office.store') }}" method="POST">
+          <form autocomplete="off" action="{{ route('office.store') }}" method="POST" enctype="multipart/form-data">
             
             @csrf
 
@@ -27,6 +27,19 @@
                     <strong>{{ $errors->first('name') }}</strong>
                 </span>
               @endif
+            </div>
+
+            <div class="form-group mb-4">
+              <label for="logo">Logo</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input{{ $errors->has('images') ? ' is-invalid' : '' }}" id="images" name="logo" accept="image/*">
+                <label class="custom-file-label" for="logo">Choose file</label>
+                @if ($errors->has('logo'))
+                  <span class="invalid-feedback" role="alert">
+                    <strong>{{ $errors->first('logo') }}</strong>
+                  </span>
+                @endif
+              </div>
             </div>
 
             <div class="form-group">
@@ -92,6 +105,11 @@
                     <strong>{{ $errors->first('address') }}</strong>
                 </span>
               @endif
+            </div>
+
+            <div class="form-group">
+              <label class="form-label" id="terms">Terms and conditions</label>
+              <textarea class="form-control" name="terms" id="terms">{{ old('terms') }}</textarea>
             </div>
 
             <div class="form-check mx-sm-2">

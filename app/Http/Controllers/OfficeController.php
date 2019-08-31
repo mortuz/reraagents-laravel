@@ -39,10 +39,22 @@ class OfficeController extends Controller
      */
     public function store(Request $request)
     {
+        
         $this->validate($request, [
             'state' => 'required',
-            'mobile' => 'nullable|max:10'
+            'mobile' => 'nullable|max:10',
+            'logo' => 'nullable|image'
         ]);
+
+
+        $logo = '';
+
+        if($request->logo) {
+            $image = $request->logo;
+            $image_new_name = time() . $image->getClientOriginalName();
+            $image->move('uploads/offices', $image_new_name);
+            $logo = 'uploads/offices/' . $image_new_name;
+        }
 
         Office::create([
             'name'     => $request->name,
@@ -52,6 +64,8 @@ class OfficeController extends Controller
             'address'  => $request->address,
             'url'      => $request->url,
             'map'      => $request->map,
+            'terms'    => $request->terms,
+            'logo'     => $logo,
             'user_id'  => Auth::id(),
             'govt'     => $request->govt ? $request->govt : 0,
             'verified' => $request->verified ? $request->verified : 0,
@@ -98,7 +112,21 @@ class OfficeController extends Controller
     {
         $this->validate($request, [
             'state' => 'required',
+            'logo' => 'nullable|image'
         ]);
+
+        $logo = '';
+
+        if ($request->logo) {
+            $image = $request->logo;
+            $image_new_name = time() . $image->getClientOriginalName();
+            $image->move('uploads/offices', $image_new_name);
+            $logo = 'uploads/offices/' . $image_new_name;
+            // remove old logo
+            if ($office->logo) {
+                unlink(public_path($office->logo));
+            }
+        }
 
         $office->name = $request->name;
         $office->state_id = $request->state;
@@ -106,7 +134,9 @@ class OfficeController extends Controller
         $office->mobile = $request->mobile;
         $office->address = $request->address;
         $office->url = $request->url;
+        $office->terms = $request->terms;
         $office->map = $request->map;
+        $office->logo = $logo;
         $office->govt = $request->govt ? $request->govt : 0;
         $office->verified = $request->verified ? $request->verified : 0;
         $office->verified_at = $request->verified ? Carbon::now() : null;

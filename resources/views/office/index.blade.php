@@ -24,6 +24,7 @@
                   <th> City </th>
                   <th> Address </th>
                   <th> name </th>
+                  <th> Logo </th>
                   <th> Agent </th>
                   <th> Verified </th>
                   <th> Govt </th>
@@ -40,6 +41,13 @@
                     <td>@if ($office->hasCity()) {{$office->city->name}} @endif</td>
                     <td>{{$office->address}}</td>
                     <td>{{$office->name}}</td>
+                    <td class="text-center">
+                      @if ($office->logo)
+                          <img src="{{asset($office->logo)}}" alt="" class="rounded-0">
+                      @else
+                          --
+                      @endif
+                    </td>
                     <td>
                       @if($office->agent)
                         <strong>
