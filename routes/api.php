@@ -70,7 +70,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('/finances', 'API\FinanceController@index');
     Route::post('/finances/store', 'API\FinanceController@store');
 
-    
 });
 
 Route::get('/designation', 'API\DesignationController@index')->name('api.designation.index');
@@ -96,6 +95,8 @@ Route::get('/area', 'API\AreaController@index')->name('api.area.index');
 Route::get('/landmark', 'API\LandmarkController@index')->name('api.landmark.index');
 Route::get('/price', 'API\PriceController@index')->name('api.price.index');
 Route::get('/states', 'API\StatesController@index')->name('api.state.index');
+
+Route::get('/area-by-city', 'API\AreaController@getAreaByCity');
 
 
 Route::group(['middleware' => 'adminToken'], function() {

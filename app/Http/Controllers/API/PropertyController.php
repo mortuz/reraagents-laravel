@@ -50,11 +50,24 @@ class PropertyController extends Controller
         // }
 
         $properties = Property::where($filter)
-                                // ->where('premium', 0)
-                                ->limit( $items_per_page)
-                                ->offset(($page - 1) * $items_per_page)
-                                ->latest()
-                                ->get();
+                    // ->where('premium', 0)
+                    ->limit( $items_per_page)
+                    ->offset(($page - 1) * $items_per_page)
+                    ->latest();
+                    // ->get();
+
+        if (!empty($request->type)) {
+            $properties->whereHas('propertytypes', function ($query) use ($request) {
+                $query->whereIn('property_type_id', explode(',', $request->type));
+            });
+        }
+        if (!empty($request->area)) {
+            $properties->whereHas('areas', function ($query) use ($request) {
+                $query->whereIn('area_id', explode(',', $request->area));
+            });
+        }
+
+        $properties = $properties->get();
                                 
         // $premiumProperties = Property::where($filter)
         //                         ->where('premium', 1)
@@ -139,7 +152,7 @@ class PropertyController extends Controller
             // $formattedProperties = $premiumProperties;
         }
 
-        return response()->json(['success' => true, 'data' => $formattedProperties, 'page' => $page]);
+        return response()->json(['success' => true, 'data' => $formattedProperties, 'page' => $page, 'filter' => $request->all()]);
     }
 
     /**

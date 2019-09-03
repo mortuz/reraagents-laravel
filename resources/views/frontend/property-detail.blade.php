@@ -74,10 +74,13 @@
                   <div class="card-body">
                     <div class="card-title">This property Information is available in office:</div>
 
-                    @if ($office->logo)
-                        <img src="{{asset($office->logo)}}" alt="{{$office->name}}" class="my-3" height="30">
-                    @endif
+                    <div class="col-md-4 order-1">
+                      @if ($office->logo)
+                        <img src="{{asset($office->logo)}}" alt="{{$office->name}}" class="my-3" style="width: 100%">
+                      @endif
+                    </div>
 
+                    <div class="col-md-8 order-2">
                       <h5>{!!$office ? $office->name . '<br>' : '' !!}</h5>
                       <h4 class="card-t1">
                         {!! nl2br(e($office->address)) !!}
@@ -93,6 +96,8 @@
                       @if ($office->map)
                         <a href="{{ $office->map }}" target="_blank" class="btn btn-light">View on Map</a>
                       @endif
+                    </div>
+                      
                   </div>
                 </div>
               </div>
@@ -103,7 +108,7 @@
             <div class="col-12">
               <div class="card">
                 <div class="card-body">
-                  <div class="card-title">To call the property owner download our mobile app.</div>
+                  <div class="card-title">Please download the app to call agent for more details.</div>
 
                   <a href="https://play.google.com/store/apps/details?id=in.idevia.reraagents" target="_blank">
                     <img src="{{ asset('img/download-on-the-app-store-icon-0.png') }}" alt="" class="playstore-img">

@@ -53,8 +53,21 @@ class RequirementController extends Controller
             // ->where('working_agent', 0)
             ->limit($items_per_page)
             ->offset(($page - 1) * $items_per_page)
-            ->latest()
-            ->get();
+            ->latest();
+        // ->get();
+
+        if (!empty($request->type)) {
+            $requirements->whereHas('propertytypes', function ($query) use ($request) {
+                $query->whereIn('property_type_id', explode(',', $request->type));
+            });
+        }
+        if (!empty($request->area)) {
+            $requirements->whereHas('areas', function ($query) use ($request) {
+                $query->whereIn('area_id', explode(',', $request->area));
+            });
+        }
+
+        $requirements = $requirements->get();
 
         $requirements->transform(function ($requirement) {
             return [
