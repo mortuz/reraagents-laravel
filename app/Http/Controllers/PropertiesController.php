@@ -45,7 +45,7 @@ class PropertiesController extends Controller
                 $query->whereIn('property_type_id', explode(',', $request->type));
             });
         }
-        if(!empty($request->areas)) {
+        if(!empty($request->area)) {
             $results->whereHas('areas', function($query) use ($request) {
                 $query->whereIn('area_id', explode(',', $request->area));
             });
