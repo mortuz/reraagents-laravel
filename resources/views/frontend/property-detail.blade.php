@@ -74,28 +74,30 @@
                   <div class="card-body">
                     <div class="card-title">This property Information is available in office:</div>
 
-                    <div class="col-md-4 order-1">
-                      @if ($office->logo)
-                        <img src="{{asset($office->logo)}}" alt="{{$office->name}}" class="my-3" style="width: 100%">
-                      @endif
-                    </div>
+                    <div class="row align-items-center">
+                      <div class="col-md-4 order-2">
+                        @if ($office->logo)
+                          <img src="{{asset($office->logo)}}" alt="{{$office->name}}" class="my-3" style="width: 100%">
+                        @endif
+                      </div>
 
-                    <div class="col-md-8 order-2">
-                      <h5>{!!$office ? $office->name . '<br>' : '' !!}</h5>
-                      <h4 class="card-t1">
-                        {!! nl2br(e($office->address)) !!}
-                      </h4>
+                      <div class="col-md-8 order-1">
+                        <h5>{!!$office ? $office->name . '<br>' : '' !!}</h5>
+                        <h4 class="card-t1">
+                          {!! nl2br(e($office->address)) !!}
+                        </h4>
 
-                      @if ($office->terms)
-                        <p class="mb-0 text-danger mt-3">Terms and conditions:</p>
-                        <h5 class=" h6 mt-1">
-                          {!! nl2br(e($office->terms)) !!}
-                        </h5>
-                      @endif
+                        @if ($office->terms)
+                          <p class="mb-0 text-danger mt-3">Terms and conditions:</p>
+                          <h5 class=" h6 mt-1">
+                            {!! nl2br(e($office->terms)) !!}
+                          </h5>
+                        @endif
 
-                      @if ($office->map)
-                        <a href="{{ $office->map }}" target="_blank" class="btn btn-light">View on Map</a>
-                      @endif
+                        @if ($office->map)
+                          <a href="{{ $office->map }}" target="_blank" class="btn btn-light">View on Map</a>
+                        @endif
+                      </div>
                     </div>
                       
                   </div>
