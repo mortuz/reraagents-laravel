@@ -44,7 +44,7 @@
                 
                     
                   <div class="col-md-12">
-                    <h3 class="agent-partner h5 ml-2">More agents</h3>
+                    <h3 class="agent-partner h5 ml-2">More agent partners</h3>
                   </div>
 
                     @foreach ($otherOffices as $office)
