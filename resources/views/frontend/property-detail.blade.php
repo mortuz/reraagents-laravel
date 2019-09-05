@@ -134,7 +134,7 @@
               @foreach ($premiumProperties as $property)
                   @if ($property->premium)
                     <div class="col-md-6">
-                      <div class="card ml-1 mr-1 bx-shadow">
+                      <div class="card ml-1 mr-1 mt-3 bx-shadow">
                           <div class="row no-gutters">
                               <div class="col-md-4">
                                   <div class="premium-img" style="background-image: url('{{ $property->firstImage }} ')"></div>
@@ -160,7 +160,7 @@
                                           <p class="card-text"><i class="fa fa-inr" aria-hidden="true"></i> {{$property->prices->first()->price}}</p>
                                       @endif
 
-                                      <p class="card-text my-3"><span class="card-text">Property Id: 
+                                      <p class="card-text mb-3"><span class="card-text">Property Id: 
                                           <span class="color-red" style="font-weight:bold;">{{ $property->id }}</span> , <span class="color-grey" style="font-weight:bold;">{{ $property->updated_at->format('Y-m-d') }}</span></span>
                                       </p>
 
