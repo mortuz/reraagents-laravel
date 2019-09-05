@@ -213,28 +213,22 @@
                 </div>
 
                 <div class="col-md-4">
-                    @if (count($agents))
+                    @if (count($offices))
                         <h3 class="agent-partner">Our Agent Partners</h3>
 
-                        @foreach ($agents as $agent)
-                            <a href="{{ route('agent.details', ['id' => $agent->id]) }}">
+                        @foreach ($offices as $office)
+                            <a href="{{ route('office.details', ['id' => $office->id]) }}">
                                 <div class="card ml-1 mr-1 bx-shadow mt-3">
                                     <div class="card-body">
-                                        <h5 style="font-size: 16px">{{ $agent->user->name }}</h5>
+                                        @if ($office->logo)
+                                            <img src="{{ asset($office->logo) }}" alt="{{ $office->name }}" style="height: 50px; margin-bottom: 15px;">
+                                        @endif
+
+                                        <h5 style="font-size: 16px">{{ $office->name }}</h5>
                                         <p>
-                                            {{ $agent->state->name }} <br>
-                                            {{ $agent->city->name }} <br>
-
-                                            @if ($agent->landmark)
-                                                {{ $agent->landmark->name }} <br>
-                                            @endif
-
-                                            @if ($agent->area)
-                                                {{ $agent->area->area }}
-                                            @endif
+                                            {{ $office->city->name }} <br>
+                                            {{ $office->state->name }} <br>
                                         </p>
-
-                                        {{-- <h6 style="font-size: 14px">{{ $agent->user->mobile }}</h6> --}}
 
                                     </div>
                                 </div>

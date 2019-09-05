@@ -136,10 +136,10 @@
                     <div class="col-md-6">
                       <div class="card ml-1 mr-1 mt-3 bx-shadow">
                           <div class="row no-gutters">
-                              <div class="col-md-4">
+                              <div class="col-md-3">
                                   <div class="premium-img" style="background-image: url('{{ $property->firstImage }} ')"></div>
                               </div>
-                              <div class="col-md-8">
+                              <div class="col-md-9">
                                   <div class="card-body">
                                       <p class="card-text">{{ $property->state->name }} >> <span>{{ $property->city ? $property->city->name : null }}</span>
                                           @if ($property->propertytypes->first())

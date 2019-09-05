@@ -67,10 +67,12 @@ class FrontendController extends Controller
         }
 
         $agents = AgentProfile::where('premium', 1)->where($agentFilter)->limit(10)->latest()->get();
+        $offices = Office::where('verified', 1)->where($agentFilter)->limit(10)->latest()->get();
         // dd($shouldScroll);
 
         return view('index')->with('properties', $properties)
                             ->with('agents', $agents)
+                            ->with('offices', $offices)
                             ->with('title', $title)
                             ->with('description', $description)
                             ->with('keywords', $keywords)
@@ -240,52 +242,52 @@ class FrontendController extends Controller
             ->with('keywords', $keywords);
     }
 
-    public function getAgentDetails($id)
+    public function getOfficeDetails($id)
     {
-        $agent = AgentProfile::where('id', $id)->where('premium', 1)->first();
+        $office = Office::where('id', $id)->where('verified', 1)->first();
 
-        if (!$agent) {
+        if (!$office) {
             return redirect()->back();
         }
 
-        $title = $agent->user->name . ' ';
+        $title = $office->name . ' ';
         $description = '';
         $keywords = '';
 
         $premium = [];
         $premiumAgents = null;
 
-        if ($agent->area_id) {
-            $premium[] = AgentProfile::where('area_id', '!=', $id)->where('premium', 1)->take(5)->inRandomOrder()->get();
-        }
+        // if ($agent->area_id) {
+        //     $premium[] = AgentProfile::where('area_id', '!=', $id)->where('premium', 1)->take(5)->inRandomOrder()->get();
+        // }
 
-        if ($agent->landmark_id) {
-            $premium[] = AgentProfile::where('landmark_id', '!=', $id)->where('premium', 1)->take(5)->inRandomOrder()->get();
-        }
+        // if ($agent->landmark_id) {
+        //     $premium[] = AgentProfile::where('landmark_id', '!=', $id)->where('premium', 1)->take(5)->inRandomOrder()->get();
+        // }
 
-        $premium[] = AgentProfile::where('city_id', $agent->city_id)
+        $premium = Office::where('city_id', $office->city_id)
             ->where('id', '!=', $id)
-            ->where('premium', 1)
-            ->inRandomOrder()->limit(4)->get();
+            ->where('verified', 1)
+            ->inRandomOrder()->limit(6)->get();
 
-        if (array_key_exists('1', $premium)) {
-            $premiumAgents = $premium[0]->merge($premium[1]);
-        }
+        // if (array_key_exists('1', $premium)) {
+        //     $premiumAgents = $premium[0]->merge($premium[1]);
+        // }
 
-        if (array_key_exists('2', $premium)) {
-            if ($premiumAgents) {
-                $premiumAgents = $premiumAgents->merge($premium[2]);
-            } else {
-                $premiumAgents = $premium[0]->merge($premium[2]);
-            }
-        }
+        // if (array_key_exists('2', $premium)) {
+        //     if ($premiumAgents) {
+        //         $premiumAgents = $premiumAgents->merge($premium[2]);
+        //     } else {
+        //         $premiumAgents = $premium[0]->merge($premium[2]);
+        //     }
+        // }
 
-        return view('frontend.agent-details')
+        return view('frontend.office-details')
             ->with('title', $title)
             ->with('description', $description)
             ->with('keywords', $keywords)
-            ->with('agent', $agent)
-            ->with('premiumAgents', $premiumAgents ? $premiumAgents->take(6) : [])
+            ->with('office', $office)
+            ->with('otherOffices', $premium)
             ;
     }
 
