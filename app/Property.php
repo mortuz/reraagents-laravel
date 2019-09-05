@@ -36,7 +36,7 @@ class Property extends Model
         $imgs = json_decode($this->images);
 
         if ($imgs) {
-            return str_replace(' ', '%20', $imgs[0]);
+            return asset(str_replace(' ', '%20', $imgs[0]));
         } else {
             return asset('img/na.jpeg');
         }
