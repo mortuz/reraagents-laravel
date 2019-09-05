@@ -226,9 +226,11 @@ class RequirementController extends Controller
             ]),
         ]);
 
-        if (!$request->isAgent) {
-            $request->user()->role = 0;
-            $request->user()->save();
+        if ($request->user()->role != 10) {
+            if (!$request->isAgent) {
+                $request->user()->role = 0;
+                $request->user()->save();
+            }
         }
 
         $requirement->agents()->attach(explode(',', AgentProfile::where('user_id', $request->user()->id)->first()->id));
