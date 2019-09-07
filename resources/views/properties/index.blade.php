@@ -138,9 +138,10 @@
                     <td style="max-width: 100px; white-space: normal;"> {{ json_decode($property->raw_data)->measurement }} </td>
                     <td style="max-width: 200px; white-space: normal;"> <span>{{ json_decode($property->raw_data)->details }}</span> </td>
                     <td> {{ \Carbon\Carbon::parse($property->expiry_date)->format('d-m-Y') }}  <br>
-                      @if (\Carbon\Carbon::parse($property->expiry_date)->diffInDays(\Carbon\Carbon::now()) <= 3)
+                      @if (\Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($property->expiry_date), false) <= 3)
                           <a href="{{route('property.renew', $property)}}">Renew</a>
                       @endif
+                      {{-- {{ \Carbon\Carbon::now()->diffInDays(\Carbon\Carbon::parse($property->expiry_date), false) }} --}}
                     </td>
                     <td>
                       @switch($property->status)
