@@ -63,6 +63,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/property/request/delete', 'PropertiesController@getRequestDelete')->name('property.delete.request');
         Route::get('/property/premium/{property}', 'PropertiesController@premiumEdit')->name('property.premium.edit');
         Route::put('/property/premium/{property}', 'PropertiesController@premiumUpdate')->name('property.premium.update');
+        Route::get('/property/renew/{property}', 'PropertiesController@renew')->name('property.renew');
         Route::resource('landmark', 'LandmarkController');
         Route::resource('area', 'AreaController');
         Route::resource('price', 'PriceController');

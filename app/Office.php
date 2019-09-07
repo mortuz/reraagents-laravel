@@ -41,4 +41,9 @@ class Office extends Model
     {
         return $this->city;
     }
+
+    public function properties()
+    {
+        return $this->hasMany('App\Property');
+    }
 }

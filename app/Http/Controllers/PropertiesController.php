@@ -55,7 +55,7 @@ class PropertiesController extends Controller
                 $query->whereIn('price_id', explode(',', $request->price));
             });
         }
-        $results = $results->latest()->paginate()->appends([
+        $results = $results->orderBy('expiry_date', 'desc')->paginate()->appends([
             'state' => $request->state,
             'city' => $request->city,
             'type' => $request->type,
@@ -485,5 +485,13 @@ class PropertiesController extends Controller
                 'prices' => $request->price,
                 'status' => $request->status,
             ]);
+    }
+
+    public function renew(Property $property)
+    {
+        $property->expiry_date = Carbon::now()->addDays('30');
+        $property->save();
+        Session::flash('success', 'Property has been renewed');
+        return redirect()->back();
     }
 }
