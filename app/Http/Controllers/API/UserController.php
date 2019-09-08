@@ -62,7 +62,7 @@ class UserController extends Controller
 
         $data['app_url'] = 'https://play.google.com/store/apps/details?id=in.idevia.reraagents';
 
-        $data['version'] = '3.7';
+        $data['version'] = '3.8';
 
         $data['ads'] = $ads;
 
