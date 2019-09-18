@@ -15,6 +15,8 @@ use App\Office;
 use App\Feedback;
 use App\Transaction;
 use App\AgentProfile;
+use App\Notifications\PremiumPropertyNotification;
+use Notification;
 
 class PropertyController extends Controller
 {
@@ -593,5 +595,85 @@ class PropertyController extends Controller
         $property->expiry_date = Carbon::now()->addDays('30');
         $property->save();
         return response()->json(['success' => true, 'message' => 'Property has been renewed.']);
+    }
+
+    public function getPremiumProperty(Request $request)
+    {
+        $id = $request->id;
+        $property = Property::find($id);
+        return response()->json(['success' => true, 'data' => $property]);
+    }
+
+    public function postPremiumProperty(Request $request)
+    {
+        $id = $request->id;
+        $property = Property::find($id);
+        // return response()->json(['success' => true, 'data' => $property, 'req' => $request->all()]);
+
+        $this->validate($request, [
+            'website' => 'nullable|regex:/^\S*$/u',
+            'youtube_link' => 'nullable|regex:/^\S*$/u',
+            'google_map' => 'nullable|regex:/^\S*$/u'
+        ]);
+
+        $images = [];
+
+        if ($request->images) {
+            foreach ($request->images as $image) {
+                $image_new_name = time() . $image->getClientOriginalName();
+                $image->move('uploads/properties', $image_new_name);
+                $images[] = 'uploads/properties/' . $image_new_name;
+            }
+
+            if ($property->images) {
+                $oldImages = json_decode($property->images);
+                foreach ($oldImages as $image) {
+                    unlink(public_path($image));
+                }
+            }
+            $property->images = json_encode($images);
+        }
+
+        if ($request->floorplans) {
+            foreach ($request->floorplans as $image) {
+                $image_new_name = time() . $image->getClientOriginalName();
+                $image->move('uploads/properties/floorplans', $image_new_name);
+                $images[] = 'uploads/properties/floorplans/' . $image_new_name;
+            }
+
+            if ($property->floorplans) {
+                $oldImages = json_decode($property->floor_plans);
+                foreach ($oldImages as $image) {
+                    unlink(public_path($image));
+                }
+            }
+            $property->floor_plans = json_encode($images);
+        }
+
+        $property->website = $request->website;
+        $property->amenities = $request->amenities;
+        $property->overview = $request->overview;
+        $property->highlights = $request->highlights;
+        $property->youtube_link = $request->youtube_link;
+        $property->google_map = $request->google_map;
+        $property->features = $request->features;
+
+        if ($request->images || !$property->images) {
+            $property->images = json_encode($images);
+        }
+
+        $property->save();
+
+        $agents = AgentProfile::where('city_id', $property->city_id)->get();
+        $users = [];
+
+        foreach ($agents as $agent) {
+            array_push($users, $agent->user);
+        }
+
+        Notification::send($users, new PremiumPropertyNotification($property));
+
+        return response()->json(['success' => true]);
+
     }
 }

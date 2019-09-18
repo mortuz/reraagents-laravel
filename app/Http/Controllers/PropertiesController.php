@@ -373,7 +373,11 @@ class PropertiesController extends Controller
 
     public function premiumEdit(Property $property)
     {
-        return view('properties.premium.edit')->with('property', $property);
+        $token = DB::table('oauth_access_tokens')->where('user_id', Auth::id())->latest()->first()->id;
+        return view('properties.premium.edit')
+            ->with('property', $property)
+            ->with('token', $token)
+            ;
     }
 
     public function premiumUpdate(Request $request, Property $property)

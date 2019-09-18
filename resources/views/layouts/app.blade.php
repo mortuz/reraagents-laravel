@@ -19,6 +19,7 @@
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
+  <link rel="stylesheet" href="{{ asset('css/app.css') }}">
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
   <!-- endinject -->
   <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" />
@@ -344,6 +345,7 @@
 
   </script>
   <!-- End custom js for this page-->
+  <script src="{{ asset('js/app.js') }}"></script>
   @yield('javascript')
 </body>
 

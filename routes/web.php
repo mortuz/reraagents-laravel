@@ -78,3 +78,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('callers', 'CallerController');
     });
 });
+
+Route::get('/build', function() {
+    return view('premium-frontend', [
+        'title' => '',
+        'keywords' => '',
+        'description' => ''
+    ]);
+});

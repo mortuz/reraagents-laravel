@@ -106,4 +106,7 @@ Route::group(['middleware' => 'adminToken'], function() {
     Route::post('/venture/store', 'API\VentureController@store')->name('api.venture.store');
     Route::get('/office/fetch-office', 'API\OfficesController@fetchOffice')->name('api.office.index');
     Route::post('/designation', 'API\DesignationController@store')->name('api.designation.store');
+    Route::get('/admin/premium/property', 'API\PropertyController@getPremiumProperty')->name('api.admin.premium.property');
+    Route::post('/admin/premium/property', 'API\PropertyController@postPremiumProperty');
+    Route::get('/admin/amenities', 'API\AmenityController@index')->name('api.admin.amenity.index');
 });
